@@ -1,7 +1,10 @@
-# PROJECT NAME
+# Lusonus
+Lusonus comes from the latin words: Luso, meaning playing; and Sonus, meaning audio. 
+Lusonus itself means playful, which is the energy we bring to the room with our app.
 
 ## Goal
-A brief description of your application. Should answer, as concisely as you can: what is it? what is its purpose?
+Our goal is to make an all purpose media app that is both convienient, and intuitive to use.
+Our app will be phone based, meaning we are giving you our best to make your mobile media _feel_ like it belongs.
 
 ## Quick-start
 How to install and launch your application. These should include instructions for:
@@ -11,4 +14,6 @@ How to install and launch your application. These should include instructions fo
 - (by Sprint 1): Screenshots from each of the main screens of your application.
 
 ## Team members
-List each person's name and email address.
+Brandon Boros: brandon.boros1@gmail.com
+Aristedes Patelis: minemastax@gmail.com
+Alexander Lystukha: alystukha@gmail.com
