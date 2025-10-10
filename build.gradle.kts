@@ -1,22 +1,11 @@
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
 plugins {
-    // Gradle Android + Kotlin
-    id("com.android.application") version "8.1.1" apply false
-    id("org.jetbrains.kotlin.android") version "1.8.10" apply false
-
-    // Regular Kotlin JVM plugin (must include version!)
-    kotlin("jvm") version "1.8.10"
-
-    // Application plugin (for running Kotlin apps)
-    application
-
-    // Ktlint plugin
+    id("com.android.application") version "8.6.1" apply false
+//    id("org.jetbrains.kotlin.android") version "1.9.25" apply false
+    id("org.jetbrains.kotlin.android") version "1.9.0" apply false
+    id("org.jetbrains.kotlin.plugin.compose") version "2.0.0" apply false
     id("org.jlleitschuh.gradle.ktlint") version "11.5.1"
-}
-
-application {
-    mainClass.set("org.jlleitschuh.gradle.ktlint.sample.kotlin.MainKt")
 }
 
 ktlint {
