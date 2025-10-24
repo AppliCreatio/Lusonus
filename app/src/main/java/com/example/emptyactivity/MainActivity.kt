@@ -10,9 +10,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import com.example.assignment_2.MainApp
 import com.example.emptyactivity.screens.ProfileScreen.DisplayProfile
+import com.example.emptyactivity.screens.ProfileScreen.Profile
 import com.example.emptyactivity.ui.theme.AppTheme
 import com.example.filedisplayer.FileImportScreen
 
@@ -24,9 +23,9 @@ class MainActivity : ComponentActivity() {
                // A surface container using the 'background' color from the theme
                Surface(
                    modifier = Modifier.fillMaxSize(),
-//                   color = MaterialTheme.colorScheme.background
+                   color = MaterialTheme.colorScheme.background
                ) {
-                   MainApp()
+                   Profile()
                }
            }
         }

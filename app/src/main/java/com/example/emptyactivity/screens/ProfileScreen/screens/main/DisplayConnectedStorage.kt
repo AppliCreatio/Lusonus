@@ -1,32 +1,32 @@
-package com.example.emptyactivity.screens.ProfileScreen
+package com.example.ass3_appdev.screens.main
 
-import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.twotone.List
-import androidx.compose.material.icons.rounded.Check
 import androidx.compose.material.icons.rounded.CheckCircle
-import androidx.compose.material.icons.twotone.List
-import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.emptyactivity.screens.ProfileScreen.data_classes.ExternalStorage
+import com.example.emptyactivity.screens.ProfileScreen.LocalStorageList
+import com.example.emptyactivity.screens.ProfileScreen.classes.data_classes.ExternalStorage
+import com.example.ass3_appdev.reusable_composables.dialogs.ConnectedStorageDialog
 
 /*
  This saver variation of ExternalStorage is meant as a conversion tool to be able to store the ExternalStorage data class
@@ -40,19 +40,22 @@ val ConnectedStorageSaver = Saver<ExternalStorage, List<Any>>(
 
 /**
  * A composable which is a container that displays the current storage that is connected to the application/profile
- * For now it just displays a storage, but in the future there will be an actual way to connect to a storage
+ *
+ * It is stateful due to the dialog boolean and the connected storage
  */
 @Composable
 fun ConnectedStorage(modifier: Modifier) {
 
     // used online recourses as well as AI to understand how to save a data class as a state
     // mostly gonna be used within the future when I add the option to change storages
-    var connectedStorage = rememberSaveable(saver = ConnectedStorageSaver) {
-        ExternalStorage(
-            "MyNAS",
-            true
-        )
+    var connectedStorage by rememberSaveable(stateSaver = ConnectedStorageSaver) {
+        mutableStateOf(ExternalStorage("MyNAS", true))
     }
+
+    val connectedStorages = LocalStorageList.current
+
+    // used to show or hide dialog
+    var chooseStorageDialog by rememberSaveable { mutableStateOf(false) }
 
     Column(
         modifier = modifier.padding(horizontal = 10.dp),
@@ -75,21 +78,46 @@ fun ConnectedStorage(modifier: Modifier) {
                 .fillMaxWidth()
                 .padding(3.dp)
         )
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable(onClick = { chooseStorageDialog = true }),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
             Row(horizontalArrangement = Arrangement.spacedBy(5.dp)) {
                 Icon(
                     Icons.AutoMirrored.TwoTone.List,
-                    "Storage is connected",
+                    "The storage icon",
                     tint = MaterialTheme.colorScheme.primary
                 )
                 Text(connectedStorage.name)
             }
 
             Row(horizontalArrangement = Arrangement.spacedBy(5.dp)) {
-                Text(if (connectedStorage.isConnected) "Connected" else "Disconnected")
+
+                // if the storage is disconnected after selecting, make isConnected = true
+                if (!connectedStorage.isConnected) {
+                    connectedStorage.isConnected = true
+                }
+
+                Text("Connected")
                 Icon(Icons.Rounded.CheckCircle, "Storage is connected", tint = Color.Green)
             }
         }
-//        Button(onClick = {}) { Text("Other Storages") }
+
     }
+
+    // connected storages dialog
+    if (chooseStorageDialog)
+        ConnectedStorageDialog(
+            onRequest = { chooseStorageDialog = false },
+            title = "Choose a storage",
+            setStorage = {
+                connectedStorage.isConnected = false
+                connectedStorages.add(connectedStorage)
+                connectedStorage = it
+                connectedStorage.isConnected = true
+            })
+
 }
+

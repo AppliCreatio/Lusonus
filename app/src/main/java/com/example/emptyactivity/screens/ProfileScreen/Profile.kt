@@ -1,57 +1,47 @@
 package com.example.emptyactivity.screens.ProfileScreen
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import com.example.emptyactivity.screens.ProfileScreen.ConnectedStorage
-import com.example.emptyactivity.screens.ProfileScreen.FavouritePlaylists
-import com.example.emptyactivity.screens.ProfileScreen.MostPlayed
-import com.example.emptyactivity.screens.ProfileScreen.ProfileBanner
+import androidx.navigation.NavHostController
+import com.example.emptyactivity.Router
+import com.example.emptyactivity.screens.ProfileScreen.classes.data_classes.ExternalStorage
+import com.example.emptyactivity.screens.ProfileScreen.classes.data_classes.MusicEntry
+import com.example.emptyactivity.ui.theme.AppTheme
+
+val LocalNavController = compositionLocalOf<NavHostController> { error("No NavController found!") }
+val LocalSongList = compositionLocalOf<MutableList<MusicEntry>> { error("No song list found!") }
+val LocalPlaylistList =
+    compositionLocalOf<MutableList<MusicEntry>> { error("No playlist list found!") }
+val LocalStorageList =
+    compositionLocalOf<MutableList<ExternalStorage>> { error("No storage list found!") }
 
 @Composable
-fun DisplayProfile(modifier: Modifier) {
-
-    // General Container for other information from the pofile screen
-    val containerDisplay: Modifier = modifier
-        .padding(horizontal = 10.dp)
-        .fillMaxWidth()
-        .background(MaterialTheme.colorScheme.secondaryContainer, shape = RoundedCornerShape(10.dp))
-
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(top = 18.dp)
-            .background(MaterialTheme.colorScheme.primary)
-    ) {
-
-        item {
-            ProfileBanner(
-                modifier = modifier
-                    .padding(horizontal = 10.dp)
-                    .height(120.dp)
-                    .fillMaxWidth()
-                    .background(
-                        MaterialTheme.colorScheme.tertiaryContainer,
-                        shape = RoundedCornerShape(10.dp)
-                    )
+fun Profile() {
+    AppTheme {
+        val songList = rememberSaveable { mutableStateListOf<MusicEntry>() }
+        val playlistList = rememberSaveable { mutableStateListOf<MusicEntry>() }
+        val storageList = rememberSaveable {
+            mutableStateListOf<ExternalStorage>(
+                ExternalStorage("test", false),
+                ExternalStorage("test1", false),
+                ExternalStorage("test2", false),
+                ExternalStorage("test3", false),
             )
         }
-        item {
-            MostPlayed(modifier = containerDisplay.height(220.dp))
-        }
-        item {
-            FavouritePlaylists(modifier = containerDisplay.height(220.dp))
-        }
-        item {
-            ConnectedStorage(modifier = containerDisplay.height(120.dp))
+        CompositionLocalProvider(LocalSongList provides songList) {
+            CompositionLocalProvider(LocalPlaylistList provides playlistList) {
+                CompositionLocalProvider(LocalStorageList provides storageList) {
+                    Scaffold { innerPadding ->
+                        Router(modifier = Modifier.padding(innerPadding))
+                    }
+                }
+            }
         }
     }
 }
