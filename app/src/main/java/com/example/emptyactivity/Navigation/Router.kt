@@ -1,4 +1,4 @@
-package com.example.emptyactivity.Navigation
+package com.example.emptyactivity.navigation
 
 import android.net.Uri
 import androidx.activity.ComponentActivity

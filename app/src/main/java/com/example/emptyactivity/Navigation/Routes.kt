@@ -1,4 +1,4 @@
-package com.example.emptyactivity.Navigation
+package com.example.emptyactivity.navigation
 
 import android.net.Uri
 import com.example.emptyactivity.screens.ProfileScreen.classes.MusicEntryTypes
