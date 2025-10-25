@@ -15,11 +15,10 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.ass3_appdev.screens.add_music_entries.AddMusicEntryScreen
-import com.example.ass3_appdev.screens.faq.FAQScreen
+import com.example.emptyactivity.screens.ProfileScreen.screens.add_music_entries.AddMusicEntryScreen
+import com.example.emptyactivity.screens.ProfileScreen.screens.faq.FAQScreen
 import com.example.ass3_appdev.screens.main.DisplayProfile
-import com.example.ass3_appdev.screens.register.RegisterScreen
-import com.example.organisemedia.Navigation.Routes
+import com.example.emptyactivity.screens.ProfileScreen.screens.register.RegisterScreen
 import com.example.emptyactivity.screens.FileImportScreen.Screens.Home.HomeScreen
 import com.example.emptyactivity.screens.FileImportScreen.Screens.Media.MediaScreen
 import com.example.emptyactivity.screens.FileImportScreen.Screens.Playlist.PlaylistScreen

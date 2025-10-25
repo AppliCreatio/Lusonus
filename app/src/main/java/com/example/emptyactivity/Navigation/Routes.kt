@@ -1,7 +1,7 @@
-package com.example.organisemedia.Navigation
+package com.example.emptyactivity.Navigation
 
 import android.net.Uri
-import com.example.ass3_appdev.classes.MusicEntryTypes
+import com.example.emptyactivity.screens.ProfileScreen.classes.MusicEntryTypes
 
 // Sealed class that holds different routes.
 sealed class Routes(val route: String) {

@@ -1,4 +1,4 @@
-package com.example.ass3_appdev.screens.register
+package com.example.emptyactivity.screens.ProfileScreen.screens.register
 
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -31,11 +31,11 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
-import com.example.emptyactivity.screens.ProfileScreen.LocalNavController
-import com.example.ass3_appdev.R
-import com.example.emptyactivity.Routes
-import com.example.ass3_appdev.reusable_composables.MainLayout
-import com.example.ass3_appdev.reusable_composables.dialogs.BadRegisterDialog
+import com.example.emptyactivity.Navigation.LocalNavController
+import com.example.emptyactivity.R
+import com.example.emptyactivity.Navigation.Routes
+import com.example.emptyactivity.screens.ProfileScreen.reusable_composables.MainLayout
+import com.example.emptyactivity.screens.ProfileScreen.reusable_composables.dialogs.BadRegisterDialog
 
 @Composable
 fun RegisterScreen() {

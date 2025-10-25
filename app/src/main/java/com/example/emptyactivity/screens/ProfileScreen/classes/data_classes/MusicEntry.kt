@@ -1,7 +1,7 @@
 package com.example.emptyactivity.screens.ProfileScreen.classes.data_classes
 
 import android.net.Uri
-import com.example.ass3_appdev.classes.MusicEntryTypes
+import com.example.emptyactivity.screens.ProfileScreen.classes.MusicEntryTypes
 
 
 data class MusicEntry(

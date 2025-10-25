@@ -1,4 +1,4 @@
-package com.example.ass3_appdev.screens.faq
+package com.example.emptyactivity.screens.ProfileScreen.screens.faq
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding

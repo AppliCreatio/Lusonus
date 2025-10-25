@@ -1,4 +1,4 @@
-package com.example.ass3_appdev.screens.main.entries
+package com.example.emptyactivity.screens.ProfileScreen.screens.main.entries
 
 import android.net.Uri
 import androidx.compose.foundation.background
@@ -22,12 +22,12 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
-import com.example.emptyactivity.screens.ProfileScreen.LocalPlaylistList
-import com.example.emptyactivity.screens.ProfileScreen.LocalSongList
-import com.example.ass3_appdev.R
-import com.example.ass3_appdev.classes.MusicEntryTypes
+import com.example.emptyactivity.Navigation.LocalPlaylistList
+import com.example.emptyactivity.Navigation.LocalSongList
+import com.example.emptyactivity.R
+import com.example.emptyactivity.screens.ProfileScreen.classes.MusicEntryTypes
 import com.example.emptyactivity.screens.ProfileScreen.classes.data_classes.MusicEntry
-import com.example.ass3_appdev.reusable_composables.dialogs.BasicConfirmCancelDialog
+import com.example.emptyactivity.screens.ProfileScreen.reusable_composables.dialogs.BasicConfirmCancelDialog
 
 /**
  * This composable is a stateful container that holds all the information for a single music entry

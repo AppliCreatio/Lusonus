@@ -14,7 +14,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.example.organisemedia.Helper.Style.IconTint
-import com.example.organisemedia.Navigation.Routes
+import com.example.emptyactivity.Navigation.Routes
 
 // Statless method for shared bottom bar
 @Composable

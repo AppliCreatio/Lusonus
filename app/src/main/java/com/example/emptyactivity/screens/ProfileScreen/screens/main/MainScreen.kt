@@ -13,14 +13,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.emptyactivity.screens.ProfileScreen.LocalNavController
-import com.example.emptyactivity.Routes
-import com.example.ass3_appdev.classes.data_classes.MenuItem
-import com.example.ass3_appdev.reusable_composables.MainLayout
-import com.example.ass3_appdev.reusable_composables.MinimalDropdownMenu
+import com.example.emptyactivity.Navigation.LocalNavController
+import com.example.emptyactivity.Navigation.Routes
+import com.example.emptyactivity.screens.ProfileScreen.classes.data_classes.MenuItem
+import com.example.emptyactivity.screens.ProfileScreen.reusable_composables.MainLayout
+import com.example.emptyactivity.screens.ProfileScreen.reusable_composables.MinimalDropdownMenu
 import com.example.ass3_appdev.screens.main.entries.FavouritePlaylists
 import com.example.ass3_appdev.screens.main.entries.MostPlayed
-import com.example.ass3_appdev.screens.main.profile_banner.ProfileBanner
+import com.example.emptyactivity.screens.ProfileScreen.screens.main.profile_banner.ProfileBanner
 
 
 @Composable

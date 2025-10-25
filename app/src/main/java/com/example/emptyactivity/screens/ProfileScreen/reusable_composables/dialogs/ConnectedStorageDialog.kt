@@ -1,4 +1,4 @@
-package com.example.ass3_appdev.reusable_composables.dialogs
+package com.example.emptyactivity.screens.ProfileScreen.reusable_composables.dialogs
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -24,7 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.example.emptyactivity.screens.ProfileScreen.LocalStorageList
+import com.example.emptyactivity.Navigation.LocalStorageList
 import com.example.emptyactivity.screens.ProfileScreen.classes.data_classes.ExternalStorage
 
 

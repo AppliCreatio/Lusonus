@@ -1,4 +1,4 @@
-package com.example.ass3_appdev.reusable_composables
+package com.example.emptyactivity.screens.ProfileScreen.reusable_composables
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -16,9 +16,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import com.example.emptyactivity.screens.ProfileScreen.LocalNavController
-import com.example.emptyactivity.Routes
-import com.example.ass3_appdev.reusable_composables.dialogs.BasicConfirmCancelDialog
+import com.example.emptyactivity.Navigation.LocalNavController
+import com.example.emptyactivity.Navigation.Routes
+import com.example.emptyactivity.screens.ProfileScreen.reusable_composables.dialogs.BasicConfirmCancelDialog
 
 /**
  * A reusable layout composable that I apply to every screen.

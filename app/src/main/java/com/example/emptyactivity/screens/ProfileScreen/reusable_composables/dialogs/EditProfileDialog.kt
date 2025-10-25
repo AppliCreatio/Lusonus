@@ -1,4 +1,4 @@
-package com.example.ass3_appdev.reusable_composables.dialogs
+package com.example.emptyactivity.screens.ProfileScreen.reusable_composables.dialogs
 
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult

@@ -24,9 +24,9 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.emptyactivity.screens.ProfileScreen.LocalStorageList
+import com.example.emptyactivity.Navigation.LocalStorageList
 import com.example.emptyactivity.screens.ProfileScreen.classes.data_classes.ExternalStorage
-import com.example.ass3_appdev.reusable_composables.dialogs.ConnectedStorageDialog
+import com.example.emptyactivity.screens.ProfileScreen.reusable_composables.dialogs.ConnectedStorageDialog
 
 /*
  This saver variation of ExternalStorage is meant as a conversion tool to be able to store the ExternalStorage data class

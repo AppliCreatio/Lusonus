@@ -11,7 +11,7 @@ import com.example.organisemedia.Helper.Playlist.NewPlaylistDialog
 import com.example.organisemedia.Layout.FloatingActionButton.SharedFloatingActionButton
 import com.example.emptyactivity.screens.FileImportScreen.Layout.MainLayout
 import com.example.emptyactivity.Navigation.LocalNavController
-import com.example.organisemedia.Navigation.Routes
+import com.example.emptyactivity.Navigation.Routes
 import com.example.organisemedia.ViewModels.PlaylistViewModel
 
 @Composable

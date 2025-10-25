@@ -1,11 +1,11 @@
-package com.example.ass3_appdev.reusable_composables
+package com.example.emptyactivity.screens.ProfileScreen.reusable_composables
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
-import com.example.emptyactivity.screens.ProfileScreen.LocalNavController
+import com.example.emptyactivity.Navigation.LocalNavController
 
 /**
  * A reusable back button

@@ -1,4 +1,4 @@
-package com.example.ass3_appdev.screens.add_music_entries
+package com.example.emptyactivity.screens.ProfileScreen.screens.add_music_entries
 
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -30,15 +30,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import com.example.emptyactivity.screens.ProfileScreen.LocalNavController
-import com.example.emptyactivity.screens.ProfileScreen.LocalPlaylistList
-import com.example.emptyactivity.screens.ProfileScreen.LocalSongList
-import com.example.ass3_appdev.R
-import com.example.ass3_appdev.classes.MusicEntryTypes
+import com.example.emptyactivity.Navigation.LocalNavController
+import com.example.emptyactivity.Navigation.LocalPlaylistList
+import com.example.emptyactivity.Navigation.LocalSongList
+import com.example.emptyactivity.R
+import com.example.emptyactivity.screens.ProfileScreen.classes.MusicEntryTypes
 import com.example.emptyactivity.screens.ProfileScreen.classes.data_classes.MusicEntry
-import com.example.ass3_appdev.reusable_composables.BackButton
-import com.example.ass3_appdev.reusable_composables.MainLayout
-import com.example.ass3_appdev.reusable_composables.dialogs.BadRegisterDialog
+import com.example.emptyactivity.screens.ProfileScreen.reusable_composables.BackButton
+import com.example.emptyactivity.screens.ProfileScreen.reusable_composables.MainLayout
+import com.example.emptyactivity.screens.ProfileScreen.reusable_composables.dialogs.BadRegisterDialog
 
 /**
  * A composable that displays the music entry adding screen, it takes in a musicEntryType to

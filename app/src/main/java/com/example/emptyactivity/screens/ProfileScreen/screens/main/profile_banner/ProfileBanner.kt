@@ -1,4 +1,4 @@
-package com.example.ass3_appdev.screens.main.profile_banner
+package com.example.emptyactivity.screens.ProfileScreen.screens.main.profile_banner
 
 import android.net.Uri
 import androidx.compose.foundation.background
@@ -20,8 +20,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import com.example.ass3_appdev.R
-import com.example.ass3_appdev.reusable_composables.dialogs.DialogToEditProfile
+import com.example.emptyactivity.R
+import com.example.emptyactivity.screens.ProfileScreen.reusable_composables.dialogs.DialogToEditProfile
+import com.example.ass3_appdev.screens.main.profile_banner.ProfileTextInfo
 
 /**
  * The Profile Banner appears at the top of the application

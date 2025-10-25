@@ -1,4 +1,4 @@
-package com.example.ass3_appdev.reusable_composables
+package com.example.emptyactivity.screens.ProfileScreen.reusable_composables
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material.icons.Icons
@@ -13,7 +13,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import com.example.ass3_appdev.classes.data_classes.MenuItem
+import com.example.emptyactivity.screens.ProfileScreen.classes.data_classes.MenuItem
 
 /**
  * A reusable drop down composable that is used when in need on an "options" button.
