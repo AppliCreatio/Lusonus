@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.organisemedia.Layout.FloatingActionButton.SharedFloatingActionButton
 import com.example.emptyactivity.screens.FileImportScreen.Layout.MainLayout
-import com.example.emptyactivity.Navigation.LocalNavController
+import com.example.emptyactivity.navigation.LocalNavController
 import com.example.organisemedia.ViewModels.MediaViewModel
 import com.example.organisemedia.ViewModels.PlaylistViewModel
 

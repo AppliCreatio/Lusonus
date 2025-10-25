@@ -30,9 +30,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import com.example.emptyactivity.Navigation.LocalNavController
-import com.example.emptyactivity.Navigation.LocalPlaylistList
-import com.example.emptyactivity.Navigation.LocalSongList
+import com.example.emptyactivity.navigation.LocalNavController
+import com.example.emptyactivity.navigation.LocalPlaylistList
+import com.example.emptyactivity.navigation.LocalSongList
 import com.example.emptyactivity.R
 import com.example.emptyactivity.screens.ProfileScreen.classes.MusicEntryTypes
 import com.example.emptyactivity.screens.ProfileScreen.classes.data_classes.MusicEntry

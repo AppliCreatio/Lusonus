@@ -21,10 +21,10 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.emptyactivity.Navigation.LocalNavController
-import com.example.emptyactivity.Navigation.LocalPlaylistList
-import com.example.emptyactivity.Navigation.LocalSongList
-import com.example.emptyactivity.Navigation.Routes
+import com.example.emptyactivity.navigation.LocalNavController
+import com.example.emptyactivity.navigation.LocalPlaylistList
+import com.example.emptyactivity.navigation.LocalSongList
+import com.example.emptyactivity.navigation.Routes
 import com.example.emptyactivity.screens.ProfileScreen.classes.MusicEntryTypes
 import com.example.emptyactivity.screens.ProfileScreen.screens.main.entries.EntryDisplay
 

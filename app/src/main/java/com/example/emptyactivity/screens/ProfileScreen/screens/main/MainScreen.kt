@@ -13,8 +13,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.emptyactivity.Navigation.LocalNavController
-import com.example.emptyactivity.Navigation.Routes
+import com.example.emptyactivity.navigation.LocalNavController
+import com.example.emptyactivity.navigation.Routes
 import com.example.emptyactivity.screens.ProfileScreen.classes.data_classes.MenuItem
 import com.example.emptyactivity.screens.ProfileScreen.reusable_composables.MainLayout
 import com.example.emptyactivity.screens.ProfileScreen.reusable_composables.MinimalDropdownMenu

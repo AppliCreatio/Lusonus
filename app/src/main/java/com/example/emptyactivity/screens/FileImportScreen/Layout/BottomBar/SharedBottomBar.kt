@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.example.emptyactivity.Navigation.LocalNavController
+import com.example.emptyactivity.navigation.LocalNavController
 
 @Composable
 fun SharedBottomBar(navController: NavHostController = LocalNavController.current) {

@@ -8,11 +8,11 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.navigation.compose.rememberNavController
-import com.example.emptyactivity.Navigation.LocalNavController
-import com.example.emptyactivity.Navigation.Router
-import com.example.emptyactivity.Navigation.LocalPlaylistList
-import com.example.emptyactivity.Navigation.LocalSongList
-import com.example.emptyactivity.Navigation.LocalStorageList
+import com.example.emptyactivity.navigation.LocalNavController
+import com.example.emptyactivity.navigation.Router
+import com.example.emptyactivity.navigation.LocalPlaylistList
+import com.example.emptyactivity.navigation.LocalSongList
+import com.example.emptyactivity.navigation.LocalStorageList
 import com.example.emptyactivity.screens.ProfileScreen.classes.data_classes.ExternalStorage
 import com.example.emptyactivity.screens.ProfileScreen.classes.data_classes.MusicEntry
 import com.example.emptyactivity.ui.theme.AppTheme

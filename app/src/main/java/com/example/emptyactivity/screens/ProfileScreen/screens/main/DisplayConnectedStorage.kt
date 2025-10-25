@@ -24,7 +24,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.emptyactivity.Navigation.LocalStorageList
+import com.example.emptyactivity.navigation.LocalStorageList
 import com.example.emptyactivity.screens.ProfileScreen.classes.data_classes.ExternalStorage
 import com.example.emptyactivity.screens.ProfileScreen.reusable_composables.dialogs.ConnectedStorageDialog
 

@@ -16,8 +16,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import com.example.emptyactivity.Navigation.LocalNavController
-import com.example.emptyactivity.Navigation.Routes
+import com.example.emptyactivity.navigation.LocalNavController
+import com.example.emptyactivity.navigation.Routes
 import com.example.emptyactivity.screens.ProfileScreen.reusable_composables.dialogs.BasicConfirmCancelDialog
 
 /**

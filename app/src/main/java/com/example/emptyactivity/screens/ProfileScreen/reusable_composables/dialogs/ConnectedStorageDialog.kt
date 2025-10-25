@@ -24,7 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.example.emptyactivity.Navigation.LocalStorageList
+import com.example.emptyactivity.navigation.LocalStorageList
 import com.example.emptyactivity.screens.ProfileScreen.classes.data_classes.ExternalStorage
 
 

@@ -2,7 +2,7 @@ package com.example.emptyactivity.screens.FileImportScreen.Layout.TopBar
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
-import com.example.emptyactivity.Navigation.LocalNavController
+import com.example.emptyactivity.navigation.LocalNavController
 
 @Composable
 fun SharedTopBar(
