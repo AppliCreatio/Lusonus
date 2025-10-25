@@ -32,7 +32,7 @@ fun MainApp(modifier: Modifier = Modifier) {
     Scaffold(
         modifier = Modifier,
 
-        topBar = {Unit},
+        topBar = {},
         bottomBar = {
             BottomAppBar (
                 actions = {
@@ -54,7 +54,7 @@ fun MainApp(modifier: Modifier = Modifier) {
                         }
 
                         IconButton(
-                            onClick = {Unit},
+                            onClick = {},
                             modifier = modifier,
                             enabled = false) {
 //                            Icon(
@@ -76,7 +76,7 @@ fun MainApp(modifier: Modifier = Modifier) {
                         }
 
                         IconButton(
-                            onClick = {Unit},
+                            onClick = {},
                             modifier = modifier,
                             enabled = false) {
 //                            Icon(
