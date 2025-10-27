@@ -1,4 +1,4 @@
-package com.example.assignment_2
+package com.example.emptyactivity.screens.SongPlayerScreen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
