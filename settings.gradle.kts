@@ -14,5 +14,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "EmptyActivity"
+rootProject.name = "lusonus"
 include(":app")

@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.emptyactivity"
+    namespace = "com.example.lusonus"
     compileSdk = 35
 
     defaultConfig {
