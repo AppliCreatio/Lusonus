@@ -11,24 +11,30 @@ import androidx.compose.ui.Modifier
 import com.example.lusonus.ui.composables.Layout.BottomBar.SharedBottomBar
 import com.example.lusonus.ui.composables.Layout.TopBar.SharedTopBar
 
+/**
+ * This main layout wraps other composables in a consistent layout. It has the ability to be modular by changing or removing the
+ * top bar, bottom bar or floating action button. If nothing is specified, it will default to the default layout
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainLayout(
     content: @Composable () -> Unit,
     screenTitle: String,
-    floatingActionButton: @Composable (() -> Unit)? = null // this is optional
+    topBar: @Composable (() -> Unit)? = { SharedTopBar(screenTitle) }, // If no specific parameter is passed, set to default top bar
+    floatingActionButton: @Composable (() -> Unit)? = null, // this is optional
+    bottomBar: @Composable (() -> Unit)? = { SharedBottomBar() } // If no specific parameter is passed, set to default bottom bar
 ) {
     // This is the main scaffold for our app, we will pass Composables to this method which will
     // then modify the contents of the scaffold as needed.
     Scaffold(
         // Gets the top bar of the scaffold.
         topBar = {
-            SharedTopBar(screenTitle)
+            topBar?.invoke()
         },
 
         // Gets the bottom bar of the scaffold.
         bottomBar = {
-            SharedBottomBar()
+            bottomBar?.invoke()
         },
 
         // Gets the floating action bar if there is one.
