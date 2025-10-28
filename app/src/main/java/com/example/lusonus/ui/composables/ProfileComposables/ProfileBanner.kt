@@ -30,29 +30,17 @@ import com.example.ass3_appdev.screens.main.profile_banner.ProfileTextInfo
  * but I could possibly make the profile attributes into a single local provider
  */
 @Composable
-fun ProfileBanner(modifier: Modifier, name: String, description: String, profileImage: Uri) {
+fun ProfileBanner(modifier: Modifier, name: String, description: String, profileImage: Uri, editToggle: () -> Unit) {
 
     var profilePicture by rememberSaveable { mutableStateOf(profileImage) }
     var userName by rememberSaveable { mutableStateOf(name) }
     var description by rememberSaveable { mutableStateOf(description) }
-    var openEditDialog by rememberSaveable { mutableStateOf(false) }
-
-    // When openEditDialog is true, it will display the edit profile dialog box
-    if (openEditDialog)
-        DialogToEditProfile(
-            { openEditDialog = false },
-            { openEditDialog = false },
-            userName,
-            description,
-            { userName = it },
-            { description = it },
-            { profilePicture = it ?: profilePicture })
 
 
     Row(
         modifier = modifier
             .padding(horizontal = 15.dp)
-            .clickable(onClick = { openEditDialog = true }),
+            .clickable(onClick = editToggle),
         horizontalArrangement = Arrangement.spacedBy(10.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
