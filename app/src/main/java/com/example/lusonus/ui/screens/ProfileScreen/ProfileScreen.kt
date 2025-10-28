@@ -36,8 +36,6 @@ val profileSaver = Saver<Profile, List<Any>>(
 @Composable
 fun DisplayProfile() {
 
-    //TODO: Load user profile on composition using view model
-    // Gets the view model information
     val viewModel: ProfileScreenViewModel = viewModel(viewModelStoreOwner = LocalNavController.current.context as ComponentActivity) // Gets an existing MediaViewModel if it exists.
 
     // used online recourses as well as AI to understand how to save a data class as a state

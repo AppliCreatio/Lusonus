@@ -11,8 +11,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.lusonus.screens.ProfileScreen.reusable_composables.BackButton
-import com.example.lusonus.screens.ProfileScreen.reusable_composables.MainLayout
+import com.example.lusonus.ui.composables.Layout.MainLayout
 
 /**
  * A composable which acts as the screen for the about/FAQ page. It shows all Frequently Asked Questions about the app.
@@ -73,6 +72,6 @@ fun FAQScreen() {
             }
         }
 
-    }, { BackButton() }, "FAQ")
+    }, "FAQ")
 
 }

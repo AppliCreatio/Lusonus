@@ -76,12 +76,7 @@ fun Router(navController: NavHostController, modifier: Modifier = Modifier) {
         // Profile screen route.
         // TODO: Make view model for profile.
         composable(Routes.Profile.route) {
-            DisplayProfile(
-                it.arguments?.getString("name") ?: "",
-                it.arguments?.getString("description") ?: "",
-                it.arguments?.getString("profileImage")?.let { Uri.decode(it).toUri() }
-                    ?: Uri.EMPTY,
-            )
+            DisplayProfile()
         }
 
         // Register screen route.

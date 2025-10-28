@@ -19,5 +19,5 @@ fun MenuDropDown(){
         MenuItem("Folders") { navController.navigate(Routes.Folders.route) },
         MenuItem("About Us") { navController.navigate(Routes.FAQ.route) })
 
-    MinimalDropdownMenu(menuList, expanded) { expanded = !expanded }
+    MinimalDropdownMenu(menuList, expanded) { expanded = !it }
 }

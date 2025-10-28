@@ -20,15 +20,15 @@ import com.example.lusonus.data.model.MenuItem
  * I decide the contents that are used for this dropdown when calling the composable.
  */
 @Composable
-fun MinimalDropdownMenu(menuItems: List<MenuItem>, expanded: Boolean, toggleAction: () -> Unit) {
+fun MinimalDropdownMenu(menuItems: List<MenuItem>, expanded: Boolean, toggleAction: (expanded: Boolean) -> Unit) {
 
     Box {
-        IconButton(onClick = { toggleAction }) {
+        IconButton(onClick = { toggleAction(expanded) } ) {
             Icon(Icons.Default.MoreVert, contentDescription = "More options")
         }
         DropdownMenu(
             expanded = expanded,
-            onDismissRequest = { toggleAction }
+            onDismissRequest = { toggleAction(expanded) }
         ) {
             menuItems.forEach { option ->
                 DropdownMenuItem(
