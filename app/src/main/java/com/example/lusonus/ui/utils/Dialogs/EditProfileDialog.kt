@@ -23,6 +23,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -35,13 +39,16 @@ import androidx.compose.ui.window.Dialog
 fun DialogToEditProfile(
     onDismissRequest: () -> Unit,
     onConfirmation: () -> Unit,
-    newName: String,
-    newDescription: String,
+    name: String,
+    description: String,
     setName: (String) -> Unit,
     setDescription: (String) -> Unit,
     setPicture: (Uri?) -> Unit,
 
     ) {
+
+    var newName by rememberSaveable { mutableStateOf(name) }
+    var newDescription by rememberSaveable { mutableStateOf(description) }
 
     val singlePhotoPickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia(),
@@ -72,7 +79,7 @@ fun DialogToEditProfile(
 
                 OutlinedTextField(
                     value = newName,
-                    onValueChange = setName,
+                    onValueChange = { newName = it },
                     label = { Text("Name") },
                     colors = TextFieldDefaults.colors(
                         unfocusedContainerColor = MaterialTheme.colorScheme.tertiaryContainer,
@@ -82,7 +89,7 @@ fun DialogToEditProfile(
 
                 OutlinedTextField(
                     value = newDescription,
-                    onValueChange = setDescription,
+                    onValueChange = { newDescription = it },
                     label = { Text("Description") },
                     colors = TextFieldDefaults.colors(
                         unfocusedContainerColor = MaterialTheme.colorScheme.tertiaryContainer,
@@ -122,10 +129,10 @@ fun DialogToEditProfile(
                     }
                     TextButton(
                         onClick = {
-                            if (!newName.trim().isEmpty())
+                            if (newName.isNotBlank())
                                 setName(newName.trim())
 
-                            if (!newDescription.trim().isEmpty())
+                            if (newDescription.isNotBlank())
                                 setDescription(newDescription.trim())
 
 

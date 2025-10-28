@@ -2,7 +2,7 @@ package com.example.lusonus.data.model
 
 import android.net.Uri
 
-class Profile(var name: String = "[Username]", var description: String = "[Description]", var profileImage: Uri = Uri.EMPTY) {
+class Profile(var name: String = "[Username]", var description: String = "[Description]", var image: Uri = Uri.EMPTY) {
     fun EditName(newName: String){
         name = newName
     }
@@ -12,6 +12,6 @@ class Profile(var name: String = "[Username]", var description: String = "[Descr
     }
 
     fun EditProfileImage(newUri: Uri){
-        profileImage = newUri
+        image = newUri
     }
 }

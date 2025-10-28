@@ -20,7 +20,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.lusonus.data.model.ExternalStorage
 import com.example.lusonus.data.model.Profile
 import com.example.lusonus.navigation.LocalNavController
 import com.example.lusonus.ui.composables.Layout.MainLayout
@@ -29,8 +28,8 @@ import com.example.lusonus.ui.screens.ProfileScreen.ProfileScreenViewModel
 import com.example.lusonus.ui.utils.Dialogs.DialogToEditProfile
 
 val profileSaver = Saver<Profile, List<Any>>(
-    save = { listOf(it.name, it.description, it.profileImage) },
-    restore = { Profile(name = it[0] as String, description = it[1] as String, profileImage = it[2] as Uri) }
+    save = { listOf(it.name, it.description, it.image) },
+    restore = { Profile(name = it[0] as String, description = it[1] as String, image = it[2] as Uri) }
 )
 
 @Composable
@@ -55,7 +54,7 @@ fun DisplayProfile() {
             profile.description,
             { profile.EditName(it) },
             { profile.EditDescription(it) },
-            { profile.EditProfileImage(it ?: profile.profileImage) })
+            { profile.EditProfileImage(it ?: profile.image) })
 
     // General Container for other information from the profile screen
     val containerDisplay: Modifier = Modifier
@@ -84,7 +83,7 @@ fun DisplayProfile() {
                             MaterialTheme.colorScheme.tertiaryContainer,
                             shape = RoundedCornerShape(10.dp)
                         ),
-                    profile.name, profile.description, profile.profileImage, {openEditDialog = true}
+                    profile.name, profile.description, profile.image, {openEditDialog = true}
                 )
             }
             item {
