@@ -21,7 +21,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.example.lusonus.R
-import com.example.lusonus.ui.utils.Dialogs.DialogToEditProfile
 import com.example.ass3_appdev.screens.main.profile_banner.ProfileTextInfo
 
 /**
@@ -32,11 +31,6 @@ import com.example.ass3_appdev.screens.main.profile_banner.ProfileTextInfo
 @Composable
 fun ProfileBanner(modifier: Modifier, name: String, description: String, profileImage: Uri, editToggle: () -> Unit) {
 
-    var profilePicture by rememberSaveable { mutableStateOf(profileImage) }
-    var userName by rememberSaveable { mutableStateOf(name) }
-    var description by rememberSaveable { mutableStateOf(description) }
-
-
     Row(
         modifier = modifier
             .padding(horizontal = 15.dp)
@@ -46,10 +40,10 @@ fun ProfileBanner(modifier: Modifier, name: String, description: String, profile
     ) {
 
         AsyncImage(
-            model = if (profilePicture != Uri.EMPTY) {
-                profilePicture
+            model = if (profileImage != Uri.EMPTY) {
+                profileImage
             } else R.drawable.resource_default,
-            contentDescription = "This is $userName's profile picture",
+            contentDescription = "This is $name's profile picture",
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .size(80.dp)
@@ -57,7 +51,7 @@ fun ProfileBanner(modifier: Modifier, name: String, description: String, profile
                 .background(MaterialTheme.colorScheme.onTertiaryContainer)
         )
 
-        ProfileTextInfo(userName, description)
+        ProfileTextInfo(name, description)
     }
 }
 
