@@ -1,6 +1,5 @@
 package com.example.ass3_appdev.screens.main
 
-import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,11 +12,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.lusonus.navigation.LocalNavController
-import com.example.lusonus.navigation.Routes
-import com.example.lusonus.data.model.MenuItem
 import com.example.lusonus.ui.composables.Layout.MainLayout
-import com.example.lusonus.ui.composables.Layout.Buttons.MinimalDropdownMenu
 import com.example.lusonus.ui.composables.ProfileComposables.ProfileBanner
 
 

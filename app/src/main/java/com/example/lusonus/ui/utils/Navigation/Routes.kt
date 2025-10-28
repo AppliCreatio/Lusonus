@@ -22,4 +22,6 @@ sealed class Routes(val route: String) {
 
     object Register : Routes("RegisterScreenRoute")
     object FAQ : Routes("FAQScreenRoute")
+    object Settings : Routes("FolderScreenRoute")
+    object Folders : Routes("FoldersViewScreenRoute")
 }

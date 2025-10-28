@@ -7,5 +7,5 @@ import com.example.lusonus.ui.composables.Layout.MainLayout
 fun SettingScreen(){
     MainLayout({
 
-    })
+    }, "Settings")
 }

@@ -22,14 +22,13 @@ import com.example.lusonus.ui.screens.MediaLibraryScreen.MediaLibraryScreen
 import com.example.lusonus.ui.screens.PlaylistLibraryScreen.PlaylistLibraryScreen
 import com.example.lusonus.ui.screens.PlaylistScreen.PlaylistScreen
 import com.example.lusonus.data.model.ExternalStorage
+import com.example.lusonus.ui.screens.FolderViewScreen.FolderViewScreen
 import com.example.lusonus.ui.screens.MediaLibraryScreen.MediaLibraryViewModel
 import com.example.lusonus.ui.screens.PlaylistLibraryScreen.PlaylistLibraryViewModel
+import com.example.lusonus.ui.screens.SettingsScreen.SettingScreen
 
 // Allows the passing down of data. (Provider pattern)
 val LocalNavController = compositionLocalOf<NavHostController> { error("No NavController found!") }
-val LocalSongList = compositionLocalOf<MutableList<MusicEntry>> { error("No song list found!") }
-val LocalPlaylistList =
-    compositionLocalOf<MutableList<MusicEntry>> { error("No playlist list found!") }
 val LocalStorageList =
     compositionLocalOf<MutableList<ExternalStorage>> { error("No storage list found!") }
 @Composable
@@ -89,7 +88,10 @@ fun Router(navController: NavHostController, modifier: Modifier = Modifier) {
         // TODO: Make view model for register.
         composable(Routes.Register.route) { RegisterScreen() }
 
-        // FAQ screen route.
+        composable(Routes.Settings.route) { SettingScreen() }
+
+        composable(Routes.Folders.route) { FolderViewScreen() }
+
         composable(Routes.FAQ.route) { FAQScreen() }
     }
 }
