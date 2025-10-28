@@ -16,15 +16,15 @@ import androidx.compose.ui.unit.dp
 import com.example.lusonus.navigation.LocalNavController
 import com.example.lusonus.navigation.Routes
 import com.example.lusonus.data.model.MenuItem
-import com.example.lusonus.screens.ProfileScreen.reusable_composables.MainLayout
+import com.example.lusonus.ui.composables.Layout.MainLayout
 import com.example.lusonus.ui.composables.Layout.Buttons.MinimalDropdownMenu
-import com.example.ass3_appdev.screens.main.entries.FavouritePlaylists
-import com.example.ass3_appdev.screens.main.entries.MostPlayed
 import com.example.lusonus.ui.composables.ProfileComposables.ProfileBanner
 
 
 @Composable
-fun DisplayProfile(name: String, description: String, profileImage: Uri) {
+fun DisplayProfile() {
+
+    //TODO: Load user profile on composition using view model
 
 
     // General Container for other information from the profile screen
@@ -58,12 +58,6 @@ fun DisplayProfile(name: String, description: String, profileImage: Uri) {
                 )
             }
             item {
-                MostPlayed(modifier = containerDisplay.height(220.dp))
-            }
-            item {
-                FavouritePlaylists(modifier = containerDisplay.height(220.dp))
-            }
-            item {
                 ConnectedStorage(
                     modifier = containerDisplay
                         .height(120.dp)
@@ -71,11 +65,5 @@ fun DisplayProfile(name: String, description: String, profileImage: Uri) {
                 )
             }
         }
-    }, {
-        val navController = LocalNavController.current
-        val faqOption =
-            arrayListOf(
-                MenuItem("FAQ") { navController.navigate(Routes.FAQ.route) })
-        MinimalDropdownMenu(faqOption)
-    }, "Home")
+    }, "Profile")
 }
