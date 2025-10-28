@@ -10,11 +10,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.navigation.compose.rememberNavController
 import com.example.lusonus.navigation.LocalNavController
 import com.example.lusonus.navigation.Router
-import com.example.lusonus.navigation.LocalPlaylistList
-import com.example.lusonus.navigation.LocalSongList
 import com.example.lusonus.navigation.LocalStorageList
 import com.example.lusonus.data.model.ExternalStorage
-import com.example.lusonus.data.model.MusicEntry
 import com.example.lusonus.ui.theme.AppTheme
 
 class MainActivity : ComponentActivity() {
@@ -26,8 +23,6 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
 
                 // Provides the navController to everything
-                val songList = rememberSaveable { mutableStateListOf<MusicEntry>() }
-                val playlistList = rememberSaveable { mutableStateListOf<MusicEntry>() }
                 val storageList = rememberSaveable {
                     mutableStateListOf<ExternalStorage>(
                         ExternalStorage("test", false),
@@ -36,8 +31,7 @@ class MainActivity : ComponentActivity() {
                         ExternalStorage("test3", false),
                     )
                 }
-                CompositionLocalProvider(LocalSongList provides songList) {
-                    CompositionLocalProvider(LocalPlaylistList provides playlistList) {
+
                         CompositionLocalProvider(LocalStorageList provides storageList) {
                             CompositionLocalProvider(LocalNavController provides navController) {
                                 Router(navController)
@@ -45,4 +39,4 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-}}}}
+}}

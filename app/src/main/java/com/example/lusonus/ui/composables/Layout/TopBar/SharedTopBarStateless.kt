@@ -10,6 +10,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
+import com.example.lusonus.ui.composables.Layout.Buttons.MenuDropDown.MenuDropDown
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -51,14 +52,9 @@ fun SharedTopBarStateless(
             }
         },
 
-        // The options menu (if needed)
-//        actions = {
-//            IconButton(onClick = { /* do something */ }) {
-//                Icon(
-//                    imageVector = Icons.Filled.Menu,
-//                    contentDescription = "Menu"
-//                )
-//            }
-//        },
+//         The options menu (if needed)
+        actions = {
+            MenuDropDown()
+        },
     )
 }

@@ -34,7 +34,7 @@ import coil3.compose.AsyncImage
 import com.example.lusonus.navigation.LocalNavController
 import com.example.lusonus.R
 import com.example.lusonus.navigation.Routes
-import com.example.lusonus.screens.ProfileScreen.reusable_composables.MainLayout
+import com.example.lusonus.ui.composables.Layout.MainLayout
 import com.example.lusonus.ui.utils.Dialogs.BadRegisterDialog
 
 @Composable
@@ -138,5 +138,5 @@ fun RegisterScreen() {
             }
         }
 
-    }, {}, "My App")
+    },"My App")
 }

@@ -9,7 +9,7 @@ sealed class Routes(val route: String) {
     object Playlist : Routes(route = "PlaylistScreenRoute/{playlistName}") {
         fun createRoute(playlistName: String) = "PlaylistScreenRoute/$playlistName"
     }
-    object Profile : Routes("ProfileScreenRoute/{name}/{description}/{profileImage}") {
+    object Profile : Routes("ProfileScreenRoute") {
         fun go(name: String, description: String, profileImage: Uri) =
             "ProfileScreenRoute/$name/$description/${Uri.encode(profileImage.toString())}"
     }
@@ -22,4 +22,6 @@ sealed class Routes(val route: String) {
 
     object Register : Routes("RegisterScreenRoute")
     object FAQ : Routes("FAQScreenRoute")
+    object Settings : Routes("FolderScreenRoute")
+    object Folders : Routes("FoldersViewScreenRoute")
 }

@@ -65,13 +65,13 @@ fun SharedBottomBarStateless(
             // The navigation button to go to the Song Screen.
             IconButton(
                 onClick = {
-                    onNavigateTo(Routes.Media.route)
+                    onNavigateTo(Routes.MediaLibrary.route)
                 }
             ) {
                 Icon(
                     imageVector = Icons.Filled.PlayArrow,
                     contentDescription = "Go to Media Screen.",
-                    tint = IconTint(currentRoute, Routes.Media.route, colorScheme)
+                    tint = IconTint(currentRoute, Routes.MediaLibrary.route, colorScheme)
                 )
             }
         }

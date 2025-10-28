@@ -1,4 +1,4 @@
-package com.example.lusonus.ui.composables.Layout.Buttons
+package com.example.lusonus.ui.composables.Layout.Buttons.MenuDropDown
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material.icons.Icons
@@ -9,10 +9,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import com.example.lusonus.data.model.MenuItem
 
 /**
@@ -20,16 +16,15 @@ import com.example.lusonus.data.model.MenuItem
  * I decide the contents that are used for this dropdown when calling the composable.
  */
 @Composable
-fun MinimalDropdownMenu(menuItems: List<MenuItem>) {
-    var expanded by remember { mutableStateOf(false) }
+fun MinimalDropdownMenu(menuItems: List<MenuItem>, expanded: Boolean, toggleAction: (expanded: Boolean) -> Unit) {
 
     Box {
-        IconButton(onClick = { expanded = !expanded }) {
+        IconButton(onClick = { toggleAction(expanded) } ) {
             Icon(Icons.Default.MoreVert, contentDescription = "More options")
         }
         DropdownMenu(
             expanded = expanded,
-            onDismissRequest = { expanded = false }
+            onDismissRequest = { toggleAction(expanded) }
         ) {
             menuItems.forEach { option ->
                 DropdownMenuItem(
