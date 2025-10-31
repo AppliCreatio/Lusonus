@@ -127,7 +127,7 @@ fun MediaContent(modifier: Modifier = Modifier, mediaName: String = "Media Name"
 
 @Preview
 @Composable
-fun MainAppPreview () {
+fun MediaContentPreview () {
     AppTheme {
         MediaContent()
     }
