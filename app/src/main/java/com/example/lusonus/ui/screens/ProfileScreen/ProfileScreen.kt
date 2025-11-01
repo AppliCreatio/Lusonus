@@ -19,6 +19,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.lusonus.data.model.Profile
 import com.example.lusonus.navigation.LocalNavController
@@ -27,21 +28,12 @@ import com.example.lusonus.ui.composables.ProfileComposables.ProfileBanner
 import com.example.lusonus.ui.screens.ProfileScreen.ProfileScreenViewModel
 import com.example.lusonus.ui.utils.Dialogs.DialogToEditProfile
 
-val profileSaver = Saver<Profile, List<Any>>(
-    save = { listOf(it.name, it.description, it.image) },
-    restore = { Profile(name = it[0] as String, description = it[1] as String, image = it[2] as Uri) }
-)
-
 @Composable
 fun DisplayProfile() {
 
     val viewModel: ProfileScreenViewModel = viewModel(viewModelStoreOwner = LocalNavController.current.context as ComponentActivity) // Gets an existing MediaViewModel if it exists.
 
-    // used online recourses as well as AI to understand how to save a data class as a state
-    // mostly gonna be used within the future when I add the option to change storages
-    var profile by rememberSaveable(stateSaver = profileSaver) {
-        mutableStateOf(viewModel.getCurrentProfile())
-    }
+    val profile by viewModel.currentProfile.collectAsStateWithLifecycle()
 
     var openEditDialog by rememberSaveable { mutableStateOf(false) }
 
@@ -52,9 +44,8 @@ fun DisplayProfile() {
             { openEditDialog = false },
             profile.name,
             profile.description,
-            { profile.EditName(it) },
-            { profile.EditDescription(it) },
-            { profile.EditProfileImage(it ?: profile.image) })
+            { viewModel.setProfile(it) },
+            { viewModel.setPicture(it ?: profile.image) })
 
     // General Container for other information from the profile screen
     val containerDisplay: Modifier = Modifier

@@ -31,6 +31,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import com.example.lusonus.data.model.Profile
 
 /**
  * A composable dialog that is called when a user wants to edit their profile information or image.
@@ -41,10 +42,8 @@ fun DialogToEditProfile(
     onConfirmation: () -> Unit,
     name: String,
     description: String,
-    setName: (String) -> Unit,
-    setDescription: (String) -> Unit,
+    setProfile: (Profile) -> Unit,
     setPicture: (Uri?) -> Unit,
-
     ) {
 
     var newName by rememberSaveable { mutableStateOf(name) }
@@ -129,11 +128,8 @@ fun DialogToEditProfile(
                     }
                     TextButton(
                         onClick = {
-                            if (newName.isNotBlank())
-                                setName(newName.trim())
-
-                            if (newDescription.isNotBlank())
-                                setDescription(newDescription.trim())
+                            if (newName.isNotBlank() && newDescription.isNotBlank())
+                                setProfile(Profile(newName.trim(), newDescription.trim()))
 
 
                             onConfirmation()
