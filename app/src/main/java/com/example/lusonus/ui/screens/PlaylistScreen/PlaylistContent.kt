@@ -12,16 +12,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
+import com.example.lusonus.data.model.Media
 import com.example.lusonus.ui.composables.MediaLibraryComposables.FileRow
 
 @Composable
 fun PlaylistContent(
-    playlistFiles: List<String>,
-    onRemoveFromPlaylist: (String) -> Unit
+    playlistFiles: List<Media>,
+    removeFromPlaylist: (Media) -> Unit
 ) {
     LazyColumn {
         items(items = playlistFiles) {
-            uriString ->
+            media ->
             Surface(
                 color = MaterialTheme.colorScheme.surfaceVariant,
                 modifier = Modifier
@@ -32,13 +33,14 @@ fun PlaylistContent(
                         detectTapGestures(
                             // We specify a long press.
                             onLongPress = {
-                                onRemoveFromPlaylist(uriString)
+                                removeFromPlaylist(media)
                             },
                         )
                     }
             ) {
+                // TODO: need to replace this with entrydisplay when we do do it.
                 FileRow(
-                    uri = uriString.toUri(),
+                    uri = media.uri,
                     modifier = Modifier.padding(12.dp)
                 )
             }

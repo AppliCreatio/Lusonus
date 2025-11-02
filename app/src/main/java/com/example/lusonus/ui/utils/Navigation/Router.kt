@@ -60,14 +60,8 @@ fun Router(navController: NavHostController, modifier: Modifier = Modifier) {
             // Gets parameter from the URL.
             val playlistName = backStackEntry.arguments?.getString("playlistName") ?: ""
 
-            // Gets the view models
-            val playlistLibraryViewModel: PlaylistLibraryViewModel = viewModel(viewModelStoreOwner =LocalNavController.current.context as ComponentActivity)
-            val mediaLibraryViewModel: MediaLibraryViewModel = viewModel(viewModelStoreOwner = LocalNavController.current.context as ComponentActivity)
-
             PlaylistScreen(
                 playlistName = playlistName,
-                playlistLibraryViewModel = playlistLibraryViewModel,
-                mediaLibraryViewModel = mediaLibraryViewModel
             )
         }
 

@@ -1,5 +1,6 @@
 package com.example.lusonus.ui.composables.MediaLibraryComposables
 
+import android.net.Uri
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -10,11 +11,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
+import com.example.lusonus.data.model.Media
+import java.net.URI
 
 @Composable
 fun MediaLibraryItem(
-    uriString: String,
-    onDelete: (String) -> Unit
+    media: Media,
+    onDelete: (Uri) -> Unit
 ) {
     Surface(
         color = MaterialTheme.colorScheme.surfaceVariant,
@@ -29,13 +32,13 @@ fun MediaLibraryItem(
                 detectTapGestures(
                     // We specify a long press.
                     onLongPress = {
-                        onDelete(uriString)
+                        onDelete(media.uri)
                     }
                 )
             }
     ) {
         FileRow(
-            uri = uriString.toUri(),
+            uri = media.uri,
             modifier = Modifier.padding(12.dp)
         )
     }
