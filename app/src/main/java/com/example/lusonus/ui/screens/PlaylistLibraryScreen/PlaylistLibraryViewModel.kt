@@ -3,7 +3,9 @@ package com.example.lusonus.ui.screens.PlaylistLibraryScreen
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
+import androidx.compose.runtime.snapshots.SnapshotStateMap
 import androidx.lifecycle.ViewModel
+import com.example.lusonus.ui.utils.sortPlaylists
 
 class PlaylistLibraryViewModel : ViewModel() {
 
@@ -54,5 +56,9 @@ class PlaylistLibraryViewModel : ViewModel() {
     fun getAllPlaylists(): List<String> {
         // We just want the playlist names.
         return playlists.keys.toList()
+    }
+
+    fun sortPlaylist(type: String) {
+        playlists = sortPlaylists(playlists, type)
     }
 }

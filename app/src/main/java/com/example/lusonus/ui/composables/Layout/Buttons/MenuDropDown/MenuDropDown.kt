@@ -1,5 +1,7 @@
 package com.example.lusonus.ui.composables.Layout.Buttons.MenuDropDown
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -19,5 +21,5 @@ fun MenuDropDown(){
         MenuItem("Folders") { navController.navigate(Routes.Folders.route) },
         MenuItem("About Us") { navController.navigate(Routes.FAQ.route) })
 
-    MinimalDropdownMenu(menuList, expanded) { expanded = !it }
+    MinimalDropdownMenu(menuList, expanded, { expanded = !it }, Icons.Default.MoreVert)
 }
