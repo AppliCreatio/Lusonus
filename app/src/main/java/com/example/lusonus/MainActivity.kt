@@ -25,10 +25,10 @@ class MainActivity : ComponentActivity() {
                 // Provides the navController to everything
                 val storageList = rememberSaveable {
                     mutableStateListOf<ExternalStorage>(
-                        ExternalStorage("test", false),
-                        ExternalStorage("test1", false),
-                        ExternalStorage("test2", false),
-                        ExternalStorage("test3", false),
+//                        ExternalStorage("test", false),
+//                        ExternalStorage("test1", false),
+//                        ExternalStorage("test2", false),
+//                        ExternalStorage("test3", false),
                     )
                 }
 

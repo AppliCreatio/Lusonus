@@ -1,9 +1,11 @@
 package com.example.lusonus.ui.screens.MediaLibraryScreen
 
+import android.content.Context
 import android.net.Uri
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import com.example.lusonus.ui.screens.PlaylistLibraryScreen.PlaylistLibraryViewModel
+import com.example.lusonus.ui.utils.sortMedia
 
 // Media view model to deal with
 class MediaLibraryViewModel : ViewModel() {
@@ -31,5 +33,11 @@ class MediaLibraryViewModel : ViewModel() {
                 playlistFiles.remove(element = uriString)
             }
         }
+    }
+
+    fun sortFiles(type: String, context: Context){
+        val temp = sortMedia(files, context)
+        files.clear()
+        files.addAll(temp)
     }
 }

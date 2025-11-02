@@ -4,11 +4,21 @@ import android.net.Uri
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.Row
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.lusonus.data.model.MenuItem
 import com.example.organisemedia.Layout.FloatingActionButton.SharedFloatingActionButton
 import com.example.lusonus.ui.composables.Layout.MainLayout
 import com.example.lusonus.navigation.LocalNavController
+import com.example.lusonus.ui.composables.Layout.Buttons.MenuDropDown.MinimalDropdownMenu
 import com.example.lusonus.ui.screens.PlaylistLibraryScreen.PlaylistLibraryViewModel
 
 @Composable
@@ -38,8 +48,21 @@ fun MediaLibraryScreen() {
             }
         }
 
+    var expanded by remember { mutableStateOf(false) }
+
+    val context = LocalContext.current
+
     MainLayout(
         content = {
+
+            val sortOptions = listOf<MenuItem>(
+                MenuItem("Alphabetical") { viewModel.sortFiles("alphabetically", context) }
+            )
+
+            Row() {
+                MinimalDropdownMenu(sortOptions, expanded, { expanded = !it }, Icons.Default.MoreVert)
+            }
+
             MediaLibraryContent(
                 files = files,
                 onDeleteMedia = { uriString ->

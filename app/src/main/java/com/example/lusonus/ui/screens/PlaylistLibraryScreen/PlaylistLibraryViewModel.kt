@@ -59,6 +59,13 @@ class PlaylistLibraryViewModel : ViewModel() {
     }
 
     fun sortPlaylist(type: String) {
-        playlists = sortPlaylists(playlists, type)
+
+        val sortedPlaylist = sortPlaylists(playlists, type)
+        playlists.clear()
+//        playlists.putAll(sortedPlaylist)
+
+        sortedPlaylist.forEach { (key, value) ->
+            playlists[key] = value
+        }
     }
 }
