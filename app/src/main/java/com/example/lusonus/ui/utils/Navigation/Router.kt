@@ -1,6 +1,8 @@
 package com.example.lusonus.navigation
 
 import androidx.activity.ComponentActivity
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.fillMaxSize
@@ -37,8 +39,8 @@ fun Router(navController: NavHostController, modifier: Modifier = Modifier) {
         navController = navController,
         startDestination = Routes.PlaylistLibrary.route, // the starting screen.
         modifier = modifier.fillMaxSize(),
-        enterTransition = { fadeIn() },
-        exitTransition = { fadeOut() }
+        enterTransition = { EnterTransition.None },
+        exitTransition = { ExitTransition.None }
     ) {
         // Media screen route.
         composable(route = Routes.MediaLibrary.route) {
