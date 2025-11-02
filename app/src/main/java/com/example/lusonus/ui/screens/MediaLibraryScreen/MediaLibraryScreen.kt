@@ -5,13 +5,21 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.sharp.Menu
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.lusonus.data.model.MenuItem
@@ -28,7 +36,7 @@ fun MediaLibraryScreen() {
     val playlistLibraryViewModel: PlaylistLibraryViewModel = viewModel(viewModelStoreOwner =LocalNavController.current.context as ComponentActivity)
 
     // Gets files from view model.
-    val files = viewModel.files
+    val files = viewModel.filesShown
 
     // This is a very fancy thing!
     // It uses this thing called Activity Result API,
@@ -49,6 +57,7 @@ fun MediaLibraryScreen() {
         }
 
     var expanded by remember { mutableStateOf(false) }
+    var searchInfo by rememberSaveable { mutableStateOf("") }
 
     val context = LocalContext.current
 
@@ -59,8 +68,22 @@ fun MediaLibraryScreen() {
                 MenuItem("Alphabetical") { viewModel.sortFiles("alphabetically", context) }
             )
 
-            Row() {
-                MinimalDropdownMenu(sortOptions, expanded, { expanded = !it }, Icons.Default.MoreVert)
+            Row(modifier = Modifier.fillMaxWidth()) {
+                MinimalDropdownMenu(sortOptions, expanded, { expanded = !it }, Icons.Sharp.Menu)
+
+                OutlinedTextField(
+                    value = searchInfo,
+                    onValueChange = {
+                        searchInfo = it
+                        viewModel.searchMedia(context, searchInfo.lowercase())
+                    },
+                    label = { Text("Description") },
+                    colors = TextFieldDefaults.colors(
+                        unfocusedContainerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                    ),
+                    singleLine = true
+                )
+
             }
 
             MediaLibraryContent(

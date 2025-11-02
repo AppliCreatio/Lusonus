@@ -15,7 +15,10 @@ fun sortPlaylists(playlists: SnapshotStateMap<String, SnapshotStateList<String>>
     }
 }
 
-fun sortMedia(mediaList: List<String>, context: Context, sortType: String? = null): List<String> {
+fun sortMedia(mediaList: List<String>, context: Context, sortType: String): List<String> {
 
-    return mediaList.sortedBy { media -> context.getFileName(media.toUri()) }
+    return when(sortType){
+        "alphabetically" -> mediaList.sortedBy { media -> context.getFileName(media.toUri()) }
+        else -> mediaList
+    }
 }
