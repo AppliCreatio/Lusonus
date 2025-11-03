@@ -15,7 +15,7 @@ class PlaylistViewModel(private val playlistName: String) : ViewModel() {
 
     // Gets the playlist from the name. Does the get(), read next comment for details.
     // This can't be null, but it won't be based on how you get to the screen in the first place.
-    private val playlist get() = playlistLibrary.getPlaylist(playlistName)!!
+    val playlist get() = playlistLibrary.getPlaylist(playlistName)!!
 
     // THIS IS COOL. It only gets the getter for the playlistList and mediaList,
     // meaning you can't edit it directly.

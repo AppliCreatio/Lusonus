@@ -7,7 +7,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.runtime.snapshots.SnapshotStateMap
-import androidx.lifecycle.ViewModel
+//import androidx.lifecycle.ViewModel
 import com.example.lusonus.ui.utils.sortPlaylists
 
 class PlaylistLibraryViewModel : ViewModel() {
@@ -29,14 +29,14 @@ class PlaylistLibraryViewModel : ViewModel() {
         return playlistLibrary.getAllPlaylists().map { it.name }
     }
 
-    fun sortPlaylist(type: String) {
-
-        val sortedPlaylist = sortPlaylists(playlists, type)
-        playlists.clear()
-//        playlists.putAll(sortedPlaylist)
-
-        sortedPlaylist.forEach { (key, value) ->
-            playlists[key] = value
-        }
-    }
+//    fun sortPlaylist(type: String) {
+//
+//        val sortedPlaylist = sortPlaylists(playlists, type)
+//        playlists.clear()
+////        playlists.putAll(sortedPlaylist)
+//
+//        sortedPlaylist.forEach { (key, value) ->
+//            playlists[key] = value
+//        }
+//    }
 }

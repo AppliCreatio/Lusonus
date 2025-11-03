@@ -18,7 +18,8 @@ import com.example.lusonus.ui.composables.MediaLibraryComposables.FileRow
 @Composable
 fun PlaylistContent(
     playlistFiles: List<Media>,
-    removeFromPlaylist: (Media) -> Unit
+    removeFromPlaylist: (Media) -> Unit,
+    onClickMedia: (String) -> Unit
 ) {
     LazyColumn {
         items(items = playlistFiles) {
@@ -35,6 +36,11 @@ fun PlaylistContent(
                             onLongPress = {
                                 removeFromPlaylist(media)
                             },
+
+                            // AND THEN WE CAN JUST HAVE... ITS AMAZING!
+                            onTap = {
+                                onClickMedia(media.name)
+                            }
                         )
                     }
             ) {

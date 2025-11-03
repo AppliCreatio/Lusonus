@@ -18,25 +18,21 @@ import com.example.lusonus.ui.composables.Layout.BottomBar.MediaBottomBar
 import com.example.lusonus.ui.screens.MediaLibraryScreen.MediaLibraryContent
 import com.example.lusonus.ui.screens.MediaLibraryScreen.MediaLibraryViewModel
 import com.example.lusonus.ui.screens.PlaylistLibraryScreen.PlaylistLibraryViewModel
+import com.example.lusonus.ui.screens.PlaylistScreen.PlaylistViewModel
+import com.example.lusonus.ui.screens.PlaylistScreen.PlaylistViewModelFactory
 import com.example.lusonus.ui.theme.AppTheme
 
 @Composable
-fun MediaScreen(mediaName: String = "Media Name", mediaArtist: String = "Artist Name") {
-    var isQueueOpen by rememberSaveable { mutableStateOf(false) }
+fun MediaScreen(mediaName: String) {
+    // Gets the media view model, calls the media factory so we can pass the media name to the
+    // view model to be able to get the specific media.
+    val viewModel: MediaViewModel = viewModel(factory = MediaViewModelFactory(mediaName))
 
     MainLayout(
         content = {
-            MediaContent(mediaName = mediaName, mediaArtist = mediaArtist, isQueueOpen = isQueueOpen)
+            MediaContent(viewModel.media, viewModel.isQueueOpen)
         },
         screenTitle = mediaName,
-        bottomBar = { MediaBottomBar(isQueueOpen) }
+        bottomBar = { MediaBottomBar() }
     )
-}
-
-@Preview
-@Composable
-fun MediaScreenPreview () {
-    AppTheme {
-        MediaScreen("Crazy Train", "Ozzy Osbourne")
-    }
 }

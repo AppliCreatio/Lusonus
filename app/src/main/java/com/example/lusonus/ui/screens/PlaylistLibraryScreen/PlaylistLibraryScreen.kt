@@ -66,22 +66,22 @@ fun PlaylistLibraryScreen() {
     MainLayout(
         content = {
 
-            val sortOptions = listOf<MenuItem>(
-                MenuItem("Alphabetical", { viewModel.sortPlaylist("alphabetically")})
-            )
+//            val sortOptions = listOf<MenuItem>(
+//                MenuItem("Alphabetical", { viewModel.sortPlaylist("alphabetically")})
+//            )
 
-            Row() {
-                MinimalDropdownMenu(sortOptions, expanded, { expanded = !it }, Icons.Sharp.Menu)
-                OutlinedTextField(
-                    value = searchInfo,
-                    onValueChange = { searchInfo = it },
-                    label = { Text("Description") },
-                    colors = TextFieldDefaults.colors(
-                        unfocusedContainerColor = MaterialTheme.colorScheme.tertiaryContainer,
-                    ),
-                    singleLine = true
-                )
-            }
+//            Row() {
+//                MinimalDropdownMenu(sortOptions, expanded, { expanded = !it }, Icons.Sharp.Menu)
+//                OutlinedTextField(
+//                    value = searchInfo,
+//                    onValueChange = { searchInfo = it },
+//                    label = { Text("Description") },
+//                    colors = TextFieldDefaults.colors(
+//                        unfocusedContainerColor = MaterialTheme.colorScheme.tertiaryContainer,
+//                    ),
+//                    singleLine = true
+//                )
+//            }
 
             PlaylistLibraryContent(
                 playlists = playlists,

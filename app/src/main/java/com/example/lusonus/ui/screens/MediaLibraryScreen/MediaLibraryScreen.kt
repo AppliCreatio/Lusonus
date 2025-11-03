@@ -15,21 +15,26 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.lusonus.data.model.MenuItem
 import com.example.organisemedia.Layout.FloatingActionButton.SharedFloatingActionButton
 import com.example.lusonus.ui.composables.Layout.MainLayout
 import com.example.lusonus.navigation.LocalNavController
+import com.example.lusonus.navigation.Routes
 import com.example.lusonus.ui.composables.Layout.Buttons.MenuDropDown.MinimalDropdownMenu
 import com.example.lusonus.ui.screens.PlaylistLibraryScreen.PlaylistLibraryViewModel
 
 @Composable
 fun MediaLibraryScreen() {
+    // Gets nav controller
+    val navController = LocalNavController.current
+
     // Gets the view model information
     val viewModel: MediaLibraryViewModel = viewModel(viewModelStoreOwner = LocalNavController.current.context as ComponentActivity) // Gets an existing MediaViewModel if it exists.
 
     // Gets files from view model.
-    val files = viewModel.filesShown
+    val files = viewModel.files
 
     // This is a very fancy thing!
     // It uses this thing called Activity Result API,
@@ -49,40 +54,41 @@ fun MediaLibraryScreen() {
             }
         }
 
-    var expanded by remember { mutableStateOf(false) }
-    var searchInfo by rememberSaveable { mutableStateOf("") }
-
-    val context = LocalContext.current
+//    var expanded by remember { mutableStateOf(false) }
+//    var searchInfo by rememberSaveable { mutableStateOf("") }
 
     MainLayout(
         content = {
 
-            val sortOptions = listOf<MenuItem>(
-                MenuItem("Alphabetical") { viewModel.sortFiles("alphabetically", context) }
-            )
+//            val sortOptions = listOf<MenuItem>(
+//                MenuItem("Alphabetical") { viewModel.sortFiles("alphabetically", context) }
+//            )
 
-            Row(modifier = Modifier.fillMaxWidth()) {
-                MinimalDropdownMenu(sortOptions, expanded, { expanded = !it }, Icons.Sharp.Menu)
-
-                OutlinedTextField(
-                    value = searchInfo,
-                    onValueChange = {
-                        searchInfo = it
-                        viewModel.searchMedia(context, searchInfo.lowercase())
-                    },
-                    label = { Text("Description") },
-                    colors = TextFieldDefaults.colors(
-                        unfocusedContainerColor = MaterialTheme.colorScheme.tertiaryContainer,
-                    ),
-                    singleLine = true
-                )
-
-            }
+//            Row(modifier = Modifier.fillMaxWidth()) {
+//                MinimalDropdownMenu(sortOptions, expanded, { expanded = !it }, Icons.Sharp.Menu)
+//
+////                OutlinedTextField(
+////                    value = searchInfo,
+////                    onValueChange = {
+////                        searchInfo = it
+////                        viewModel.searchMedia(context, searchInfo.lowercase())
+////                    },
+////                    label = "Description" ,
+////                    colors = TextFieldDefaults.colors(
+////                        unfocusedContainerColor = MaterialTheme.colorScheme.tertiaryContainer,
+////                    ),
+////                    singleLine = true
+////                )
+//
+//            }
 
             MediaLibraryContent(
                 files = files,
                 onDeleteMedia = { uri ->
                     viewModel.removeFile(uri)
+                },
+                onClickMedia = { mediaName ->
+                    navController.navigate(Routes.MediaPlayer.go(mediaName))
                 }
             )
         },

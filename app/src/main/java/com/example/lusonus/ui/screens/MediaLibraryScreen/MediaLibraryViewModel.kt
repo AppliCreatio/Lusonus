@@ -29,21 +29,21 @@ class MediaLibraryViewModel : ViewModel() {
         mediaLibrary.removeMedia(uri)
     }
 
-    fun sortFiles(type: String, context: Context){
-        val temp = sortMedia(filesShown, context, type)
-        filesShown.clear()
-        filesShown.addAll(temp)
-    }
-
-    fun searchMedia(context: Context, query: String){
-        if(query.isNotBlank()){
-            val matches = search(filesShown, query, context)
-            filesShown.clear()
-            filesShown.addAll(matches)
-        }
-        else {
-            filesShown.clear()
-            filesShown.addAll(files)
-        }
-    }
+//    fun sortFiles(type: String, context: Context){
+//        val temp = sortMedia(filesShown, context, type)
+//        filesShown.clear()
+//        filesShown.addAll(temp)
+//    }
+//
+//    fun searchMedia(context: Context, query: String){
+//        if(query.isNotBlank()){
+//            val matches = search(filesShown, query, context)
+//            filesShown.clear()
+//            filesShown.addAll(matches)
+//        }
+//        else {
+//            filesShown.clear()
+//            filesShown.addAll(files)
+//        }
+//    }
 }

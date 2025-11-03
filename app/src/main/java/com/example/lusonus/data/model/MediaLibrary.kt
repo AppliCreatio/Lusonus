@@ -36,6 +36,10 @@ open class MediaLibrary {
         }
     }
 
+    // Gets a specific media.
+    fun getMedia(name: String): Media? =
+        mediaList.find { it.name == name }
+
     // Method that clears the MediaLibrary.
     fun clear() {
         mediaList.clear()

@@ -5,13 +5,19 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.lusonus.ui.screens.MediaScreen.MediaViewModel
 
 @Composable
-fun MediaBottomBar(isQueueOpen: Boolean) {
-    // TODO: Place boolean parameter functionalities into dedicated ViewModel class.
+fun MediaBottomBar() {
+    val viewModel: MediaViewModel = viewModel()
 
-    var isLiked by rememberSaveable { mutableStateOf(false) }
-    var isPaused by rememberSaveable { mutableStateOf(false) }
-
-    MediaBottomBarStateless(isQueueOpen, isLiked, isPaused)
+    // Calls the MediaBottomBarStateless, the :: allows the passing of the function itself.
+    MediaBottomBarStateless(
+        isLiked = viewModel.isLiked,
+        isPaused = viewModel.isPaused,
+        onToggleQueue = viewModel::toggleQueue,
+        onToggleLike = viewModel::toggleLike,
+        onTogglePause = viewModel::togglePause
+    )
 }
