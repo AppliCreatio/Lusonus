@@ -96,7 +96,8 @@ fun MediaLibraryScreen() {
                     navController.navigate(Routes.MediaPlayer.go(mediaName))
                 }
             )
-        },
+        }
+                  },
         screenTitle = "Media",
         floatingActionButton = {
             SharedFloatingActionButton(
