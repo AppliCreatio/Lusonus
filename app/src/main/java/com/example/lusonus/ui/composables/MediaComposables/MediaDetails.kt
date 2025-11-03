@@ -56,7 +56,7 @@ fun MediaDetails(
 
 @Preview(showBackground = true)
 @Composable
-fun SongDetailsPreview() {
+fun MediaDetailsPreview() {
     AppTheme {
         MediaDetails(Modifier,
             "Song Name",

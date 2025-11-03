@@ -24,6 +24,7 @@ import com.example.lusonus.ui.screens.PlaylistScreen.PlaylistScreen
 import com.example.lusonus.data.model.ExternalStorage
 import com.example.lusonus.ui.screens.FolderViewScreen.FolderViewScreen
 import com.example.lusonus.ui.screens.MediaLibraryScreen.MediaLibraryViewModel
+import com.example.lusonus.ui.screens.MediaScreen.MediaScreen
 import com.example.lusonus.ui.screens.PlaylistLibraryScreen.PlaylistLibraryViewModel
 import com.example.lusonus.ui.screens.SettingsScreen.SettingScreen
 
@@ -45,6 +46,20 @@ fun Router(navController: NavHostController, modifier: Modifier = Modifier) {
         // Media screen route.
         composable(route = Routes.MediaLibrary.route) {
             MediaLibraryScreen()
+        }
+
+        composable(
+            route = Routes.MediaPlayer.route,
+            //arguments = listOf(navArgument(name = "mediaName") { type = NavType.StringType })
+        ) {
+            backStackEntry ->
+
+            // Gets parameter from the URL.
+            //val mediaName = backStackEntry.arguments?.getString("playlistName") ?: ""
+
+            MediaScreen(
+                //mediaName = mediaName
+            )
         }
 
         // PlaylistLibrary screen route.

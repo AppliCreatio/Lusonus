@@ -1,131 +1,42 @@
 package com.example.lusonus.ui.screens.MediaScreen
 
-
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.Scaffold
+import android.net.Uri
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.organisemedia.Layout.FloatingActionButton.SharedFloatingActionButton
+import com.example.lusonus.ui.composables.Layout.MainLayout
+import com.example.lusonus.navigation.LocalNavController
+import com.example.lusonus.ui.composables.Layout.BottomBar.MediaBottomBar
+import com.example.lusonus.ui.screens.MediaLibraryScreen.MediaLibraryContent
+import com.example.lusonus.ui.screens.MediaLibraryScreen.MediaLibraryViewModel
+import com.example.lusonus.ui.screens.PlaylistLibraryScreen.PlaylistLibraryViewModel
 import com.example.lusonus.ui.theme.AppTheme
-import com.example.lusonus.R
-import com.example.lusonus.ui.composables.MediaComposables.MediaDetails
-import com.example.lusonus.ui.utils.SongQueue
-
 
 @Composable
-fun MediaScreen(modifier: Modifier = Modifier) {
+fun MediaScreen(mediaName: String = "Media Name", mediaArtist: String = "Artist Name") {
     var isQueueOpen by rememberSaveable { mutableStateOf(false) }
-    var isLiked by rememberSaveable { mutableStateOf(false) }
-    var isPaused by rememberSaveable { mutableStateOf(false) }
 
-    Scaffold(
-        modifier = Modifier,
-
-        bottomBar = {
-            BottomAppBar (
-                actions = {
-                    Row (
-                        modifier = modifier
-                            .padding(20.dp, 10.dp)
-                            .fillMaxSize(),
-                        horizontalArrangement = Arrangement.SpaceEvenly
-                    ) {
-                        IconButton(
-                            modifier = modifier,
-                            onClick = { isQueueOpen = !isQueueOpen }
-                        ) {
-//                            Icon(
-//                                modifier = modifier.size(30.dp),
-//                                painter = painterResource(R.drawable.queue_button),
-//                                contentDescription = "A button to open and close the song queue."
-//                            )
-                        }
-
-                        IconButton(
-                            onClick = {},
-                            modifier = modifier,
-                            enabled = false) {
-//                            Icon(
-//                                modifier = modifier.size(30.dp),
-//                                painter = painterResource(R.drawable.previous_button),
-//                                contentDescription = "A button to skip to the previous song."
-//                            )
-                        }
-
-                        IconButton(
-                            modifier = modifier,
-                            onClick = { isPaused = !isPaused }
-                        ) {
-//                            Icon(
-//                                modifier = modifier.size(30.dp),
-//                                painter = if (isPaused) painterResource(R.drawable.pause_button) else painterResource(R.drawable.play_button),
-//                                contentDescription = "A button to play and pause the current song."
-//                            )
-                        }
-
-                        IconButton(
-                            onClick = {},
-                            modifier = modifier,
-                            enabled = false) {
-//                            Icon(
-//                                modifier = modifier.size(30.dp),
-//                                painter = painterResource(R.drawable.next_button),
-//                                contentDescription = "A button to skip to the next song.",
-//                            )
-                        }
-
-                        IconButton(
-                            modifier = modifier,
-                            onClick = { isLiked = !isLiked }
-                        ) {
-//                            Icon(
-//                                modifier = modifier.size(30.dp),
-//                                painter = if (isLiked) painterResource(R.drawable.heart_clicked) else painterResource(R.drawable.heart_empty),
-//                                contentDescription = "A heart-shaped button to favorite the current song."
-//                            )
-                        }
-                    }
-                }
-            )
-        }
-        ) { innerPadding ->
-        Column (
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceAround,
-            modifier = modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-        ) {
-            MediaDetails(
-                modifier = modifier,
-                "Crazy Train",
-                "Ozzy Osbourne",
-                painterResource(R.drawable.ic_launcher_background)
-            )
-
-            if (isQueueOpen)
-                SongQueue()
-        }
-    }
+    MainLayout(
+        content = {
+            MediaContent(mediaName = mediaName, mediaArtist = mediaArtist, isQueueOpen = isQueueOpen)
+        },
+        screenTitle = mediaName,
+        bottomBar = { MediaBottomBar(isQueueOpen) }
+    )
 }
 
 @Preview
 @Composable
-fun MainAppPreview () {
+fun MediaScreenPreview () {
     AppTheme {
-        MediaScreen()
+        MediaScreen("Crazy Train", "Ozzy Osbourne")
     }
 }
