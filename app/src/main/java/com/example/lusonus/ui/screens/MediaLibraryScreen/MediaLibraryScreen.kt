@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.organisemedia.Layout.FloatingActionButton.SharedFloatingActionButton
 import com.example.lusonus.ui.composables.Layout.MainLayout
@@ -15,7 +16,6 @@ import com.example.lusonus.ui.screens.PlaylistLibraryScreen.PlaylistLibraryViewM
 fun MediaLibraryScreen() {
     // Gets the view model information
     val viewModel: MediaLibraryViewModel = viewModel(viewModelStoreOwner = LocalNavController.current.context as ComponentActivity) // Gets an existing MediaViewModel if it exists.
-    val playlistLibraryViewModel: PlaylistLibraryViewModel = viewModel(viewModelStoreOwner =LocalNavController.current.context as ComponentActivity)
 
     // Gets files from view model.
     val files = viewModel.files
@@ -42,8 +42,8 @@ fun MediaLibraryScreen() {
         content = {
             MediaLibraryContent(
                 files = files,
-                onDeleteMedia = { uriString ->
-                    viewModel.removeFile(uriString, playlistLibraryViewModel = playlistLibraryViewModel)
+                onDeleteMedia = { uri ->
+                    viewModel.removeFile(uri)
                 }
             )
         },
