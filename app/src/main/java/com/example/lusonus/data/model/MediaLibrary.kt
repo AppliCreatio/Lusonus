@@ -3,6 +3,8 @@ package com.example.lusonus.data.model
 import android.net.Uri
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
+import com.example.lusonus.ui.utils.search
+import com.example.lusonus.ui.utils.sort
 import java.util.Date
 
 open class MediaLibrary {
@@ -14,13 +16,12 @@ open class MediaLibrary {
     val mediaList: SnapshotStateList<Media> = mutableStateListOf()
 
     // Method to addMedia to the Library, we initialize media items.
-    fun addMedia(uris: List<Uri>) {
+    fun addMedia(pendingMedia: Map<String, Uri>) {
         val now = Date()
-        uris.forEach { uri ->
+        pendingMedia.forEach { (key, value) ->
             // Makes sure to not have duplicates.
-            if (mediaList.none { it.uri == uri }) {
-                val name = uri.lastPathSegment ?: "Unknown"
-                mediaList.add(Media(name, uri))
+            if (mediaList.none { it.uri == value }) {
+                mediaList.add(Media(key, value))
             }
         }
     }
@@ -39,5 +40,18 @@ open class MediaLibrary {
     // Method that clears the MediaLibrary.
     fun clear() {
         mediaList.clear()
+    }
+
+    // Sorts the files
+    fun sortFiles(type: String) = sort(mediaList, type)
+
+
+    // Searches through the files
+    fun searchFiles(query: String): List<Media> {
+        return if (query.isNotBlank()){
+            search(mediaList, query)
+        } else {
+            mediaList
+        }
     }
 }
