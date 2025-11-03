@@ -11,19 +11,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
+import com.example.lusonus.data.model.Media
 import com.example.lusonus.ui.composables.MediaLibraryComposables.FileRow
 
 @Composable
 fun MediaPicker(
-    allMediaFiles: List<String>,
-    playlistFiles: List<String>,
-    onAddToPlaylist: (List<String>) -> Unit,
+    allMediaFiles: List<Media>,
+    playlistFiles: List<Media>,
+    onAddToPlaylist: (List<Media>) -> Unit,
 ) {
     Column(
         modifier = Modifier.padding(16.dp)
     ) {
         // Filters out the files that have been added.
-        val availableFiles = allMediaFiles.filterNot { it in playlistFiles }
+        val availableFiles = allMediaFiles.filter { media ->
+            playlistFiles.none { it.uri == media.uri }
+        }
 
         // In the situation where no media was added in the media page.
         if (availableFiles.isEmpty()) {
@@ -38,7 +41,7 @@ fun MediaPicker(
         }
 
         // Only non added files.
-        availableFiles.forEach { uriString ->
+        availableFiles.forEach { media ->
             Surface(
                 color = MaterialTheme.colorScheme.surfaceVariant,
                 modifier = Modifier
@@ -46,11 +49,12 @@ fun MediaPicker(
                     .padding(vertical = 4.dp)
                     .clickable {
                         // Adds a single file to playlist
-                        onAddToPlaylist(listOf(uriString))
+                        onAddToPlaylist(listOf(media))
                     }
             ) {
+                // TODO: swap with entryDisplay maybe?
                 FileRow(
-                    uri = uriString.toUri(),
+                    uri = media.uri,
                     modifier = Modifier.padding(12.dp)
                 )
             }

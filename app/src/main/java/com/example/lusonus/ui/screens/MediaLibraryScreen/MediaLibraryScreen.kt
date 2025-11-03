@@ -14,13 +14,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.lusonus.data.model.MenuItem
 import com.example.organisemedia.Layout.FloatingActionButton.SharedFloatingActionButton
@@ -33,7 +27,6 @@ import com.example.lusonus.ui.screens.PlaylistLibraryScreen.PlaylistLibraryViewM
 fun MediaLibraryScreen() {
     // Gets the view model information
     val viewModel: MediaLibraryViewModel = viewModel(viewModelStoreOwner = LocalNavController.current.context as ComponentActivity) // Gets an existing MediaViewModel if it exists.
-    val playlistLibraryViewModel: PlaylistLibraryViewModel = viewModel(viewModelStoreOwner =LocalNavController.current.context as ComponentActivity)
 
     // Gets files from view model.
     val files = viewModel.filesShown
@@ -88,8 +81,8 @@ fun MediaLibraryScreen() {
 
             MediaLibraryContent(
                 files = files,
-                onDeleteMedia = { uriString ->
-                    viewModel.removeFile(uriString, playlistLibraryViewModel = playlistLibraryViewModel)
+                onDeleteMedia = { uri ->
+                    viewModel.removeFile(uri)
                 }
             )
         },

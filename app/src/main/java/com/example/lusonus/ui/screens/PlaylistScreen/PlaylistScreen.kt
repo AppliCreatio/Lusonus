@@ -1,11 +1,15 @@
 package com.example.lusonus.ui.screens.PlaylistScreen
 
+import androidx.activity.ComponentActivity
 import androidx.compose.material3.AlertDialog
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.lusonus.data.model.Playlist
+import com.example.lusonus.navigation.LocalNavController
 import com.example.organisemedia.Layout.FloatingActionButton.SharedFloatingActionButton
 import com.example.lusonus.ui.composables.Layout.MainLayout
 import com.example.lusonus.ui.composables.PlaylistComposables.MediaPicker
@@ -14,13 +18,13 @@ import com.example.lusonus.ui.screens.PlaylistLibraryScreen.PlaylistLibraryViewM
 
 @Composable
 fun PlaylistScreen(
-    playlistName: String,
-    playlistLibraryViewModel: PlaylistLibraryViewModel,
-    mediaLibraryViewModel: MediaLibraryViewModel
+    playlistName: String
 ) {
+    val viewModel: PlaylistViewModel = viewModel(factory = PlaylistViewModelFactory(playlistName))
+
     // Gets playlist files. Will update because of snapshot.
-    val playlistFiles = playlistLibraryViewModel.getFiles(playlistName)
-    val allMediaFiles = mediaLibraryViewModel.files
+    val playlistFiles = viewModel.playlistFiles
+    val allMediaFiles = viewModel.mediaFiles
 
     var showPicker by rememberSaveable { mutableStateOf(false) }
 
@@ -28,8 +32,8 @@ fun PlaylistScreen(
         content = {
             PlaylistContent(
                 playlistFiles = playlistFiles,
-                onRemoveFromPlaylist = { uri ->
-                    playlistLibraryViewModel.removeFileFromPlaylist(playlistName, uriString = uri)
+                removeFromPlaylist = { media ->
+                    viewModel.removeFromPlaylist(media)
                 }
             )
 
@@ -43,10 +47,7 @@ fun PlaylistScreen(
                             allMediaFiles = allMediaFiles,
                             playlistFiles = playlistFiles,
                             onAddToPlaylist = { selected ->
-                                playlistLibraryViewModel.addFilesToPlaylist(
-                                    playlistName = playlistName,
-                                    uris = selected
-                                )
+                                viewModel.addToPlaylist(selected)
                                 showPicker = false
                             }
                         )
