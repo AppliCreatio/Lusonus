@@ -9,6 +9,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.vector.ImageVector
 import com.example.lusonus.data.model.MenuItem
 
 /**
@@ -16,11 +17,11 @@ import com.example.lusonus.data.model.MenuItem
  * I decide the contents that are used for this dropdown when calling the composable.
  */
 @Composable
-fun MinimalDropdownMenu(menuItems: List<MenuItem>, expanded: Boolean, toggleAction: (expanded: Boolean) -> Unit) {
+fun MinimalDropdownMenu(menuItems: List<MenuItem>, expanded: Boolean, toggleAction: (expanded: Boolean) -> Unit, icon: ImageVector) {
 
     Box {
         IconButton(onClick = { toggleAction(expanded) } ) {
-            Icon(Icons.Default.MoreVert, contentDescription = "More options")
+            Icon(icon, contentDescription = "More options")
         }
         DropdownMenu(
             expanded = expanded,

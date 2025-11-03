@@ -1,10 +1,13 @@
 package com.example.lusonus.ui.screens.MediaLibraryScreen
 
+import android.content.Context
 import android.net.Uri
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import com.example.lusonus.data.model.SharedMediaLibrary
 import com.example.lusonus.ui.screens.PlaylistLibraryScreen.PlaylistLibraryViewModel
+import com.example.lusonus.ui.utils.search
+import com.example.lusonus.ui.utils.sortMedia
 
 // Media view model to deal with
 class MediaLibraryViewModel : ViewModel() {
@@ -24,5 +27,23 @@ class MediaLibraryViewModel : ViewModel() {
     // Removes a single media by its URI string
     fun removeFile(uri: Uri) {
         mediaLibrary.removeMedia(uri)
+    }
+
+    fun sortFiles(type: String, context: Context){
+        val temp = sortMedia(filesShown, context, type)
+        filesShown.clear()
+        filesShown.addAll(temp)
+    }
+
+    fun searchMedia(context: Context, query: String){
+        if(query.isNotBlank()){
+            val matches = search(filesShown, query, context)
+            filesShown.clear()
+            filesShown.addAll(matches)
+        }
+        else {
+            filesShown.clear()
+            filesShown.addAll(files)
+        }
     }
 }
