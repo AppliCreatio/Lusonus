@@ -5,7 +5,10 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.runtime.snapshots.SnapshotStateMap
+import com.example.lusonus.ui.utils.sort
 import java.util.Date
+import kotlin.text.clear
+import kotlin.text.set
 
 open class PlaylistLibrary {
 
@@ -62,4 +65,8 @@ open class PlaylistLibrary {
 
     // Get's all playlists.
     fun getAllPlaylists(): List<Playlist> = playlists
+
+    // Sorts all playlists
+    fun sortPlaylists(type: String) = sort(playlists, type)
+
 }

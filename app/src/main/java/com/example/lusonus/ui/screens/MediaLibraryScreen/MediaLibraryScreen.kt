@@ -14,7 +14,13 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.lusonus.data.model.MenuItem
 import com.example.organisemedia.Layout.FloatingActionButton.SharedFloatingActionButton
@@ -28,8 +34,10 @@ fun MediaLibraryScreen() {
     // Gets the view model information
     val viewModel: MediaLibraryViewModel = viewModel(viewModelStoreOwner = LocalNavController.current.context as ComponentActivity) // Gets an existing MediaViewModel if it exists.
 
+    val context = LocalContext.current
+
     // Gets files from view model.
-    val files = viewModel.filesShown
+    val files = viewModel.files
 
     // This is a very fancy thing!
     // It uses this thing called Activity Result API,
@@ -45,20 +53,18 @@ fun MediaLibraryScreen() {
             uris?.let {
                 // We map over each uris and convert it to a string.
                 // Has to be in strings because you can't use rememberSaveable on uris.
-                viewModel.addFiles(it)
+                viewModel.addFiles(context,it)
             }
         }
 
     var expanded by remember { mutableStateOf(false) }
     var searchInfo by rememberSaveable { mutableStateOf("") }
 
-    val context = LocalContext.current
-
     MainLayout(
         content = {
 
             val sortOptions = listOf<MenuItem>(
-                MenuItem("Alphabetical") { viewModel.sortFiles("alphabetically", context) }
+                MenuItem("Alphabetical") { viewModel.sortMedia("alphabetically") }
             )
 
             Row(modifier = Modifier.fillMaxWidth()) {
@@ -68,7 +74,7 @@ fun MediaLibraryScreen() {
                     value = searchInfo,
                     onValueChange = {
                         searchInfo = it
-                        viewModel.searchMedia(context, searchInfo.lowercase())
+                        viewModel.searchMedia( searchInfo.lowercase())
                     },
                     label = { Text("Description") },
                     colors = TextFieldDefaults.colors(
