@@ -14,7 +14,12 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.lusonus.data.model.MenuItem
@@ -33,6 +38,8 @@ fun MediaLibraryScreen() {
     // Gets the view model information
     val viewModel: MediaLibraryViewModel = viewModel(viewModelStoreOwner = LocalNavController.current.context as ComponentActivity) // Gets an existing MediaViewModel if it exists.
 
+    val context = LocalContext.current
+
     // Gets files from view model.
     val files = viewModel.files
 
@@ -50,37 +57,35 @@ fun MediaLibraryScreen() {
             uris?.let {
                 // We map over each uris and convert it to a string.
                 // Has to be in strings because you can't use rememberSaveable on uris.
-                viewModel.addFiles(it)
+                viewModel.addFiles(context,it)
             }
         }
 
-//    var expanded by remember { mutableStateOf(false) }
-//    var searchInfo by rememberSaveable { mutableStateOf("") }
+    var expanded by remember { mutableStateOf(false) }
+    var searchInfo by rememberSaveable { mutableStateOf("") }
 
     MainLayout(
         content = {
 
-//            val sortOptions = listOf<MenuItem>(
-//                MenuItem("Alphabetical") { viewModel.sortFiles("alphabetically", context) }
-//            )
+            val sortOptions = listOf<MenuItem>(
+                MenuItem("Alphabetical") { viewModel.sortMedia("alphabetically") }
+            )
 
-//            Row(modifier = Modifier.fillMaxWidth()) {
-//                MinimalDropdownMenu(sortOptions, expanded, { expanded = !it }, Icons.Sharp.Menu)
-//
-////                OutlinedTextField(
-////                    value = searchInfo,
-////                    onValueChange = {
-////                        searchInfo = it
-////                        viewModel.searchMedia(context, searchInfo.lowercase())
-////                    },
-////                    label = "Description" ,
-////                    colors = TextFieldDefaults.colors(
-////                        unfocusedContainerColor = MaterialTheme.colorScheme.tertiaryContainer,
-////                    ),
-////                    singleLine = true
-////                )
-//
-//            }
+            Row(modifier = Modifier.fillMaxWidth()) {
+                MinimalDropdownMenu(sortOptions, expanded, { expanded = !it }, Icons.Sharp.Menu)
+
+                OutlinedTextField(
+                    value = searchInfo,
+                    onValueChange = {
+                        searchInfo = it
+                        viewModel.searchMedia( searchInfo.lowercase())
+                    },
+                    label = { Text("Description") },
+                    colors = TextFieldDefaults.colors(
+                        unfocusedContainerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                    ),
+                    singleLine = true
+                )
 
             MediaLibraryContent(
                 files = files,
