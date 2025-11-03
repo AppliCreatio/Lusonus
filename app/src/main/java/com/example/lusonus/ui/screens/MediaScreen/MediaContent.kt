@@ -24,30 +24,29 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.lusonus.ui.theme.AppTheme
 import com.example.lusonus.R
+import com.example.lusonus.data.model.Media
 import com.example.lusonus.ui.composables.Layout.MainLayout
 import com.example.lusonus.ui.composables.MediaComposables.MediaDetails
 import com.example.lusonus.ui.utils.SongQueue
 
 
 @Composable
-fun MediaContent(modifier: Modifier = Modifier, mediaName: String = "Media Name", mediaArtist: String = "Artist Name", isQueueOpen: Boolean = false) {
+fun MediaContent(media: Media, isQueueOpen: Boolean = false) {
     Scaffold(
-        modifier = Modifier,
         bottomBar = {
 
         }
-        ) { innerPadding ->
+        ) {
+        innerPadding ->
         Column (
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceAround,
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
             MediaDetails(
-                modifier = modifier,
-                mediaName,
-                mediaArtist,
+                media,
                 painterResource(R.drawable.ic_launcher_background)
             )
 
@@ -55,13 +54,5 @@ fun MediaContent(modifier: Modifier = Modifier, mediaName: String = "Media Name"
                 SongQueue()
         }
 
-    }
-}
-
-@Preview
-@Composable
-fun MediaContentPreview () {
-    AppTheme {
-        MediaContent()
     }
 }

@@ -50,16 +50,14 @@ fun Router(navController: NavHostController, modifier: Modifier = Modifier) {
 
         composable(
             route = Routes.MediaPlayer.route,
-            //arguments = listOf(navArgument(name = "mediaName") { type = NavType.StringType })
+            arguments = listOf(navArgument(name = "mediaName") { type = NavType.StringType })
         ) {
             backStackEntry ->
 
             // Gets parameter from the URL.
-            //val mediaName = backStackEntry.arguments?.getString("playlistName") ?: ""
+            val mediaName = backStackEntry.arguments?.getString("mediaName") ?: ""
 
-            MediaScreen(
-                //mediaName = mediaName
-            )
+            MediaScreen(mediaName = mediaName)
         }
 
         // PlaylistLibrary screen route.

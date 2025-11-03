@@ -15,7 +15,8 @@ import com.example.lusonus.ui.composables.MediaLibraryComposables.MediaLibraryIt
 @Composable
 fun MediaLibraryContent(
     files: List<Media>,
-    onDeleteMedia: (Uri) -> Unit
+    onDeleteMedia: (Uri) -> Unit,
+    onClickMedia: (String) -> Unit
 ) {
     // Lazy column in-case can have a lot of files added
     LazyColumn(
@@ -29,7 +30,8 @@ fun MediaLibraryContent(
             // TODO: merge EntryDisplay & MediaLibraryItem (more specifically just replace FileRow with EntryDisplay)
             MediaLibraryItem(
                 media = media,
-                onDelete = onDeleteMedia
+                onDelete = onDeleteMedia,
+                onClick = onClickMedia
             )
         }
     }

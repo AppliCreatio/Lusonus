@@ -5,10 +5,10 @@ import android.net.Uri
 // Sealed class that holds different routes.
 sealed class Routes(val route: String) {
     object MediaLibrary: Routes(route = "MediaLibraryScreenRoute")
-    object MediaPlayer: Routes(route = "MediaScreenRoute") {
-//        fun go(name: String) =
-//            "MediaScreenRoute/$name"
+    object MediaPlayer : Routes(route = "MediaScreenRoute/{mediaName}") {
+        fun go(mediaName: String) = "MediaScreenRoute/$mediaName"
     }
+
     object PlaylistLibrary: Routes(route = "PlaylistLibraryScreenRoute")
     object Playlist : Routes(route = "PlaylistScreenRoute/{playlistName}") {
         fun createRoute(playlistName: String) = "PlaylistScreenRoute/$playlistName"

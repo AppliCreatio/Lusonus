@@ -20,75 +20,50 @@ import androidx.compose.ui.unit.dp
 import com.example.lusonus.R
 
 @Composable
-fun MediaBottomBarStateless(isQueueOpen: Boolean, isLiked: Boolean, isPaused: Boolean) {
-    BottomAppBar (
+fun MediaBottomBarStateless(
+    isLiked: Boolean,
+    isPaused: Boolean,
+    onToggleQueue: () -> Unit,
+    onToggleLike: () -> Unit,
+    onTogglePause: () -> Unit
+) {
+    BottomAppBar(
         containerColor = MaterialTheme.colorScheme.primaryContainer,
         contentColor = MaterialTheme.colorScheme.primary,
         actions = {
-            Row (
+            Row(
                 modifier = Modifier
                     .padding(20.dp, 10.dp)
                     .fillMaxSize(),
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                IconButton(
-                    modifier = Modifier,
-                    onClick = {
-                        //isQueueOpen = !isQueueOpen
-                    }
-                ) {
+                IconButton(onClick = onToggleQueue) {
                     Icon(
                         modifier = Modifier.size(30.dp),
                         painter = painterResource(R.drawable.queue_button),
-                        contentDescription = "A button to open and close the song queue."
+                        contentDescription = "Toggle queue"
                     )
                 }
 
-                IconButton(
-                    onClick = {},
-                    modifier = Modifier,
-                    enabled = false) {
+                IconButton(onClick = onTogglePause) {
                     Icon(
                         modifier = Modifier.size(30.dp),
-                        painter = painterResource(R.drawable.previous_button),
-                        contentDescription = "A button to skip to the previous song."
+                        painter = if (isPaused)
+                            painterResource(R.drawable.pause_button)
+                        else
+                            painterResource(R.drawable.play_button),
+                        contentDescription = "Play/pause"
                     )
                 }
 
-                IconButton(
-                    modifier = Modifier,
-                    onClick = {
-                        //isPaused = !isPaused
-                    }
-                ) {
+                IconButton(onClick = onToggleLike) {
                     Icon(
                         modifier = Modifier.size(30.dp),
-                        painter = if (isPaused) painterResource(R.drawable.pause_button) else painterResource(R.drawable.play_button),
-                        contentDescription = "A button to play and pause the current song."
-                    )
-                }
-
-                IconButton(
-                    onClick = {},
-                    modifier = Modifier,
-                    enabled = false) {
-                    Icon(
-                        modifier = Modifier.size(30.dp),
-                        painter = painterResource(R.drawable.next_button),
-                        contentDescription = "A button to skip to the next song.",
-                    )
-                }
-
-                IconButton(
-                    modifier = Modifier,
-                    onClick = {
-                        //isLiked = !isLiked
-                    }
-                ) {
-                    Icon(
-                        modifier = Modifier.size(30.dp),
-                        painter = if (isLiked) painterResource(R.drawable.heart_clicked) else painterResource(R.drawable.heart_empty),
-                        contentDescription = "A heart-shaped button to favorite the current song."
+                        painter = if (isLiked)
+                            painterResource(R.drawable.heart_clicked)
+                        else
+                            painterResource(R.drawable.heart_empty),
+                        contentDescription = "Toggle favorite"
                     )
                 }
             }

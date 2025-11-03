@@ -19,12 +19,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.lusonus.ui.theme.AppTheme
 import com.example.lusonus.R
+import com.example.lusonus.data.model.Media
 
 @Composable
 fun MediaDetails(
-    modifier: Modifier = Modifier,
-    name: String = "Song Name",
-    artist: String = "Artist",
+    media: Media,
     image: Painter
     ) {
     Column (
@@ -39,28 +38,18 @@ fun MediaDetails(
                 .size(350.dp)
         )
         Text(
-            text = name,
+            text = media.name,
             style = MaterialTheme.typography.titleLarge,
             modifier = Modifier
                 .padding(5.dp, 2.dp, 5.dp),
             fontSize = 60.sp,
         )
         Text(
-            text = artist,
+            // TODO: change this
+            text = media.name,
             style = MaterialTheme.typography.labelLarge,
-            modifier = modifier,
+            modifier = Modifier,
             fontSize = 25.sp
         )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun MediaDetailsPreview() {
-    AppTheme {
-        MediaDetails(Modifier,
-            "Song Name",
-            "Artist",
-            painterResource(R.drawable.ic_launcher_background))
     }
 }

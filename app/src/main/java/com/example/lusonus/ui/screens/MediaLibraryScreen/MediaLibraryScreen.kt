@@ -26,11 +26,15 @@ import com.example.lusonus.data.model.MenuItem
 import com.example.organisemedia.Layout.FloatingActionButton.SharedFloatingActionButton
 import com.example.lusonus.ui.composables.Layout.MainLayout
 import com.example.lusonus.navigation.LocalNavController
+import com.example.lusonus.navigation.Routes
 import com.example.lusonus.ui.composables.Layout.Buttons.MenuDropDown.MinimalDropdownMenu
 import com.example.lusonus.ui.screens.PlaylistLibraryScreen.PlaylistLibraryViewModel
 
 @Composable
 fun MediaLibraryScreen() {
+    // Gets nav controller
+    val navController = LocalNavController.current
+
     // Gets the view model information
     val viewModel: MediaLibraryViewModel = viewModel(viewModelStoreOwner = LocalNavController.current.context as ComponentActivity) // Gets an existing MediaViewModel if it exists.
 
@@ -83,12 +87,13 @@ fun MediaLibraryScreen() {
                     singleLine = true
                 )
 
-            }
-
             MediaLibraryContent(
                 files = files,
                 onDeleteMedia = { uri ->
                     viewModel.removeFile(uri)
+                },
+                onClickMedia = { mediaName ->
+                    navController.navigate(Routes.MediaPlayer.go(mediaName))
                 }
             )
         },

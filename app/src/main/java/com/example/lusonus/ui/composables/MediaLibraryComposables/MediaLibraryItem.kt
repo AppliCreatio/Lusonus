@@ -17,7 +17,8 @@ import java.net.URI
 @Composable
 fun MediaLibraryItem(
     media: Media,
-    onDelete: (Uri) -> Unit
+    onDelete: (Uri) -> Unit,
+    onClick: (String) -> Unit,
 ) {
     Surface(
         color = MaterialTheme.colorScheme.surfaceVariant,
@@ -33,6 +34,11 @@ fun MediaLibraryItem(
                     // We specify a long press.
                     onLongPress = {
                         onDelete(media.uri)
+                    },
+
+                    // AND THEN WE CAN JUST HAVE... ITS AMAZING!
+                    onTap = {
+                        onClick(media.name)
                     }
                 )
             }
