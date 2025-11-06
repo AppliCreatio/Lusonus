@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.example.lusonus.data.model.MenuItem
 import com.example.lusonus.navigation.LocalNavController
@@ -13,7 +14,7 @@ import com.example.lusonus.navigation.Routes
 
 @Composable
 fun MenuDropDown(){
-    var expanded by remember { mutableStateOf(false) }
+    var expanded by rememberSaveable { mutableStateOf(false) }
     val navController = LocalNavController.current
 
     val menuList: List<MenuItem> = listOf(MenuItem("Profile") { navController.navigate(Routes.Profile.route) },

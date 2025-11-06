@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.runtime.snapshots.SnapshotStateMap
+import com.example.lusonus.ui.utils.search
 import com.example.lusonus.ui.utils.sort
 import java.util.Date
 import kotlin.text.clear
@@ -68,5 +69,8 @@ open class PlaylistLibrary {
 
     // Sorts all playlists
     fun sortPlaylists(type: String) = sort(playlists, type)
+
+    //Searches through the playlists
+    fun searchPlaylists(query: String) = search(playlists, query)
 
 }

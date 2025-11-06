@@ -17,7 +17,7 @@ import com.example.lusonus.data.model.MenuItem
  * I decide the contents that are used for this dropdown when calling the composable.
  */
 @Composable
-fun MinimalDropdownMenu(menuItems: List<MenuItem>, expanded: Boolean, toggleAction: (expanded: Boolean) -> Unit, icon: ImageVector) {
+fun MinimalDropdownMenu(menuItems: List<MenuItem>, expanded: Boolean, toggleAction: (Boolean) -> Unit, icon: ImageVector) {
 
     Box {
         IconButton(onClick = { toggleAction(expanded) } ) {
