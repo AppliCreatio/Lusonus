@@ -24,6 +24,7 @@ import com.example.lusonus.ui.composables.Layout.Buttons.MenuDropDown.MinimalDro
 import com.example.organisemedia.Layout.FloatingActionButton.SharedFloatingActionButton
 import com.example.lusonus.ui.composables.Layout.MainLayout
 import com.example.lusonus.ui.composables.PlaylistComposables.MediaPicker
+import com.example.lusonus.ui.composables.SearchBar
 
 @Composable
 fun PlaylistScreen(
@@ -53,19 +54,10 @@ fun PlaylistScreen(
             Row(modifier = Modifier.fillMaxWidth()) {
                 MinimalDropdownMenu(sortOptions, expanded, { expanded = !it }, Icons.Sharp.Menu)
 
-                OutlinedTextField(
-                    value = searchInfo,
-                    onValueChange = {
+                SearchBar(searchInfo) {
                         searchInfo = it
                         viewModel.searchMedia( searchInfo.lowercase())
-                    },
-                    label = { Text("Description") },
-                    colors = TextFieldDefaults.colors(
-                        unfocusedContainerColor = MaterialTheme.colorScheme.tertiaryContainer,
-                    ),
-                    singleLine = true
-                )
-
+                    }
             }
 
             PlaylistContent(

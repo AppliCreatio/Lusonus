@@ -28,6 +28,7 @@ import com.example.lusonus.ui.composables.Layout.MainLayout
 import com.example.lusonus.navigation.LocalNavController
 import com.example.lusonus.navigation.Routes
 import com.example.lusonus.ui.composables.Layout.Buttons.MenuDropDown.MinimalDropdownMenu
+import com.example.lusonus.ui.composables.SearchBar
 import com.example.lusonus.ui.screens.PlaylistLibraryScreen.PlaylistLibraryViewModel
 
 @Composable
@@ -74,29 +75,21 @@ fun MediaLibraryScreen() {
             Row(modifier = Modifier.fillMaxWidth()) {
                 MinimalDropdownMenu(sortOptions, expanded, { expanded = !it }, Icons.Sharp.Menu)
 
-                OutlinedTextField(
-                    value = searchInfo,
-                    onValueChange = {
+                SearchBar(searchInfo) {
                         searchInfo = it
                         viewModel.searchMedia( searchInfo.lowercase())
-                    },
-                    label = { Text("Description") },
-                    colors = TextFieldDefaults.colors(
-                        unfocusedContainerColor = MaterialTheme.colorScheme.tertiaryContainer,
-                    ),
-                    singleLine = true
-                )
+                    }
+            }
 
-            MediaLibraryContent(
-                files = files,
-                onDeleteMedia = { uri ->
-                    viewModel.removeFile(uri)
-                },
-                onClickMedia = { mediaName ->
-                    navController.navigate(Routes.MediaPlayer.go(mediaName))
-                }
-            )
-        }
+                MediaLibraryContent(
+                    files = files,
+                    onDeleteMedia = { uri ->
+                        viewModel.removeFile(uri)
+                    },
+                    onClickMedia = { mediaName ->
+                        navController.navigate(Routes.MediaPlayer.go(mediaName))
+                    }
+                )
                   },
         screenTitle = "Media",
         floatingActionButton = {
