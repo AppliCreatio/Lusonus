@@ -1,0 +1,36 @@
+package com.example.lusonus.ui.screens.PlaylistLibraryScreen
+
+import androidx.lifecycle.ViewModel
+import com.example.lusonus.data.model.SharedPlaylistLibrary
+import com.example.lusonus.data.model.Media
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateMapOf
+import androidx.compose.runtime.snapshots.SnapshotStateList
+import androidx.compose.runtime.snapshots.SnapshotStateMap
+import com.example.lusonus.ui.utils.sort
+
+class PlaylistLibraryViewModel : ViewModel() {
+
+    private val playlistLibrary = SharedPlaylistLibrary
+
+    // Creates a playlist.
+    fun createPlaylist(name: String) {
+        playlistLibrary.createPlaylist(name)
+    }
+
+    // Deletes a playlist.
+    fun deletePlaylist(name: String) {
+        playlistLibrary.deletePlaylist(name)
+    }
+
+    // Get all playlist names.
+    fun getAllPlaylists(): List<String> {
+        return playlistLibrary.getAllPlaylists().map { it.name }
+    }
+
+    fun sortPlaylist(type: String) {
+        val sortedPlaylist = playlistLibrary.sortPlaylists(type)
+        playlistLibrary.playlists.clear()
+        playlistLibrary.playlists.addAll(sortedPlaylist)
+    }
+}
