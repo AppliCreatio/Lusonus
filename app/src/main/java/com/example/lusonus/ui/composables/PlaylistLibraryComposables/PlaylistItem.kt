@@ -28,7 +28,7 @@ fun PlaylistItem(
             .fillMaxWidth()
             .padding(vertical = 4.dp, horizontal = 8.dp)
             // THIS IS SO COOL! It's how you can check for long presses!
-            .pointerInput(Unit) {
+            .pointerInput(playlistName) {
                 detectTapGestures(
                     // We specify a long press.
                     onLongPress = {

@@ -30,7 +30,7 @@ fun PlaylistContent(
                     .fillMaxWidth()
                     .padding(4.dp)
                     // THIS IS SO COOL! It's how you can check for long presses!
-                    .pointerInput(Unit) {
+                    .pointerInput(media) {
                         detectTapGestures(
                             // We specify a long press.
                             onLongPress = {
