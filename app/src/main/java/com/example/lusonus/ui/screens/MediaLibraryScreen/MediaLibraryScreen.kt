@@ -74,7 +74,6 @@ fun MediaLibraryScreen() {
                         viewModel.searchMedia( searchInfo.lowercase())
                     }
             }
-
                 MediaLibraryContent(
                     files = files,
                     onDeleteMedia = { uri ->

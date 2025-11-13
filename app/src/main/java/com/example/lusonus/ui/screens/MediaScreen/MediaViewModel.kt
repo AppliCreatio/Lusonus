@@ -15,7 +15,7 @@ class MediaViewModel(private val mediaName: String) : ViewModel() {
 
     // Gets the media from the name. Does the get(), read next comment for details.
     // This can't be null, but it won't be based on how you get to the screen in the first place.
-    val media get() = mediaLibrary.getMedia(mediaName)!!
+    val media get() = mediaLibrary.getMedia(mediaName)
 
     // Property defining whether the Queue is open.
     var isQueueOpen by mutableStateOf(false)

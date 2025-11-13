@@ -29,7 +29,7 @@ fun MediaLibraryItem(
             .fillMaxWidth()
             .padding(vertical = 4.dp, horizontal = 8.dp)
             // THIS IS SO COOL! It's how you can check for long presses!
-            .pointerInput(Unit) {
+            .pointerInput(media.uri) {
                 detectTapGestures(
                     // We specify a long press.
                     onLongPress = {
@@ -38,6 +38,7 @@ fun MediaLibraryItem(
 
                     // AND THEN WE CAN JUST HAVE... ITS AMAZING!
                     onTap = {
+
                         onClick(media.name)
                     }
                 )
