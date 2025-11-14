@@ -6,6 +6,7 @@ plugins {
     id("org.jetbrains.kotlin.android") version "1.9.0" apply false
     id("org.jetbrains.kotlin.plugin.compose") version "2.0.0" apply false
     id("org.jlleitschuh.gradle.ktlint") version "11.5.1"
+    id("com.google.gms.google-services") version "4.4.4" apply false
 }
 
 ktlint {
