@@ -1,4 +1,4 @@
-package com.example.lusonus.ui.composables
+package com.example.lusonus.ui.composables.Layout.SearchAndSort
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -11,7 +11,7 @@ fun SearchBar(searchInfo: String, searchAction: (String) -> Unit) {
         OutlinedTextField(
             value = searchInfo,
             onValueChange = {searchAction(it)},
-            label = { Text("Description") },
+            label = { Text("Search", color = MaterialTheme.colorScheme.onTertiaryContainer) },
             colors = TextFieldDefaults.colors(
                 unfocusedContainerColor = MaterialTheme.colorScheme.tertiaryContainer,
             ),
