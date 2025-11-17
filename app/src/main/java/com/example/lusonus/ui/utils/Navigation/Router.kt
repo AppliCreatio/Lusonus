@@ -23,10 +23,12 @@ import com.example.lusonus.ui.screens.MediaLibraryScreen.MediaLibraryScreen
 import com.example.lusonus.ui.screens.PlaylistLibraryScreen.PlaylistLibraryScreen
 import com.example.lusonus.ui.screens.PlaylistScreen.PlaylistScreen
 import com.example.lusonus.data.model.ExternalStorage
+import com.example.lusonus.ui.screens.FolderScreen.FolderScreen
 import com.example.lusonus.ui.screens.MediaLibraryScreen.MediaLibraryViewModel
 import com.example.lusonus.ui.screens.MediaScreen.MediaScreen
 import com.example.lusonus.ui.screens.PlaylistLibraryScreen.PlaylistLibraryViewModel
 import com.example.lusonus.ui.screens.SettingsScreen.SettingScreen
+import com.example.lusonus.ui.screens.folders.FolderLibraryViewModel
 
 // Allows the passing down of data. (Provider pattern)
 val LocalNavController = compositionLocalOf<NavHostController> { error("No NavController found!") }
@@ -93,7 +95,18 @@ fun Router(navController: NavHostController, modifier: Modifier = Modifier) {
         composable(Routes.Settings.route) { SettingScreen() }
 
         composable(Routes.FolderLibrary.route) { FolderLibraryScreen() }
+        composable(
+            route = Routes.Folder.route,
+            arguments = listOf(navArgument(name = "folderName") { type = NavType.StringType })
+        ) {
+                backStackEntry ->
 
+            // Gets parameter from the URL.
+            val folderName = backStackEntry.arguments?.getString("folderName") ?: ""
+            FolderScreen(
+                folderName = folderName,
+            )
+        }
         composable(Routes.FAQ.route) { FAQScreen() }
     }
 }

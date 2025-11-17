@@ -19,7 +19,7 @@ open class MediaLibrary {
     fun addMedia(pendingMedia: Map<String, Uri>) {
         pendingMedia.forEach { (key, value) ->
             // Makes sure to not have duplicates.
-            if (mediaList.none { it.uri == value }) {
+            if (mediaList.none { it.uri == value && it.name == key }) {
                 mediaList.add(Media(key, value))
             }
         }
