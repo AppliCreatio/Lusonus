@@ -8,7 +8,6 @@ sealed class Routes(val route: String) {
     object MediaPlayer : Routes(route = "MediaScreenRoute/{mediaName}") {
         fun go(mediaName: String) = "MediaScreenRoute/$mediaName"
     }
-
     object PlaylistLibrary: Routes(route = "PlaylistLibraryScreenRoute")
     object Playlist : Routes(route = "PlaylistScreenRoute/{playlistName}") {
         fun createRoute(playlistName: String) = "PlaylistScreenRoute/$playlistName"
@@ -27,5 +26,8 @@ sealed class Routes(val route: String) {
     object Register : Routes("RegisterScreenRoute")
     object FAQ : Routes("FAQScreenRoute")
     object Settings : Routes("FolderScreenRoute")
-    object Folders : Routes("FoldersViewScreenRoute")
+    object FolderLibrary : Routes("FoldersLibraryScreenRoute")
+    object Folder : Routes(route = "FolderScreenRoute/{folderName}") {
+        fun createRoute(folderName: String) = "FolderScreenRoute/$folderName"
+    }
 }

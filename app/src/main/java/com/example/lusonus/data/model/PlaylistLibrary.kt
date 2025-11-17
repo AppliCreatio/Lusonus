@@ -18,7 +18,6 @@ open class PlaylistLibrary {
                 Playlist(
                     name = name,
                     media = mutableStateListOf(),
-                    //dateAdded = Date()
                 )
             )
         }
@@ -55,11 +54,11 @@ open class PlaylistLibrary {
         }
     }
 
-    // Get's a specific playlist.
+    // Gets a specific playlist.
     fun getPlaylist(name: String): Playlist? =
         playlists.find { it.name == name }
 
-    // Get's all playlists.
+    // Gets all playlists.
     fun getAllPlaylists(): List<Playlist> = playlists
 
     // Sorts all playlists

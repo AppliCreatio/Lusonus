@@ -1,5 +1,6 @@
 package com.example.lusonus.navigation
 
+import FolderLibraryScreen
 import androidx.activity.ComponentActivity
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
@@ -22,7 +23,6 @@ import com.example.lusonus.ui.screens.MediaLibraryScreen.MediaLibraryScreen
 import com.example.lusonus.ui.screens.PlaylistLibraryScreen.PlaylistLibraryScreen
 import com.example.lusonus.ui.screens.PlaylistScreen.PlaylistScreen
 import com.example.lusonus.data.model.ExternalStorage
-import com.example.lusonus.ui.screens.FolderViewScreen.FolderViewScreen
 import com.example.lusonus.ui.screens.MediaLibraryScreen.MediaLibraryViewModel
 import com.example.lusonus.ui.screens.MediaScreen.MediaScreen
 import com.example.lusonus.ui.screens.PlaylistLibraryScreen.PlaylistLibraryViewModel
@@ -92,7 +92,7 @@ fun Router(navController: NavHostController, modifier: Modifier = Modifier) {
 
         composable(Routes.Settings.route) { SettingScreen() }
 
-        composable(Routes.Folders.route) { FolderViewScreen() }
+        composable(Routes.FolderLibrary.route) { FolderLibraryScreen() }
 
         composable(Routes.FAQ.route) { FAQScreen() }
     }

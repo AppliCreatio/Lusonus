@@ -17,7 +17,6 @@ open class MediaLibrary {
 
     // Method to addMedia to the Library, we initialize media items.
     fun addMedia(pendingMedia: Map<String, Uri>) {
-        val now = Date()
         pendingMedia.forEach { (key, value) ->
             // Makes sure to not have duplicates.
             if (mediaList.none { it.uri == value }) {

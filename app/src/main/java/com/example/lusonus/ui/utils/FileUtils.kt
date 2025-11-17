@@ -2,6 +2,7 @@ package com.example.lusonus.ui.utils
 
 import android.content.Context
 import android.net.Uri
+import android.provider.DocumentsContract
 import android.provider.OpenableColumns
 
 // Some research here...
@@ -34,4 +35,44 @@ fun Context.getFileName(uri: Uri): String {
     }
 
     return name
+}
+
+fun Context.getFolderName(uri: Uri): String {
+    return uri.lastPathSegment?.substringAfterLast(":") ?: "Folder"
+}
+
+
+fun Context.getMediaUrisInFolder(folderUri: Uri): List<Uri> {
+    val result = mutableListOf<Uri>()
+
+    val children = contentResolver.query(
+        DocumentsContract.buildChildDocumentsUriUsingTree(
+            folderUri,
+            DocumentsContract.getTreeDocumentId(folderUri)
+        ),
+        arrayOf(
+            DocumentsContract.Document.COLUMN_DOCUMENT_ID,
+            DocumentsContract.Document.COLUMN_MIME_TYPE
+        ),
+        null,
+        null,
+        null
+    ) ?: return result
+
+    children.use { cursor ->
+        val idIndex = cursor.getColumnIndex(DocumentsContract.Document.COLUMN_DOCUMENT_ID)
+        val mimeIndex = cursor.getColumnIndex(DocumentsContract.Document.COLUMN_MIME_TYPE)
+
+        while (cursor.moveToNext()) {
+            val docId = cursor.getString(idIndex)
+            val mime = cursor.getString(mimeIndex)
+
+            if (mime.startsWith("audio/") || mime.startsWith("video/")) {
+                val childUri = DocumentsContract.buildDocumentUriUsingTree(folderUri, docId)
+                result.add(childUri)
+            }
+        }
+    }
+
+    return result
 }
