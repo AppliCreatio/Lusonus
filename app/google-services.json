@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "190884301782",
+    "project_id": "applicreatio-lusonus",
+    "storage_bucket": "applicreatio-lusonus.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:190884301782:android:96cfac09bb5f3ce078f277",
+        "android_client_info": {
+          "package_name": "com.example.lusonus"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRK8kQRslY2yP_rQ2zmpcUgmKFsJXRPG4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
