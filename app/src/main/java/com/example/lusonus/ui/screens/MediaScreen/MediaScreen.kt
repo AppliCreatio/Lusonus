@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -24,13 +25,24 @@ import com.example.lusonus.ui.theme.AppTheme
 
 @Composable
 fun MediaScreen(mediaName: String) {
+    // Gets nav controller
+//    val navController = LocalNavController.current
+
     // Gets the media view model, calls the media factory so we can pass the media name to the
     // view model to be able to get the specific media.
     val viewModel: MediaViewModel = viewModel(factory = MediaViewModelFactory(mediaName))
 
+//    if (viewModel.media == null) {
+//        // Media might have been deleted or list not yet updated
+//        LaunchedEffect(Unit) {
+//            navController.popBackStack() // or show an error/snackbar
+//        }
+//        return
+//    }
+
     MainLayout(
         content = {
-            MediaContent(viewModel.media, viewModel.isQueueOpen)
+            MediaContent(viewModel.media!!, viewModel.isQueueOpen)
         },
         screenTitle = mediaName,
         bottomBar = { MediaBottomBar() }
