@@ -9,6 +9,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.lusonus.data.model.MenuItem
 import com.example.organisemedia.Helper.Playlist.NewPlaylistDialog
@@ -17,7 +18,9 @@ import com.example.lusonus.ui.composables.Layout.MainLayout
 import com.example.lusonus.navigation.LocalNavController
 import com.example.lusonus.navigation.Routes
 import com.example.lusonus.ui.composables.Layout.Buttons.MenuDropDown.MinimalDropdownMenu
-import com.example.lusonus.ui.composables.SearchBar
+import com.example.lusonus.ui.composables.Layout.SearchAndSort.SearchAndSort
+import com.example.lusonus.ui.composables.Layout.SearchAndSort.SearchBar
+import kotlin.math.exp
 
 @Composable
 fun PlaylistLibraryScreen() {
@@ -25,7 +28,7 @@ fun PlaylistLibraryScreen() {
     val navController = LocalNavController.current
 
     // Gets the view model information
-    val viewModel: PlaylistLibraryViewModel = viewModel(viewModelStoreOwner = LocalNavController.current.context as ComponentActivity) // Gets an existing MediaViewModel if it exists.
+    val viewModel: PlaylistLibraryViewModel = viewModel(viewModelStoreOwner = LocalNavController.current.context as ComponentActivity)
 
     // Gets files from view model.
     val playlists = viewModel.getAllPlaylists()
@@ -63,13 +66,10 @@ fun PlaylistLibraryScreen() {
                 MenuItem("Alphabetical", { viewModel.sortPlaylist("alphabetically")})
             )
 
-            Row() {
-                MinimalDropdownMenu(sortOptions, expanded, { expanded = !it }, Icons.Sharp.Menu)
-                SearchBar(searchInfo) {
-                    searchInfo = it
-                    viewModel.searchPlaylists( searchInfo.lowercase())
-                }
-            }
+            SearchAndSort(sortOptions, expanded, { expanded = !it }, searchInfo, {
+                searchInfo = it
+                viewModel.searchPlaylists( searchInfo.lowercase())
+            })
 
             PlaylistLibraryContent(
                 playlists = playlists,

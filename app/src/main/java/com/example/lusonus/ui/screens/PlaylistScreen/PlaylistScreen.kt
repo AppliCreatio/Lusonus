@@ -19,8 +19,9 @@ import com.example.lusonus.navigation.Routes
 import com.example.lusonus.ui.composables.Layout.Buttons.MenuDropDown.MinimalDropdownMenu
 import com.example.organisemedia.Layout.FloatingActionButton.SharedFloatingActionButton
 import com.example.lusonus.ui.composables.Layout.MainLayout
+import com.example.lusonus.ui.composables.Layout.SearchAndSort.SearchAndSort
 import com.example.lusonus.ui.composables.PlaylistComposables.MediaPicker
-import com.example.lusonus.ui.composables.SearchBar
+import com.example.lusonus.ui.composables.Layout.SearchAndSort.SearchBar
 
 @Composable
 fun PlaylistScreen(
@@ -47,14 +48,10 @@ fun PlaylistScreen(
                 MenuItem("Alphabetical") { viewModel.sortMedia("alphabetically") }
             )
 
-            Row(modifier = Modifier.fillMaxWidth()) {
-                MinimalDropdownMenu(sortOptions, expanded, { expanded = !it }, Icons.Sharp.Menu)
-
-                SearchBar(searchInfo) {
-                        searchInfo = it
-                        viewModel.searchMedia( searchInfo.lowercase())
-                    }
-            }
+            SearchAndSort(sortOptions, expanded, { expanded = !it }, searchInfo, {
+                searchInfo = it
+                viewModel.searchMedia( searchInfo.lowercase())
+            })
 
             PlaylistContent(
                 playlistFiles = playlistFiles,
