@@ -1,6 +1,7 @@
 package com.example.lusonus.ui.composables.MediaComposables.MediaPopUp
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,12 +20,19 @@ import androidx.compose.material3.SegmentedButtonDefaults.Icon
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.lusonus.R
+import com.example.lusonus.data.model.ExternalStorage
+import com.example.lusonus.data.model.ExternalStorageListSaver
+import com.example.lusonus.data.model.Media
 import com.example.lusonus.ui.screens.MediaLibraryScreen.MediaPopUpControls
 import com.example.lusonus.ui.screens.MediaLibraryScreen.MediaPopUpInfo
 
@@ -32,7 +40,7 @@ import com.example.lusonus.ui.screens.MediaLibraryScreen.MediaPopUpInfo
 fun MediaPopUpContent (mediaName: String = "Media Name", mediaArtist: String = "Media Artist", isPaused: Boolean = false) {
     Card(
         modifier = Modifier
-            .fillMaxWidth(), // Optional: Makes the Box fill the available space
+            .fillMaxWidth().clickable(), // Optional: Makes the Box fill the available space
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer, // Set the background color of the card
             contentColor = MaterialTheme.colorScheme.primary // Set the color of the content inside the card
@@ -51,6 +59,18 @@ fun MediaPopUpContent (mediaName: String = "Media Name", mediaArtist: String = "
                 MediaPopUpControls(isPaused)
             }
         }
+    }
+}
+
+@Composable
+fun rememberCurrentlyPlayingMedia(): MutableState<Media> {
+    return rememberSaveable(saver = ExternalStorageListSaver) {
+        mutableStateListOf(
+            ExternalStorage("test", false),
+            ExternalStorage("test1", false),
+            ExternalStorage("test2", false),
+            ExternalStorage("test3", false),
+        )
     }
 }
 

@@ -7,6 +7,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -22,6 +23,7 @@ import com.example.lusonus.ui.screens.MediaLibraryScreen.MediaLibraryScreen
 import com.example.lusonus.ui.screens.PlaylistLibraryScreen.PlaylistLibraryScreen
 import com.example.lusonus.ui.screens.PlaylistScreen.PlaylistScreen
 import com.example.lusonus.data.model.ExternalStorage
+import com.example.lusonus.data.model.Media
 import com.example.lusonus.ui.screens.FolderViewScreen.FolderViewScreen
 import com.example.lusonus.ui.screens.MediaLibraryScreen.MediaLibraryViewModel
 import com.example.lusonus.ui.screens.MediaScreen.MediaScreen
@@ -32,6 +34,7 @@ import com.example.lusonus.ui.screens.SettingsScreen.SettingScreen
 val LocalNavController = compositionLocalOf<NavHostController> { error("No NavController found!") }
 val LocalStorageList =
     compositionLocalOf<MutableList<ExternalStorage>> { error("No storage list found!") }
+val LocalCurrentMedia = compositionLocalOf<MutableState<Media?>> { error("No currently playing media")  }
 @Composable
 // Router deals with managing our different pages and which route calls which composable.
 fun Router(navController: NavHostController, modifier: Modifier = Modifier) {

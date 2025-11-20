@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.listSaver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.navigation.compose.rememberNavController
@@ -13,7 +14,9 @@ import com.example.lusonus.navigation.LocalNavController
 import com.example.lusonus.navigation.Router
 import com.example.lusonus.navigation.LocalStorageList
 import com.example.lusonus.data.model.ExternalStorage
+import com.example.lusonus.data.model.Media
 import com.example.lusonus.data.model.rememberExternalStorageList
+import com.example.lusonus.navigation.LocalCurrentMedia
 import com.example.lusonus.ui.theme.AppTheme
 
 class MainActivity : ComponentActivity() {
@@ -26,11 +29,15 @@ class MainActivity : ComponentActivity() {
 
                 // Provides the navController to everything
                 val storageList = rememberExternalStorageList()
+                val currentMedia = rememberSaveable { mutableStateOf<Media?>(null) }
 
-                CompositionLocalProvider(LocalStorageList provides storageList) {
-                            CompositionLocalProvider(LocalNavController provides navController) {
-                                Router(navController)
-                            }
+                CompositionLocalProvider(LocalCurrentMedia provides currentMedia) {
+                    CompositionLocalProvider(LocalStorageList provides storageList) {
+                        CompositionLocalProvider(LocalNavController provides navController) {
+                            Router(navController)
+                        }
+                }
+
             }
         }
     }
