@@ -18,17 +18,18 @@ import com.example.lusonus.ui.composables.Layout.MainLayout
  */
 @Composable
 fun FAQScreen() {
-
     val containerDisplay: Modifier = Modifier
         .padding(horizontal = 10.dp)
         .fillMaxWidth()
         .background(MaterialTheme.colorScheme.secondaryContainer, shape = RoundedCornerShape(10.dp))
+
     MainLayout({
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background),
-            verticalArrangement = Arrangement.spacedBy(20.dp)
+                .background(MaterialTheme.colorScheme.background)
+                .padding(vertical = 10.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
 
             item {

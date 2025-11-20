@@ -38,7 +38,8 @@ fun NewPlaylistDialog(
                         onValueChange = { playlistName = it },
                         label = {
                             Text("Playlist Name")
-                        }
+                        },
+                        singleLine = true
                     )
                 }
             },

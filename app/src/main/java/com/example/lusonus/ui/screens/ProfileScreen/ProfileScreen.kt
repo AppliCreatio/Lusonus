@@ -60,7 +60,8 @@ fun DisplayProfile() {
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background),
+                .background(MaterialTheme.colorScheme.background)
+                .padding(vertical = 10.dp),
             verticalArrangement = Arrangement.spacedBy(20.dp)
         ) {
 
