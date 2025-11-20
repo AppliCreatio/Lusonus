@@ -1,6 +1,7 @@
 package com.example.lusonus.ui.screens.PlaylistLibraryScreen
 
 import androidx.activity.ComponentActivity
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.sharp.Menu
@@ -17,9 +18,11 @@ import com.example.organisemedia.Layout.FloatingActionButton.SharedFloatingActio
 import com.example.lusonus.ui.composables.Layout.MainLayout
 import com.example.lusonus.navigation.LocalNavController
 import com.example.lusonus.navigation.Routes
+import com.example.lusonus.ui.composables.Layout.BottomBar.SharedBottomBar
 import com.example.lusonus.ui.composables.Layout.Buttons.MenuDropDown.MinimalDropdownMenu
 import com.example.lusonus.ui.composables.Layout.SearchAndSort.SearchAndSort
 import com.example.lusonus.ui.composables.Layout.SearchAndSort.SearchBar
+import com.example.lusonus.ui.composables.MediaComposables.MediaPopUp.MediaPopUpContent
 import kotlin.math.exp
 
 @Composable
@@ -82,6 +85,13 @@ fun PlaylistLibraryScreen() {
             )
         },
         screenTitle = "Playlists",
+        bottomBar = {
+            Column {
+                MediaPopUpContent()
+                SharedBottomBar()
+            }
+
+        },
         floatingActionButton = {
             SharedFloatingActionButton(
                 onClick = {

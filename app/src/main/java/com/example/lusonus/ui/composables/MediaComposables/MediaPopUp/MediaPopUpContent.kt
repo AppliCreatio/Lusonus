@@ -1,12 +1,17 @@
 package com.example.lusonus.ui.composables.MediaComposables.MediaPopUp
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -25,23 +30,28 @@ import com.example.lusonus.ui.screens.MediaLibraryScreen.MediaPopUpInfo
 
 @Composable
 fun MediaPopUpContent (mediaName: String = "Media Name", mediaArtist: String = "Media Artist", isPaused: Boolean = false) {
-    BottomAppBar (
-        containerColor = MaterialTheme.colorScheme.primaryContainer,
-        contentColor = MaterialTheme.colorScheme.primary,
-        actions = {
-            Row (
-                modifier = Modifier
-                    .padding(20.dp, 10.dp)
-                    .fillMaxSize(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceEvenly) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth(), // Optional: Makes the Box fill the available space
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.primaryContainer, // Set the background color of the card
+            contentColor = MaterialTheme.colorScheme.primary // Set the color of the content inside the card
+        ),
+    ) {
+        Row (
+            modifier = Modifier
+                .padding(20.dp, 10.dp)
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween) {
 
-                MediaPopUpInfo(mediaName, mediaArtist)
+            MediaPopUpInfo(mediaName, mediaArtist)
 
+            Row {
                 MediaPopUpControls(isPaused)
             }
         }
-    )
+    }
 }
 
 @Preview
