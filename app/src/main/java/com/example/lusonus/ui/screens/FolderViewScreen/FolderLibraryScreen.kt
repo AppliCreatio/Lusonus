@@ -4,11 +4,16 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.lusonus.data.model.MenuItem
 import com.example.lusonus.navigation.LocalNavController
@@ -57,8 +62,33 @@ fun FolderLibraryScreen() {
     var expanded by rememberSaveable { mutableStateOf(false) }
     var searchInfo by rememberSaveable { mutableStateOf("") }
 
+    val lifecycleOwner = LocalLifecycleOwner.current
+
+    // Refreshes when the screen appears and when the app returns to the foreground.
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_RESUME) {
+                // User returned to the app while screen is active.
+                viewModel.displayedFolders.forEach { folder ->
+                    viewModel.refreshFolder(context, folder.uri)
+                }
+            }
+        }
+
+        lifecycleOwner.lifecycle.addObserver(observer)
+
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
+        }
+    }
+
     MainLayout(
         content = {
+            LaunchedEffect(Unit) {
+                viewModel.displayedFolders.forEach { folder ->
+                    viewModel.refreshFolder(context, folder.uri)
+                }
+            }
 
             val sortOptions = listOf(
                 MenuItem("Alphabetical") { viewModel.sortFolders("alphabetically") }

@@ -23,6 +23,15 @@ open class FolderLibrary {
         }
     }
 
+    // Updates the folder.
+    fun replaceFolder(newFolder: Folder) {
+        val index = folders.indexOfFirst { it.uri == newFolder.uri }
+        if (index != -1) {
+            // Replace with a new snapshot folder.
+            folders[index] = newFolder
+        }
+    }
+
     // Remove folder
     fun removeFolder(uri: Uri) {
         val folder = folders.find { it.uri == uri } ?: return

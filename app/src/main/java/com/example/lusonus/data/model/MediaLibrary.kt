@@ -1,8 +1,10 @@
 package com.example.lusonus.data.model
 
+import android.content.Context
 import android.net.Uri
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
+import androidx.documentfile.provider.DocumentFile
 import com.example.lusonus.ui.utils.search
 import com.example.lusonus.ui.utils.sort
 import java.util.Date
@@ -41,9 +43,21 @@ open class MediaLibrary {
         return mediaList.find { it.name == name }
     }
 
-    // Method that clears the MediaLibrary.
-    fun clear() {
+    fun refreshMedia(context: Context) {
+        // Builds a new SnapshotStateList
+        val refreshed = mutableListOf<Media>()
+
+        mediaList.forEach { media ->
+            val doc = DocumentFile.fromSingleUri(context, media.uri)
+
+            // Only keeps if the file still exists.
+            if (doc != null && doc.exists()) {
+                refreshed.add(media)
+            }
+        }
+
         mediaList.clear()
+        mediaList.addAll(refreshed)
     }
 
     // Sorts the files

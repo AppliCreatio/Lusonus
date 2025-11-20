@@ -19,7 +19,6 @@ fun FolderScreen(folderName: String) {
     val viewModel: FolderViewModel = viewModel(factory = FolderViewModelFactory(folderName))
 
     val folderFiles = viewModel.folderFiles
-    val allMediaFiles = viewModel.allMediaFiles
 
     var expanded by remember { mutableStateOf(false) }
     var searchInfo by rememberSaveable { mutableStateOf("") }

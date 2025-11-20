@@ -14,7 +14,6 @@ class FolderViewModel(private val folderName: String) : ViewModel() {
     val folder get() = folderLibrary.getFolder(folderName)!!
 
     val folderFiles = mutableStateListOf<Media>().apply { addAll(folder.media) }
-    val allMediaFiles get() = mediaLibrary.mediaList
 
     fun searchMedia(query: String) {
         val matches = mediaLibrary.searchFiles(query)

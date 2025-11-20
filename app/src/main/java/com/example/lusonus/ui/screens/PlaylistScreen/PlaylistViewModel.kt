@@ -1,5 +1,6 @@
 package com.example.lusonus.ui.screens.PlaylistScreen
 
+import android.content.Context
 import android.net.Uri
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
@@ -40,6 +41,11 @@ class PlaylistViewModel(private val playlistName: String) : ViewModel() {
     fun searchMedia(query: String) {
         val matches = mediaLibrary.searchFiles(query)
         updateFiles(matches)
+    }
+
+    fun refreshMedia(context: Context) {
+        mediaLibrary.refreshMedia(context)
+        updateFiles()
     }
 
     // TODO: change the header of input box

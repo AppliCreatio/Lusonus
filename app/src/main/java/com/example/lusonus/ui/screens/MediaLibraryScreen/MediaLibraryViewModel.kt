@@ -36,6 +36,11 @@ class MediaLibraryViewModel : ViewModel() {
 
     }
 
+    fun refreshMedia(context: Context) {
+        mediaLibrary.refreshMedia(context)
+        updateFiles()
+    }
+
     fun searchMedia(query: String) {
         val matches = mediaLibrary.searchFiles(query)
         updateFiles(matches)

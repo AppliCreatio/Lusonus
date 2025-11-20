@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.sharp.Menu
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -17,6 +18,9 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.lusonus.data.model.MenuItem
 import com.example.organisemedia.Layout.FloatingActionButton.SharedFloatingActionButton
@@ -62,8 +66,29 @@ fun MediaLibraryScreen() {
     var expanded by remember { mutableStateOf(false) }
     var searchInfo by rememberSaveable { mutableStateOf("") }
 
+    val lifecycleOwner = LocalLifecycleOwner.current
+
+    // Refreshes when the screen appears and when the app returns to the foreground.
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_RESUME) {
+                // User returned to the app while screen is active.
+                viewModel.refreshMedia(context)
+            }
+        }
+
+        lifecycleOwner.lifecycle.addObserver(observer)
+
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
+        }
+    }
+
     MainLayout(
         content = {
+            LaunchedEffect(Unit) {
+                viewModel.refreshMedia(context)
+            }
 
             val sortOptions = listOf<MenuItem>(
                 MenuItem("Alphabetical") { viewModel.sortMedia("alphabetically") }
