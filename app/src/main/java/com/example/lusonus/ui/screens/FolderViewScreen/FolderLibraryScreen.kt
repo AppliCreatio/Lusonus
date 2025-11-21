@@ -1,3 +1,4 @@
+import android.app.Application
 import android.content.Intent
 import android.net.Uri
 import androidx.activity.ComponentActivity
@@ -39,8 +40,11 @@ fun FolderLibraryScreen() {
     // Gets the local context.
     val context = LocalContext.current
 
+    // Gets the application (super important for updating media in folders)
+    val app = context.applicationContext as Application
+
     // Gets the viewmodel for this view.
-    val viewModel: FolderLibraryViewModel = viewModel(LocalNavController.current.context as ComponentActivity)
+    val viewModel: FolderLibraryViewModel = viewModel(viewModelStoreOwner = LocalNavController.current.context as ComponentActivity)
 
     // DOES THE HOT FLOW!!!! YES!
     val folders by viewModel.folders.collectAsState()

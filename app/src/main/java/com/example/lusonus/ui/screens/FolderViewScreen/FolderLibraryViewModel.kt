@@ -2,15 +2,20 @@ package com.example.lusonus.ui.screens.FolderViewScreen
 
 import android.content.Context
 import android.net.Uri
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.lusonus.appContext
 import com.example.lusonus.data.model.*
 import com.example.lusonus.ui.utils.getFileName
 import com.example.lusonus.ui.utils.scanFolderRecursive
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class FolderLibraryViewModel : ViewModel() {
+class FolderLibraryViewModel : ViewModel(), LifecycleEventObserver {
 
     // Gets the singleton instance of the folder library.
     private val folderLibrary = SharedFolderLibrary
@@ -20,6 +25,35 @@ class FolderLibraryViewModel : ViewModel() {
 
     // Gets the folders from the model.
     val folders: StateFlow<List<Folder>> = folderLibrary.folders
+
+    // This is SUPER important.
+    // This makes it so the folders update regardless of where you are in the app when it resumes.
+    init {
+        // Observe app lifecycle.
+        ProcessLifecycleOwner.get().lifecycle.addObserver(this)
+    }
+
+    override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
+        if (event == Lifecycle.Event.ON_RESUME) {
+            refreshAllFolders()
+        }
+    }
+
+    // This methods refreshes all the imported folders (insanely important)
+    private fun refreshAllFolders() {
+        val context = appContext
+
+        // For each folder we call the refresh.
+        folderLibrary.folders.value.forEach { folder ->
+            refreshFolder(context, folder.uri)
+        }
+    }
+
+    // This is the final function needed to inherit from LifecycleEventObserver
+    // and is the ending function.
+    override fun onCleared() {
+        ProcessLifecycleOwner.get().lifecycle.removeObserver(this)
+    }
 
     // Adds a folder to the storage along with all the media involved with that folder.
     fun addFolder(context: Context, folderUri: Uri, folderName: String, folderMediaUris: List<Uri>) {
@@ -69,7 +103,7 @@ class FolderLibraryViewModel : ViewModel() {
     // Finalizes the updating of a folder.
     private fun updateFolder(folderUri: Uri, newUris: List<Uri>, context: Context) {
         // Gets existing one or returns if it's invalid.
-        val existing = folderLibrary.folders.value.find { it.uri == newUris } ?: return
+        val existing = folderLibrary.folders.value.find { it.uri == folderUri } ?: return
 
         // Makes new SnapshotStateList.
         val newMedia = newUris.map { uri ->

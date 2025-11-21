@@ -8,8 +8,11 @@ import androidx.lifecycle.viewModelScope
 import com.example.lusonus.data.model.Media
 import com.example.lusonus.data.model.SharedFolderLibrary
 import com.example.lusonus.data.model.SharedMediaLibrary
+import com.example.lusonus.ui.utils.getFileName
+import com.example.lusonus.ui.utils.scanFolderRecursive
 import com.example.lusonus.ui.utils.search
 import com.example.lusonus.ui.utils.sort
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -46,15 +49,32 @@ class FolderViewModel(private val folderName: String) : ViewModel() {
         }
     }
 
-    // Refreshes the media list (cleans up dead links).
+    // Refreshes the media list (cleans up dead links/find new links).
     fun refreshMedia(context: Context) {
-        // Filters out the invalid.
-        val refreshed = _folderFiles.value.filter { media ->
-            DocumentFile.fromSingleUri(context, media.uri)?.exists() == true
-        }
+        // Launch the coroutine.
+        viewModelScope.launch(Dispatchers.IO) {
+            // Get the folder we are in.
+            val folder = folderLibrary.getFolder(folderName) ?: return@launch // again this is an Android studio recommended return.
 
-        // Updates the flow.
-        _folderFiles.value = refreshed
+            val scannedUris = context.scanFolderRecursive(folder.uri)
+
+            // Maps new Uris to medias.
+            val scannedMedia = scannedUris.mapNotNull { uri ->
+                val name = context.getFileName(uri)
+                SharedMediaLibrary.modifyMedia(mapOf(name to uri))
+                SharedMediaLibrary.getMedia(name)
+            }
+
+            // Updates the flow.
+            _folderFiles.value = scannedMedia
+
+            // Updates the original folder.
+            folderLibrary.replaceFolder(
+                folder.copy(
+                    media = scannedMedia.toMutableList()
+                )
+            )
+        }
     }
 
     // Sort based on sorting type.
