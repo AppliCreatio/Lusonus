@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.sharp.Menu
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -31,7 +32,7 @@ fun PlaylistLibraryScreen() {
     val viewModel: PlaylistLibraryViewModel = viewModel(viewModelStoreOwner = LocalNavController.current.context as ComponentActivity)
 
     // Gets files from view model.
-    val playlists = viewModel.getAllPlaylists()
+    val playlists by viewModel.playlists.collectAsState()
 
     // State variables.
     var showDialog by rememberSaveable { mutableStateOf(value = false) }
@@ -72,7 +73,7 @@ fun PlaylistLibraryScreen() {
             })
 
             PlaylistLibraryContent(
-                playlists = playlists,
+                playlists = playlists.map {it.name},
                 onDeletePlaylist = { playlistName ->
                     viewModel.deletePlaylist(playlistName)
                 },
