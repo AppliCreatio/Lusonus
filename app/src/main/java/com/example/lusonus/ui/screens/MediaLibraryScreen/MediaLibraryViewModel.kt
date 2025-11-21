@@ -2,60 +2,47 @@ package com.example.lusonus.ui.screens.MediaLibraryScreen
 
 import android.content.Context
 import android.net.Uri
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.ViewModel
 import com.example.lusonus.data.model.Media
 import com.example.lusonus.data.model.SharedMediaLibrary
 import com.example.lusonus.ui.utils.getFileName
+import kotlinx.coroutines.flow.StateFlow
 
 // Media view model to deal with
 class MediaLibraryViewModel : ViewModel() {
     // Gets shared singleton instance.
     private val mediaLibrary = SharedMediaLibrary
 
-    // THIS IS COOL. It only gets the getter for the mediaList, meaning you can't edit it directly.
-    // (which is exactly what we want since we want to call the methods,
-    // its like having a private set in c#)
-    val files = SnapshotStateList<Media>().apply { addAll(mediaLibrary.mediaList) }
+    // Used to thing SnapshotStateList was cool... flows are so good.
+    val mediaFiles: StateFlow<List<Media>> = mediaLibrary.media
 
     // Add files to files.
     fun addFiles(context: Context, uris: List<Uri>) {
-        val pendingMedias = mutableMapOf<String, Uri>()
-        uris.forEach { uri ->
-            pendingMedias[context.getFileName(uri)] = uri
-        }
-        mediaLibrary.addMedia(pendingMedias)
-        updateFiles()
+        // THE RABBIT HOLES! Associate by is really really really cool.
+        val map = uris.associateBy { uri -> context.getFileName(uri) }
+
+        // Adds the medias to the data.
+        mediaLibrary.modifyMedia(map)
     }
 
-    // Removes a single media by its URI string
+    // Removes a single media by its URI.
     fun removeFile(uri: Uri) {
         mediaLibrary.removeMedia(uri)
-        updateFiles()
-
     }
 
+    // Refreshes the media list (cleans up dead links).
     fun refreshMedia(context: Context) {
         mediaLibrary.refreshMedia(context)
-        updateFiles()
     }
 
+    // Searches the media by a query.
     fun searchMedia(query: String) {
-        val matches = mediaLibrary.searchFiles(query)
-        updateFiles(matches)
+        mediaLibrary.searchFiles(query)
     }
 
-    // TODO: change the header of input box
-
+    // Sorts media by provided sorting type.
     fun sortMedia(type: String) {
-        val sorted = mediaLibrary.sortFiles(type)
-        updateFiles(sorted)
-
-    }
-
-    private fun updateFiles(newList: List<Media> = mediaLibrary.mediaList) {
-        files.clear()
-        files.addAll(newList)
+        mediaLibrary.sortFiles(type)
     }
 }

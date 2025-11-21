@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun FolderItem(
     folderName: String,
+    folderPath: String,
     onDelete: (String) -> Unit,
     onClick: (String) -> Unit
 ) {
@@ -38,7 +39,8 @@ fun FolderItem(
             modifier = Modifier.padding(12.dp).fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = folderName, style = MaterialTheme.typography.bodyLarge)
+            Text(text = folderName, style = MaterialTheme.typography.titleMedium)
+            Text(text = folderPath, style = MaterialTheme.typography.bodySmall)
         }
     }
 }

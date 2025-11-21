@@ -11,6 +11,7 @@ import androidx.compose.material.icons.sharp.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -41,9 +42,9 @@ fun MediaLibraryScreen() {
 
     val context = LocalContext.current
 
-    // Gets files from view model.
+    // Gets files from view model... but as a hot flow!
 
-    val files = viewModel.files
+    val files by viewModel.mediaFiles.collectAsState()
 
     // This is a very fancy thing!
     // It uses this thing called Activity Result API,

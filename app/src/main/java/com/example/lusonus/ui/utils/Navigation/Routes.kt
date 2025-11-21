@@ -16,13 +16,6 @@ sealed class Routes(val route: String) {
         fun go(name: String, description: String, profileImage: Uri) =
             "ProfileScreenRoute/$name/$description/${Uri.encode(profileImage.toString())}"
     }
-
-    //TODO: delete eventually
-//    object AddMusicEntry : Routes("MainScreenRoute/{entryType}") {
-//        fun go(entryType: MusicEntryTypes) =
-//            "MainScreenRoute/${entryType.toString()}"
-//    }
-
     object Register : Routes("RegisterScreenRoute")
     object FAQ : Routes("FAQScreenRoute")
     object Settings : Routes("FolderScreenRoute")

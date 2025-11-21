@@ -1,16 +1,12 @@
 package com.example.lusonus.navigation
 
 import FolderLibraryScreen
-import androidx.activity.ComponentActivity
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -24,11 +20,8 @@ import com.example.lusonus.ui.screens.PlaylistLibraryScreen.PlaylistLibraryScree
 import com.example.lusonus.ui.screens.PlaylistScreen.PlaylistScreen
 import com.example.lusonus.data.model.ExternalStorage
 import com.example.lusonus.ui.screens.FolderScreen.FolderScreen
-import com.example.lusonus.ui.screens.MediaLibraryScreen.MediaLibraryViewModel
 import com.example.lusonus.ui.screens.MediaScreen.MediaScreen
-import com.example.lusonus.ui.screens.PlaylistLibraryScreen.PlaylistLibraryViewModel
 import com.example.lusonus.ui.screens.SettingsScreen.SettingScreen
-import com.example.lusonus.ui.screens.folders.FolderLibraryViewModel
 
 // Allows the passing down of data. (Provider pattern)
 val LocalNavController = compositionLocalOf<NavHostController> { error("No NavController found!") }

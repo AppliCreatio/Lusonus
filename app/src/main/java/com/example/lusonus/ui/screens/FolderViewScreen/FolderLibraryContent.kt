@@ -7,24 +7,31 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import com.example.lusonus.data.model.Folder
 import com.example.lusonus.ui.composables.FolderLibraryComposables.FolderItem
+import com.example.lusonus.ui.utils.getName
 
 @Composable
 fun FolderLibraryContent(
-    folders: List<String>,
+    folders: List<Folder>,
     onDeleteFolder: (String) -> Unit,
     onClickFolder: (String) -> Unit
 ) {
+    // Gets the local context.
+    val context = LocalContext.current
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        items(folders) { folderName ->
+        items(folders) { folder ->
             FolderItem(
-                folderName = folderName,
+                folderName = folder.name,
+                folderPath = context.getName(folder.uri),
                 onDelete = onDeleteFolder,
                 onClick = onClickFolder
             )

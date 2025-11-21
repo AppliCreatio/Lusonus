@@ -8,6 +8,7 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -19,6 +20,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.lusonus.data.model.Media
 import com.example.lusonus.data.model.MenuItem
 import com.example.lusonus.navigation.LocalNavController
 import com.example.lusonus.navigation.Routes
@@ -42,9 +44,8 @@ fun PlaylistScreen(
     // view model to be able to get the specific playlist.
     val viewModel: PlaylistViewModel = viewModel(factory = PlaylistViewModelFactory(playlistName))
 
-    // Gets playlist files. Will update because of snapshot.
-    val playlistFiles = viewModel.playlistFiles
-    val allMediaFiles = viewModel.mediaFiles
+    val playlistFiles by viewModel.playlistFiles.collectAsState()
+    val allMediaFiles by viewModel.allMediaFiles.collectAsState()
 
     var showPicker by rememberSaveable { mutableStateOf(false) }
     var expanded by remember { mutableStateOf(false) }

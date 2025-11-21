@@ -1,102 +1,84 @@
-package com.example.lusonus.ui.screens.folders
+package com.example.lusonus.ui.screens.FolderViewScreen
 
 import android.content.Context
 import android.net.Uri
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.snapshots.SnapshotStateList
-import androidx.documentfile.provider.DocumentFile
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.lusonus.data.model.*
 import com.example.lusonus.ui.utils.getFileName
+import com.example.lusonus.ui.utils.scanFolderRecursive
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 
 class FolderLibraryViewModel : ViewModel() {
 
+    // Gets the singleton instance of the folder library.
     private val folderLibrary = SharedFolderLibrary
+
+    // Gets the singleton instance of the media library.
     private val mediaLibrary = SharedMediaLibrary
 
-    // Local copy that UI observes — same as PlaylistLibraryViewModel
-    val displayedFolders = mutableStateListOf<Folder>().apply {
-        addAll(folderLibrary.folders)
-    }
+    // Gets the folders from the model.
+    val folders: StateFlow<List<Folder>> = folderLibrary.folders
 
-    // UI will expect this → same pattern as playlists
-    fun getAllFolders(): List<String> {
-        return displayedFolders.map { it.name }
-    }
-
-    fun addFolder(
-        context: Context,
-        folderUri: Uri,
-        folderName: String,
-        folderMediaUris: List<Uri>
-    ) {
+    // Adds a folder to the storage along with all the media involved with that folder.
+    fun addFolder(context: Context, folderUri: Uri, folderName: String, folderMediaUris: List<Uri>) {
         val media = folderMediaUris.map { uri ->
             val name = context.getFileName(uri)
-            mediaLibrary.addMedia(mapOf(name to uri))
+            mediaLibrary.modifyMedia(mapOf(name to uri))
             mediaLibrary.getMedia(name)!!
         }
 
+        // Adds folder to the "storage"
         folderLibrary.addFolder(folderName, folderUri, media)
-        updateFolderDisplay()
     }
 
+    // Deletes a folder, deletes all involved media in the library.
     fun deleteFolder(name: String) {
-        val folder = displayedFolders.find { it.name == name } ?: return
-        folderLibrary.removeFolder(folder.uri)
-        updateFolderDisplay()
+        // Gets the folder to delete, if it can't find it we return.
+        folderLibrary.folders.value
+            .find { it.name == name }
+            ?.let { folderLibrary.removeFolder(it.uri) }
     }
 
-
+    // Sorts the folders based on provided sorting type.
     fun sortFolders(type: String) {
-        val sorted = folderLibrary.sortFolders(type)
-        updateFolderDisplay(sorted)
+        // Updates the list.
+        folderLibrary.sortFolders(type)
     }
 
+    // Searches the folders based on the query.
     fun searchFolders(query: String) {
-        val matches = folderLibrary.searchFolders(query)
-        updateFolderDisplay(matches)
+        // Updates the list.
+        folderLibrary.searchFolders(query)
     }
 
+    // Refreshes the folder (what you call when you update the folder).
+    // This is the "parent" function that starts up the coroutine.
     fun refreshFolder(context: Context, folderUri: Uri) {
-        val mediaUris = scanFolder(context, folderUri)
-        updateFolder(folderUri, mediaUris, context)
+        // Does a coroutine!!!
+        viewModelScope.launch {
+            // Does the most important recursive function ever, read it in FileUtils.kt
+            val mediaUris = context.scanFolderRecursive(folderUri)
+
+            // Calls the update.
+            updateFolder(folderUri, mediaUris, context)
+        }
     }
 
-    // Checks to see if their are invalid uris in the folder
-    private fun scanFolder(context: Context, folderUri: Uri): List<Uri> {
-        // gets the contents of the folder
-        val docFile = DocumentFile.fromTreeUri(context, folderUri) ?: return emptyList()
-
-        // returns the new cleaned version of the folder
-        return docFile.listFiles().filter { it.isFile }.mapNotNull { it.uri }
-    }
-
-    private fun updateFolder(folderUri: Uri, newMediaUris: List<Uri>, context: Context) {
+    // Finalizes the updating of a folder.
+    private fun updateFolder(folderUri: Uri, newUris: List<Uri>, context: Context) {
         // Gets existing one or returns if it's invalid.
-        val existing = folderLibrary.folders.find { it.uri == folderUri } ?: return
+        val existing = folderLibrary.folders.value.find { it.uri == newUris } ?: return
 
         // Makes new SnapshotStateList.
-        val updatedMedia = SnapshotStateList<Media>().apply {
-            newMediaUris.forEach { uri ->
-                val name = context.getFileName(uri)
-                mediaLibrary.addMedia(mapOf(name to uri))
-                mediaLibrary.getMedia(name)?.let { add(it) }
-            }
+        val newMedia = newUris.map { uri ->
+            val name = context.getFileName(uri)
+            mediaLibrary.modifyMedia(mapOf(name to uri))
+            mediaLibrary.getMedia(name)!!
         }
 
-        // Create a new folder list with the new media list.
-        val updatedFolder = existing.copy(media = updatedMedia)
-
-        // Replaces folder in shared library.
-        folderLibrary.replaceFolder(updatedFolder)
-
-        // Updates UI snapshot.
-        updateFolderDisplay()
-    }
-
-    // Updates the folder list presented to the user.
-    private fun updateFolderDisplay(newList: List<Folder> = folderLibrary.folders) {
-        displayedFolders.clear()
-        displayedFolders.addAll(newList)
+        // Updates the list.
+        folderLibrary.replaceFolder(existing.copy(media = newMedia as MutableList<Media>))
     }
 }
