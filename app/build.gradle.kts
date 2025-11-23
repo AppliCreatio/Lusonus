@@ -57,6 +57,10 @@ android {
 }
 
 dependencies {
+    implementation("androidx.media3:media3-exoplayer:1.8.0")
+    implementation("androidx.media3:media3-exoplayer-dash:1.8.0")
+    implementation("androidx.media3:media3-ui:1.8.0")
+    implementation("androidx.media3:media3-ui-compose:1.8.0")
     implementation("androidx.core:core-ktx:1.17.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.10.0")
     implementation("androidx.activity:activity-compose:1.12.0")
