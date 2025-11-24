@@ -15,7 +15,7 @@ import com.example.lusonus.ui.composables.MediaLibraryComposables.MediaLibraryIt
 
 @Composable
 fun MediaLibraryContent(
-    files: SnapshotStateList<Media>,
+    files: List<Media>,
     onDeleteMedia: (Uri) -> Unit,
     onClickMedia: (String) -> Unit
 ) {

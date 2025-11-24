@@ -25,20 +25,9 @@ import com.example.lusonus.ui.theme.AppTheme
 
 @Composable
 fun MediaScreen(mediaName: String) {
-    // Gets nav controller
-//    val navController = LocalNavController.current
-
     // Gets the media view model, calls the media factory so we can pass the media name to the
     // view model to be able to get the specific media.
     val viewModel: MediaViewModel = viewModel(factory = MediaViewModelFactory(mediaName))
-
-//    if (viewModel.media == null) {
-//        // Media might have been deleted or list not yet updated
-//        LaunchedEffect(Unit) {
-//            navController.popBackStack() // or show an error/snackbar
-//        }
-//        return
-//    }
 
     MainLayout(
         content = {
