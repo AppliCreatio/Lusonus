@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowBackIosNew
+import androidx.compose.material.icons.filled.FastRewind
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -52,19 +54,8 @@ fun SharedTopBarStateless(
                         onNavigateBack()
                     }
                 ) {
-                    Image(
-                        painter = painterResource(R.drawable.lusonus_final_nobg),
-                        contentDescription = "Go Back.",
-                        Modifier.size(40.dp)
-                    )
+                    Icon(Icons.Default.ArrowBackIosNew, contentDescription = "Previous Media.")
                 }
-            }
-            else {
-                Image(
-                    painter = painterResource(R.drawable.lusonus_final_nobg),
-                    contentDescription = "You are home.",
-                    Modifier.size(40.dp)
-                )
             }
         },
 
