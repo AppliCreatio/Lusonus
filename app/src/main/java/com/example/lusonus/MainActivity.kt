@@ -9,6 +9,7 @@ import androidx.annotation.RequiresApi
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.navigation.compose.rememberNavController
 import com.example.lusonus.data.model.Global
@@ -29,7 +30,7 @@ class MainActivity : ComponentActivity() {
             AppTheme {
                 val navController = rememberNavController()
 
-                val globals by rememberSaveable { mutableStateOf<Global>(Global()) }
+                val globals by remember { mutableStateOf<Global>(Global) }
                 // Provides the navController to everything
                 val storageList = rememberExternalStorageList()
 

@@ -105,7 +105,7 @@ fun MediaLibraryScreen() {
                     },
                     onClickMedia = { mediaName ->
 //                        navController.navigate(Routes.MediaPlayer.go(mediaName))
-                        globals.setMediaPopUpName(mediaName)
+                        globals.setMediaPopUpNameToField(mediaName)
                     }
                 )
                   },
