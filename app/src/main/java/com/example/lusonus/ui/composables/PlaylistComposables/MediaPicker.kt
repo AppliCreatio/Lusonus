@@ -10,7 +10,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.core.net.toUri
 import com.example.lusonus.data.model.Media
 import com.example.lusonus.ui.composables.MediaLibraryComposables.FileRow
 

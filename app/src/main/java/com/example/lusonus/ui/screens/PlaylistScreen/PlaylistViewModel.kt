@@ -1,13 +1,10 @@
 package com.example.lusonus.ui.screens.PlaylistScreen
 
 import android.content.Context
-import android.net.Uri
-import androidx.compose.runtime.mutableStateListOf
 import androidx.documentfile.provider.DocumentFile
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.lusonus.data.model.Media
-import com.example.lusonus.data.model.Playlist
 import com.example.lusonus.data.model.SharedMediaLibrary
 import com.example.lusonus.data.model.SharedPlaylistLibrary
 import com.example.lusonus.ui.utils.search

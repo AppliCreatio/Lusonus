@@ -16,8 +16,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import com.example.lusonus.R
 import com.example.ass3_appdev.screens.main.profile_banner.ProfileTextInfo
+import com.example.lusonus.R
 
 /**
  * The Profile Banner appears at the top of the application

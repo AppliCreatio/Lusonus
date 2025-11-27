@@ -1,7 +1,6 @@
 package com.example.lusonus.ui.screens.MediaLibraryScreen
 
 import android.graphics.Bitmap
-import android.net.Uri
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row

@@ -12,7 +12,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.lusonus.ui.composables.Layout.MainLayout
 import com.example.lusonus.services.ACTION_NEXT
 import com.example.lusonus.services.ACTION_PAUSE
 import com.example.lusonus.services.ACTION_PLAYBACK_STATE
@@ -23,11 +22,11 @@ import com.example.lusonus.services.ACTION_SEEK_TO
 import com.example.lusonus.services.EXTRA_ARTWORK_BYTES
 import com.example.lusonus.services.EXTRA_DURATION
 import com.example.lusonus.services.EXTRA_IS_PLAYING
-import com.example.lusonus.services.EXTRA_MEDIA_NAME
 import com.example.lusonus.services.EXTRA_POSITION
 import com.example.lusonus.services.EXTRA_SEEK_POSITION
 import com.example.lusonus.services.EXTRA_URI
 import com.example.lusonus.services.PlayerService
+import com.example.lusonus.ui.composables.Layout.MainLayout
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable

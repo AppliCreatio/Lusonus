@@ -2,7 +2,6 @@ package com.example.lusonus.ui.screens.MediaLibraryScreen
 
 import android.content.Context
 import android.net.Uri
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.ViewModel
 import com.example.lusonus.data.model.Media
 import com.example.lusonus.data.model.SharedMediaLibrary
