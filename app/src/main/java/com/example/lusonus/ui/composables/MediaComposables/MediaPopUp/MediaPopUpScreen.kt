@@ -4,16 +4,23 @@ import androidx.activity.ComponentActivity
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.lusonus.navigation.LocalNavController
+import com.example.lusonus.navigation.Routes
 import com.example.lusonus.ui.composables.Layout.MainLayout
+import com.example.lusonus.ui.screens.MediaScreen.MediaViewModel
+import com.example.lusonus.ui.screens.MediaScreen.MediaViewModelFactory
 
 @Composable
-fun MediaPopUpScreen() {
-    val viewModel: MediaPopUpViewModel = viewModel(viewModelStoreOwner = LocalNavController.current.context as ComponentActivity)
+fun MediaPopUpScreen(mediaName: String) {
+    val viewModel: MediaViewModel = viewModel(factory = MediaViewModelFactory(mediaName))
 
-    MainLayout(
-        content = {
-            MediaPopUpContent(viewModel.mediaName.value, viewModel.mediaArtist.value, viewModel.isPaused)
-        },
-        screenTitle = viewModel.mediaName.value
-    )
+    // Gets nav controller
+    val navController = LocalNavController.current
+
+    MediaPopUpContent(
+        media = viewModel.media!!,
+        bitmapImage = viewModel.artworkBitmap ,
+        isPlaying = viewModel.isPlaying,
+        onClickPopUp = { mediaName ->
+            navController.navigate(Routes.MediaPlayer.go(mediaName))
+        })
 }

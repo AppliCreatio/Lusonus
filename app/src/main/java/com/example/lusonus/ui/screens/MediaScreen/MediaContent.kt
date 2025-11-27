@@ -40,10 +40,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
 import com.example.lusonus.ui.theme.AppTheme
 import com.example.lusonus.R
 import com.example.lusonus.data.model.Media
@@ -77,21 +79,12 @@ fun MediaContent(
         verticalArrangement = Arrangement.SpaceAround
     ) {
         // First we want the media art.
-        if (artworkBitmap != null) {
-            // Image from media metadata.
-            Image(
-                bitmap = artworkBitmap.asImageBitmap(),
-                contentDescription = "Artwork representing the ${media.name} media.",
-                modifier = Modifier.size(300.dp).clip(RoundedCornerShape(16.dp))
-            )
-        } else {
-            // Image from default.
-            Image(
-                painter = painterResource(id = R.drawable.lusonus_final_nobg),
-                contentDescription = "Artwork representing the ${media.name} media.",
-                modifier = Modifier.size(300.dp).clip(RoundedCornerShape(16.dp))
-            )
-        }
+        AsyncImage(
+            model = artworkBitmap?.asImageBitmap() ?: R.drawable.resource_default,
+            contentDescription = "Artwork representing the ${media.name} media.",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.size(300.dp).clip(RoundedCornerShape(16.dp))
+        )
 
         // Second we want the title.
         Text(text = media.name)

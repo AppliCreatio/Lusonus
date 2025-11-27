@@ -46,6 +46,7 @@ fun Router(navController: NavHostController, modifier: Modifier = Modifier) {
             MediaLibraryScreen()
         }
 
+        // Media Player route
         composable(
             route = Routes.MediaPlayer.route,
             arguments = listOf(navArgument(name = "mediaName") { type = NavType.StringType })
