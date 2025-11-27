@@ -15,7 +15,7 @@ fun MediaBottomBar() {
     // Calls the MediaBottomBarStateless, the :: allows the passing of the function itself.
     MediaBottomBarStateless(
         isLiked = viewModel.isLiked,
-        isPaused = viewModel.isPaused,
+        isPaused = viewModel.isPlaying,
         onToggleQueue = viewModel::toggleQueue,
         onToggleLike = viewModel::toggleLike,
         onTogglePause = viewModel::togglePause
