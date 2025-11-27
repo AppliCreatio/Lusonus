@@ -90,11 +90,11 @@ fun MediaLibraryScreen() {
                 viewModel.refreshMedia(context)
             }
 
-            val sortOptions = listOf<MenuItem>(
+            val sortOptions = listOf(
                 MenuItem("Alphabetical") { viewModel.sortMedia("alphabetically") }
             )
 
-            SearchAndSort(sortOptions, expanded, { expanded = !it }, searchInfo, {
+            SearchAndSort(sortOptions, expanded, { !it }, searchInfo, {
                 searchInfo = it
                 viewModel.searchMedia( searchInfo.lowercase())
             })
@@ -105,7 +105,7 @@ fun MediaLibraryScreen() {
                     },
                     onClickMedia = { mediaName ->
 //                        navController.navigate(Routes.MediaPlayer.go(mediaName))
-                        globals.mediaPopUpName = mediaName
+                        globals.setMediaPopUpName(mediaName)
                     }
                 )
                   },

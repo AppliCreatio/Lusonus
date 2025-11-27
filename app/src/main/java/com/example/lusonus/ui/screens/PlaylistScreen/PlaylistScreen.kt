@@ -89,7 +89,7 @@ fun PlaylistScreen(
                 },
                 onClickMedia = { mediaName ->
 //                        navController.navigate(Routes.MediaPlayer.go(mediaName))
-                    globals.mediaPopUpName = mediaName
+                    globals.setMediaPopUpName(mediaName)
                 }
             )
 

@@ -43,7 +43,7 @@ fun MainLayout(
         // Gets the bottom bar of the scaffold.
         bottomBar = {
             Column {
-                if(!globals.mediaPopUpName.isEmpty())
+                if(globals.mediaPopUpName.isNotEmpty())
                     MediaScreen(globals.mediaPopUpName)
                 bottomBar?.invoke()
             }
