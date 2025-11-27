@@ -1,6 +1,7 @@
 package com.example.lusonus.ui.screens.PlaylistScreen
 
-import androidx.compose.foundation.layout.Column
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.material3.AlertDialog
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -17,15 +18,14 @@ import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.lusonus.data.model.MenuItem
-import com.example.lusonus.navigation.LocalCurrentMedia
+import com.example.lusonus.navigation.LocalGlobals
 import com.example.lusonus.navigation.LocalNavController
-import com.example.lusonus.ui.composables.Layout.BottomBar.SharedBottomBar
 import com.example.lusonus.ui.composables.Layout.MainLayout
 import com.example.lusonus.ui.composables.Layout.SearchAndSort.SearchAndSort
-import com.example.lusonus.ui.composables.MediaComposables.MediaPopUp.MediaPopUpScreen
 import com.example.lusonus.ui.composables.PlaylistComposables.MediaPicker
 import com.example.organisemedia.Layout.FloatingActionButton.SharedFloatingActionButton
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun PlaylistScreen(
     playlistName: String
@@ -34,7 +34,7 @@ fun PlaylistScreen(
     val navController = LocalNavController.current
 
     // Gets the current playing media
-    var currentMedia = LocalCurrentMedia.current
+    val globals = LocalGlobals.current
 
     val context = LocalContext.current
 
@@ -89,7 +89,7 @@ fun PlaylistScreen(
                 },
                 onClickMedia = { mediaName ->
 //                        navController.navigate(Routes.MediaPlayer.go(mediaName))
-                    currentMedia = mediaName
+                    globals.mediaPopUpName = mediaName
                 }
             )
 
@@ -118,13 +118,6 @@ fun PlaylistScreen(
                     showPicker = true
                 }
             )
-        },
-        bottomBar = {
-            Column {
-                if(currentMedia.isNotEmpty())
-                    MediaPopUpScreen(currentMedia)
-                SharedBottomBar()
-            }
         }
     )
 }

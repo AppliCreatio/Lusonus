@@ -1,10 +1,11 @@
 package com.example.lusonus.ui.screens.MediaLibraryScreen
 
 import android.net.Uri
+import android.os.Build
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.layout.Column
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -20,21 +21,20 @@ import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.lusonus.data.model.MenuItem
-import com.example.lusonus.navigation.LocalCurrentMedia
+import com.example.lusonus.navigation.LocalGlobals
 import com.example.lusonus.navigation.LocalNavController
-import com.example.lusonus.ui.composables.Layout.BottomBar.SharedBottomBar
 import com.example.lusonus.ui.composables.Layout.MainLayout
 import com.example.lusonus.ui.composables.Layout.SearchAndSort.SearchAndSort
-import com.example.lusonus.ui.composables.MediaComposables.MediaPopUp.MediaPopUpScreen
 import com.example.organisemedia.Layout.FloatingActionButton.SharedFloatingActionButton
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun MediaLibraryScreen() {
     // Gets nav controller
     val navController = LocalNavController.current
 
     // Gets the current playing media
-    var currentMedia = LocalCurrentMedia.current
+    val globals = LocalGlobals.current
 
     // Gets the view model information
     val viewModel: MediaLibraryViewModel = viewModel(viewModelStoreOwner = LocalNavController.current.context as ComponentActivity) // Gets an existing MediaViewModel if it exists.
@@ -105,7 +105,7 @@ fun MediaLibraryScreen() {
                     },
                     onClickMedia = { mediaName ->
 //                        navController.navigate(Routes.MediaPlayer.go(mediaName))
-                        currentMedia = mediaName
+                        globals.mediaPopUpName = mediaName
                     }
                 )
                   },
@@ -117,14 +117,6 @@ fun MediaLibraryScreen() {
                     pickFilesLauncher.launch(input = arrayOf("audio/*", "video/*"))
                 }
             )
-        },
-        bottomBar = {
-            Column {
-                // Only shows up when there is an actual value associated to it
-                if(currentMedia.isNotEmpty())
-                    MediaPopUpScreen(currentMedia)
-                SharedBottomBar()
-            }
         }
     )
 }

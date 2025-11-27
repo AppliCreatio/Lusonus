@@ -1,7 +1,8 @@
 package com.example.lusonus.ui.screens.PlaylistLibraryScreen
 
+import android.os.Build
 import androidx.activity.ComponentActivity
-import androidx.compose.foundation.layout.Column
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -10,23 +11,18 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.lusonus.data.model.MenuItem
-import com.example.lusonus.navigation.LocalCurrentMedia
 import com.example.lusonus.navigation.LocalNavController
 import com.example.lusonus.navigation.Routes
-import com.example.lusonus.ui.composables.Layout.BottomBar.SharedBottomBar
 import com.example.lusonus.ui.composables.Layout.MainLayout
 import com.example.lusonus.ui.composables.Layout.SearchAndSort.SearchAndSort
-import com.example.lusonus.ui.composables.MediaComposables.MediaPopUp.MediaPopUpScreen
 import com.example.organisemedia.Helper.Playlist.NewPlaylistDialog
 import com.example.organisemedia.Layout.FloatingActionButton.SharedFloatingActionButton
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun PlaylistLibraryScreen() {
     // Gets nav controller
     val navController = LocalNavController.current
-
-    // Gets the current media playing
-    val currentMedia = LocalCurrentMedia.current
 
     // Gets the view model information
     val viewModel: PlaylistLibraryViewModel = viewModel(viewModelStoreOwner = LocalNavController.current.context as ComponentActivity)
@@ -89,13 +85,6 @@ fun PlaylistLibraryScreen() {
                     showDialog = true
                 }
             )
-        },
-        bottomBar = {
-            Column {
-                if(currentMedia.isNotEmpty())
-                    MediaPopUpScreen(currentMedia)
-                SharedBottomBar()
-            }
         }
     )
 }
