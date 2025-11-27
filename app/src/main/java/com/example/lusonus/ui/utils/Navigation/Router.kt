@@ -1,6 +1,8 @@
 package com.example.lusonus.navigation
 
 import FolderLibraryScreen
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.layout.fillMaxSize
@@ -27,6 +29,7 @@ import com.example.lusonus.ui.screens.SettingsScreen.SettingScreen
 val LocalNavController = compositionLocalOf<NavHostController> { error("No NavController found!") }
 val LocalStorageList =
     compositionLocalOf<MutableList<ExternalStorage>> { error("No storage list found!") }
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 // Router deals with managing our different pages and which route calls which composable.
 fun Router(navController: NavHostController, modifier: Modifier = Modifier) {
