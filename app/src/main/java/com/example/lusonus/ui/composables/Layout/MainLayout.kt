@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import com.example.lusonus.navigation.LocalGlobals
 import com.example.lusonus.ui.composables.Layout.BottomBar.SharedBottomBar
 import com.example.lusonus.ui.composables.Layout.TopBar.SharedTopBar
+import com.example.lusonus.ui.composables.MediaComposables.MediaPopUp.MediaPopUpScreen
 import com.example.lusonus.ui.screens.MediaScreen.MediaScreen
 
 /**
@@ -44,7 +45,7 @@ fun MainLayout(
         bottomBar = {
             Column {
                 if(globals.mediaPopUpName.isNotEmpty())
-                    MediaScreen(globals.mediaPopUpName)
+                    MediaPopUpScreen(globals.mediaPopUpName)
                 bottomBar?.invoke()
             }
         },
