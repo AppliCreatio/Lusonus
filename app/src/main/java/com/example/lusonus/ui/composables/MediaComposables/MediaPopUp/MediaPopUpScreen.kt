@@ -85,9 +85,11 @@ fun MediaPopUpScreen(mediaName: String) {
 
         // Sets up the proper intent.
         val intent = Intent(context, PlayerService::class.java).apply {
-            action = if(viewModel.isPlaying || viewModel.durationMilliseconds <= 0) ACTION_PLAY_URI else ACTION_PAUSE
+            action = if(viewModel.isPlaying || !viewModel.hasStarted) ACTION_PLAY_URI else ACTION_PAUSE
             putExtra(EXTRA_URI, viewModel.media?.uri.toString())
         }
+
+        viewModel.toggleStartedPlaying()
 
         // Start the foreground service with this intent.
         context.startForegroundService(intent)

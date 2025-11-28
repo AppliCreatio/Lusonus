@@ -94,7 +94,7 @@ fun MediaLibraryScreen() {
                 MenuItem("Alphabetical") { viewModel.sortMedia("alphabetically") }
             )
 
-            SearchAndSort(sortOptions, expanded, { !it }, searchInfo, {
+            SearchAndSort(sortOptions, expanded, { expanded = !it }, searchInfo, {
                 searchInfo = it
                 viewModel.searchMedia( searchInfo.lowercase())
             })

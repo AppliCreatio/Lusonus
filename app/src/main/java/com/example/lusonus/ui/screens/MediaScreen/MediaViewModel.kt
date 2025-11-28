@@ -17,6 +17,9 @@ class MediaViewModel(private var mediaName: String) : ViewModel() {
     // This can't be null, but it won't be based on how you get to the screen in the first place.
     val media get() = mediaLibrary.getMedia(mediaName)
 
+    var hasStarted by mutableStateOf(false)
+        private set
+
     // Property defining whether the Queue is open.
     var isQueueOpen by mutableStateOf(false)
         private set
@@ -25,6 +28,10 @@ class MediaViewModel(private var mediaName: String) : ViewModel() {
     // TODO: Add isLiked to media dataclass.
     var isLiked by mutableStateOf(false)
         private set
+
+    fun toggleStartedPlaying() {
+        hasStarted = true
+    }
 
     // Method that toggles queue property.
     fun toggleQueue() { isQueueOpen = !isQueueOpen }
@@ -47,6 +54,7 @@ class MediaViewModel(private var mediaName: String) : ViewModel() {
         private set
 
     fun updateMedia(newMediaName: String) {
+        hasStarted = false
         mediaName = newMediaName
     }
 
