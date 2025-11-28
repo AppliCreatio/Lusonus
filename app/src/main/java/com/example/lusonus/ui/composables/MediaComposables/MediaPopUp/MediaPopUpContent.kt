@@ -1,4 +1,3 @@
-
 package com.example.lusonus.ui.composables.MediaComposables.MediaPopUp
 
 import android.graphics.Bitmap
@@ -15,30 +14,46 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.lusonus.data.model.Media
-import com.example.lusonus.ui.screens.MediaLibraryScreen.MediaPopUpControls
-import com.example.lusonus.ui.screens.MediaLibraryScreen.MediaPopUpInfo
+import com.example.lusonus.ui.composables.MediaComposables.MediaPopUp.stateless.MediaPopUpControls
+import com.example.lusonus.ui.composables.MediaComposables.MediaPopUp.stateless.MediaPopUpInfo
 
 @Composable
-fun MediaPopUpContent (media: Media, bitmapImage: Bitmap?, isPlaying: Boolean = false, onClickPopUp: (String) -> Unit) {
+fun MediaPopUpContent(
+    media: Media,
+    bitmapImage: Bitmap?,
+    isPlaying: Boolean = false,
+    onClickPopUp: (String) -> Unit,
+    onPause: () -> Unit,
+    onResume: () -> Unit,
+    onNext: () -> Unit,
+    onPrevious: () -> Unit
+) {
     Card(
         modifier = Modifier
-            .fillMaxWidth().clickable(onClick={ onClickPopUp(media.name)}), // Optional: Makes the Box fill the available space
+            .fillMaxWidth()
+            .clickable(onClick = { onClickPopUp(media.name) }), // Optional: Makes the Box fill the available space
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer, // Set the background color of the card
             contentColor = MaterialTheme.colorScheme.primary // Set the color of the content inside the card
         ),
     ) {
-        Row (
+        Row(
             modifier = Modifier
                 .padding(20.dp, 10.dp)
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween) {
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
 
             MediaPopUpInfo(media.name, "[Insert Name]", mediaImage = bitmapImage)
 
             Row {
-                MediaPopUpControls(isPlaying)
+                MediaPopUpControls(
+                    isPlaying = isPlaying, onPause = onPause,
+                    onResume = onResume,
+                    onNext = onNext,
+                    onPrevious = onPrevious,
+                )
             }
         }
     }

@@ -1,4 +1,4 @@
-package com.example.lusonus.ui.screens.MediaLibraryScreen
+package com.example.lusonus.ui.composables.MediaComposables.MediaPopUp.stateless
 
 import android.graphics.Bitmap
 import androidx.compose.foundation.layout.Arrangement
