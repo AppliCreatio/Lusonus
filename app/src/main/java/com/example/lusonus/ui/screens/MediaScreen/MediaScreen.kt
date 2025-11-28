@@ -80,7 +80,7 @@ fun MediaScreen(mediaName: String) {
 
         // Sets up the proper intent.
         val intent = Intent(context, PlayerService::class.java).apply {
-            action = ACTION_PLAY_URI
+            action = if(viewModel.isPlaying || viewModel.durationMilliseconds == 0L) ACTION_PLAY_URI else ACTION_PAUSE
             putExtra(EXTRA_URI, viewModel.media?.uri.toString())
         }
 

@@ -10,7 +10,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.lusonus.navigation.LocalGlobals
+import com.example.lusonus.navigation.LocalNavController
+import com.example.lusonus.navigation.Routes
 import com.example.lusonus.ui.composables.Layout.BottomBar.SharedBottomBar
 import com.example.lusonus.ui.composables.Layout.TopBar.SharedTopBar
 import com.example.lusonus.ui.composables.MediaComposables.MediaPopUp.MediaPopUpScreen
@@ -31,8 +34,13 @@ fun MainLayout(
     bottomBar: @Composable (() -> Unit)? = { SharedBottomBar() } // If no specific parameter is passed, set to default bottom bar
 ) {
 
+    val navController = LocalNavController.current
     val globals = LocalGlobals.current
+    val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
 
+    val screensWithPlayer = listOf(Routes.MediaLibrary.route, Routes.FolderLibrary.route, Routes.PlaylistLibrary.route,
+        Routes.Playlist.route)
+    val showPopUp = currentRoute in screensWithPlayer
     // This is the main scaffold for our app, we will pass Composables to this method which will
     // then modify the contents of the scaffold as needed.
     Scaffold(
@@ -44,7 +52,7 @@ fun MainLayout(
         // Gets the bottom bar of the scaffold.
         bottomBar = {
             Column {
-                if(globals.mediaPopUpName.isNotEmpty())
+                if(globals.mediaPopUpName.isNotEmpty() && showPopUp)
                     MediaPopUpScreen(globals.mediaPopUpName)
                 bottomBar?.invoke()
             }

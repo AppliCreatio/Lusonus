@@ -20,12 +20,10 @@ import com.example.lusonus.services.ACTION_PLAYBACK_STATE
 import com.example.lusonus.services.ACTION_PLAY_URI
 import com.example.lusonus.services.ACTION_PREV
 import com.example.lusonus.services.ACTION_RESUME
-import com.example.lusonus.services.ACTION_SEEK_TO
 import com.example.lusonus.services.EXTRA_ARTWORK_BYTES
 import com.example.lusonus.services.EXTRA_DURATION
 import com.example.lusonus.services.EXTRA_IS_PLAYING
 import com.example.lusonus.services.EXTRA_POSITION
-import com.example.lusonus.services.EXTRA_SEEK_POSITION
 import com.example.lusonus.services.EXTRA_URI
 import com.example.lusonus.services.PlayerService
 import com.example.lusonus.ui.screens.MediaScreen.MediaViewModel
@@ -84,7 +82,7 @@ fun MediaPopUpScreen(mediaName: String) {
 
         // Sets up the proper intent.
         val intent = Intent(context, PlayerService::class.java).apply {
-            action = ACTION_PLAY_URI
+            action = if(viewModel.isPlaying || viewModel.durationMilliseconds == 0L) ACTION_PLAY_URI else ACTION_PAUSE
             putExtra(EXTRA_URI, viewModel.media?.uri.toString())
         }
 
