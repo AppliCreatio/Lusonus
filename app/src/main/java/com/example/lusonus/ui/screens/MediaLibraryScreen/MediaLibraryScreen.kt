@@ -1,13 +1,11 @@
 package com.example.lusonus.ui.screens.MediaLibraryScreen
 
 import android.net.Uri
+import android.os.Build
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.sharp.Menu
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -17,25 +15,26 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.lusonus.data.model.MenuItem
-import com.example.organisemedia.Layout.FloatingActionButton.SharedFloatingActionButton
-import com.example.lusonus.ui.composables.Layout.MainLayout
+import com.example.lusonus.navigation.LocalGlobals
 import com.example.lusonus.navigation.LocalNavController
-import com.example.lusonus.navigation.Routes
-import com.example.lusonus.ui.composables.Layout.Buttons.MenuDropDown.MinimalDropdownMenu
+import com.example.lusonus.ui.composables.Layout.MainLayout
 import com.example.lusonus.ui.composables.Layout.SearchAndSort.SearchAndSort
-import com.example.lusonus.ui.composables.Layout.SearchAndSort.SearchBar
+import com.example.organisemedia.Layout.FloatingActionButton.SharedFloatingActionButton
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun MediaLibraryScreen() {
     // Gets nav controller
     val navController = LocalNavController.current
+
+    // Gets the current playing media
+    val globals = LocalGlobals.current
 
     // Gets the view model information
     val viewModel: MediaLibraryViewModel = viewModel(viewModelStoreOwner = LocalNavController.current.context as ComponentActivity) // Gets an existing MediaViewModel if it exists.
@@ -91,7 +90,7 @@ fun MediaLibraryScreen() {
                 viewModel.refreshMedia(context)
             }
 
-            val sortOptions = listOf<MenuItem>(
+            val sortOptions = listOf(
                 MenuItem("Alphabetical") { viewModel.sortMedia("alphabetically") }
             )
 
@@ -105,7 +104,8 @@ fun MediaLibraryScreen() {
                         viewModel.removeFile(uri)
                     },
                     onClickMedia = { mediaName ->
-                        navController.navigate(Routes.MediaPlayer.go(mediaName))
+//                        navController.navigate(Routes.MediaPlayer.go(mediaName))
+                        globals.setMediaPopUpNameToField(mediaName)
                     }
                 )
                   },

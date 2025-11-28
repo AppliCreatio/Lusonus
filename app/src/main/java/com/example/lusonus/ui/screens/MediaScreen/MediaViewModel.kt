@@ -9,13 +9,16 @@ import androidx.lifecycle.ViewModel
 import com.example.lusonus.data.model.SharedMediaLibrary
 
 // View model for MediaScreen.
-class MediaViewModel(private val mediaName: String) : ViewModel() {
+class MediaViewModel(private var mediaName: String) : ViewModel() {
     // Gets shared singleton instance.
     private val mediaLibrary = SharedMediaLibrary
 
     // Gets the media from the name. Does the get(), read next comment for details.
     // This can't be null, but it won't be based on how you get to the screen in the first place.
     val media get() = mediaLibrary.getMedia(mediaName)
+
+    var hasStarted by mutableStateOf(false)
+        private set
 
     // Property defining whether the Queue is open.
     var isQueueOpen by mutableStateOf(false)
@@ -25,6 +28,10 @@ class MediaViewModel(private val mediaName: String) : ViewModel() {
     // TODO: Add isLiked to media dataclass.
     var isLiked by mutableStateOf(false)
         private set
+
+    fun toggleStartedPlaying() {
+        hasStarted = true
+    }
 
     // Method that toggles queue property.
     fun toggleQueue() { isQueueOpen = !isQueueOpen }
@@ -46,6 +53,11 @@ class MediaViewModel(private val mediaName: String) : ViewModel() {
     var artworkBitmap by mutableStateOf<Bitmap?>(null)
         private set
 
+    fun updateMedia(newMediaName: String) {
+        hasStarted = false
+        mediaName = newMediaName
+    }
+
     // Method that toggles paused property.
     // Note, this is local. The main one comes from broadcast.
     fun togglePause() { isPlaying = !isPlaying }
@@ -53,6 +65,7 @@ class MediaViewModel(private val mediaName: String) : ViewModel() {
     // This is called by BroadcastReceiver in compose when we receive the playback updates.
     fun updatePlaybackState(isPlaying: Boolean, position: Long, duration: Long, artworkBytes: ByteArray?)
     {
+
         // Sets whether it's playing.
         this.isPlaying = isPlaying
 

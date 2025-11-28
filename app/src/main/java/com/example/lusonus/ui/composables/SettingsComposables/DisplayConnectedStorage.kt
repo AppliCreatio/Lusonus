@@ -24,8 +24,8 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.lusonus.navigation.LocalStorageList
 import com.example.lusonus.data.model.ExternalStorage
+import com.example.lusonus.navigation.LocalStorageList
 import com.example.lusonus.ui.utils.Dialogs.ConnectedStorageDialog
 
 /*

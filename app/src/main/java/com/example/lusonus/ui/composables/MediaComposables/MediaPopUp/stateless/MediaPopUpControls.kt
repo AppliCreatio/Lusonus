@@ -1,4 +1,4 @@
-package com.example.lusonus.ui.screens.MediaLibraryScreen
+package com.example.lusonus.ui.composables.MediaComposables.MediaPopUp.stateless
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
@@ -10,11 +10,15 @@ import androidx.compose.ui.unit.dp
 import com.example.lusonus.R
 
 @Composable
-fun MediaPopUpControls(isPaused: Boolean) {
+fun MediaPopUpControls(
+    isPlaying: Boolean,
+    onPause: () -> Unit,
+    onResume: () -> Unit,
+    onNext: () -> Unit,
+    onPrevious: () -> Unit)
+{
     IconButton(
-        onClick = {
-            // TODO: Implement previous media functionality
-        },
+        onClick = onPrevious,
         modifier = Modifier,
         enabled = false) {
         Icon(
@@ -27,20 +31,22 @@ fun MediaPopUpControls(isPaused: Boolean) {
     IconButton(
         modifier = Modifier,
         onClick = {
-            // TODO: Implement pause functionality
+            if(isPlaying)
+                onPause()
+            else onResume()
+
+
         }
     ) {
         Icon(
             modifier = Modifier.size(30.dp),
-            painter = if (isPaused) painterResource(R.drawable.pause_button) else painterResource(R.drawable.play_button),
+            painter = if (isPlaying) painterResource(R.drawable.pause_button) else painterResource(R.drawable.play_button),
             contentDescription = "A button to play and pause the current song."
         )
     }
 
     IconButton(
-        onClick = {
-            // TODO: Implement next media functionality
-        },
+        onClick = onNext,
         modifier = Modifier,
         enabled = false) {
         Icon(

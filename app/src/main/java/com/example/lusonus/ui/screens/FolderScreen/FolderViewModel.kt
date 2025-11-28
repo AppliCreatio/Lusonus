@@ -1,8 +1,6 @@
 package com.example.lusonus.ui.screens.FolderScreen
 
 import android.content.Context
-import androidx.compose.runtime.mutableStateListOf
-import androidx.documentfile.provider.DocumentFile
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.lusonus.data.model.Media

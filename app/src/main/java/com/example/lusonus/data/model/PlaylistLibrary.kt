@@ -1,8 +1,6 @@
 package com.example.lusonus.data.model
 
 import android.net.Uri
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.runtime.toMutableStateList
 import com.example.lusonus.ui.utils.search
 import com.example.lusonus.ui.utils.sort

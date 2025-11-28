@@ -1,9 +1,8 @@
 package com.example.lusonus.ui.screens.PlaylistLibraryScreen
 
 import androidx.lifecycle.ViewModel
-import com.example.lusonus.data.model.SharedPlaylistLibrary
-import androidx.compose.runtime.mutableStateListOf
 import com.example.lusonus.data.model.Playlist
+import com.example.lusonus.data.model.SharedPlaylistLibrary
 import kotlinx.coroutines.flow.StateFlow
 
 class PlaylistLibraryViewModel : ViewModel() {

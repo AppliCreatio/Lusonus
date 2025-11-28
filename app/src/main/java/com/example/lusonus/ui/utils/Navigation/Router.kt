@@ -14,21 +14,26 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.lusonus.ui.screens.FAQScreen.FAQScreen
 import com.example.ass3_appdev.screens.main.DisplayProfile
-import com.example.lusonus.ui.screens.RegisterScreen.RegisterScreen
+import com.example.lusonus.data.model.ExternalStorage
+import com.example.lusonus.data.model.Global
+import com.example.lusonus.ui.screens.FAQScreen.FAQScreen
+import com.example.lusonus.ui.screens.FolderScreen.FolderScreen
 import com.example.lusonus.ui.screens.MediaLibraryScreen.MediaLibraryScreen
+import com.example.lusonus.ui.screens.MediaScreen.MediaScreen
 import com.example.lusonus.ui.screens.PlaylistLibraryScreen.PlaylistLibraryScreen
 import com.example.lusonus.ui.screens.PlaylistScreen.PlaylistScreen
-import com.example.lusonus.data.model.ExternalStorage
-import com.example.lusonus.ui.screens.FolderScreen.FolderScreen
-import com.example.lusonus.ui.screens.MediaScreen.MediaScreen
+import com.example.lusonus.ui.screens.RegisterScreen.RegisterScreen
 import com.example.lusonus.ui.screens.SettingsScreen.SettingScreen
+
 
 // Allows the passing down of data. (Provider pattern)
 val LocalNavController = compositionLocalOf<NavHostController> { error("No NavController found!") }
 val LocalStorageList =
     compositionLocalOf<MutableList<ExternalStorage>> { error("No storage list found!") }
+
+val LocalGlobals =
+    compositionLocalOf<Global> { error("No media list found!") }
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 // Router deals with managing our different pages and which route calls which composable.
@@ -46,6 +51,7 @@ fun Router(navController: NavHostController, modifier: Modifier = Modifier) {
             MediaLibraryScreen()
         }
 
+        // Media Player route
         composable(
             route = Routes.MediaPlayer.route,
             arguments = listOf(navArgument(name = "mediaName") { type = NavType.StringType })

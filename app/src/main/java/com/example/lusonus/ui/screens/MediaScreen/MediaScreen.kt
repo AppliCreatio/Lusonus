@@ -9,10 +9,10 @@ import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.lusonus.ui.composables.Layout.MainLayout
 import com.example.lusonus.services.ACTION_NEXT
 import com.example.lusonus.services.ACTION_PAUSE
 import com.example.lusonus.services.ACTION_PLAYBACK_STATE
@@ -23,11 +23,11 @@ import com.example.lusonus.services.ACTION_SEEK_TO
 import com.example.lusonus.services.EXTRA_ARTWORK_BYTES
 import com.example.lusonus.services.EXTRA_DURATION
 import com.example.lusonus.services.EXTRA_IS_PLAYING
-import com.example.lusonus.services.EXTRA_MEDIA_NAME
 import com.example.lusonus.services.EXTRA_POSITION
 import com.example.lusonus.services.EXTRA_SEEK_POSITION
 import com.example.lusonus.services.EXTRA_URI
 import com.example.lusonus.services.PlayerService
+import com.example.lusonus.ui.composables.Layout.MainLayout
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -81,9 +81,11 @@ fun MediaScreen(mediaName: String) {
 
         // Sets up the proper intent.
         val intent = Intent(context, PlayerService::class.java).apply {
-            action = ACTION_PLAY_URI
+            action = if(viewModel.isPlaying || !viewModel.hasStarted) ACTION_PLAY_URI else ACTION_PAUSE
             putExtra(EXTRA_URI, viewModel.media?.uri.toString())
         }
+
+        viewModel.toggleStartedPlaying()
 
         // Start the foreground service with this intent.
         context.startForegroundService(intent)
