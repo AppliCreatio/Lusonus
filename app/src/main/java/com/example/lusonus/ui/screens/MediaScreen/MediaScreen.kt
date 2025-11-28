@@ -9,6 +9,7 @@ import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -80,7 +81,7 @@ fun MediaScreen(mediaName: String) {
 
         // Sets up the proper intent.
         val intent = Intent(context, PlayerService::class.java).apply {
-            action = if(viewModel.isPlaying || viewModel.durationMilliseconds == 0L) ACTION_PLAY_URI else ACTION_PAUSE
+            action = if(viewModel.isPlaying) ACTION_PLAY_URI else ACTION_PAUSE
             putExtra(EXTRA_URI, viewModel.media?.uri.toString())
         }
 

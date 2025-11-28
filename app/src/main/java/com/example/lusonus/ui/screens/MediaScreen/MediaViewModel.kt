@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModel
 import com.example.lusonus.data.model.SharedMediaLibrary
 
 // View model for MediaScreen.
-class MediaViewModel(private val mediaName: String) : ViewModel() {
+class MediaViewModel(private var mediaName: String) : ViewModel() {
     // Gets shared singleton instance.
     private val mediaLibrary = SharedMediaLibrary
 
@@ -46,6 +46,10 @@ class MediaViewModel(private val mediaName: String) : ViewModel() {
     var artworkBitmap by mutableStateOf<Bitmap?>(null)
         private set
 
+    fun updateMedia(newMediaName: String) {
+        mediaName = newMediaName
+    }
+
     // Method that toggles paused property.
     // Note, this is local. The main one comes from broadcast.
     fun togglePause() { isPlaying = !isPlaying }
@@ -53,6 +57,7 @@ class MediaViewModel(private val mediaName: String) : ViewModel() {
     // This is called by BroadcastReceiver in compose when we receive the playback updates.
     fun updatePlaybackState(isPlaying: Boolean, position: Long, duration: Long, artworkBytes: ByteArray?)
     {
+
         // Sets whether it's playing.
         this.isPlaying = isPlaying
 
