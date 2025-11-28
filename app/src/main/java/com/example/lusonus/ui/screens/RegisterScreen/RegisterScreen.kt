@@ -1,9 +1,11 @@
 package com.example.lusonus.ui.screens.RegisterScreen
 
 import android.net.Uri
+import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -37,6 +39,7 @@ import com.example.lusonus.navigation.Routes
 import com.example.lusonus.ui.composables.Layout.MainLayout
 import com.example.lusonus.ui.utils.Dialogs.BadRegisterDialog
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun RegisterScreen() {
 

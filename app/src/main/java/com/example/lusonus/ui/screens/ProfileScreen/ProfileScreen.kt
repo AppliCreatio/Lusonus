@@ -1,6 +1,8 @@
 package com.example.ass3_appdev.screens.main
 
+import android.os.Build
 import androidx.activity.ComponentActivity
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,6 +27,7 @@ import com.example.lusonus.ui.composables.ProfileComposables.ProfileBanner
 import com.example.lusonus.ui.screens.ProfileScreen.ProfileScreenViewModel
 import com.example.lusonus.ui.utils.Dialogs.DialogToEditProfile
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun DisplayProfile() {
 
