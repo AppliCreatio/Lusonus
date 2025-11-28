@@ -2,12 +2,16 @@ package com.example.lusonus.data.model
 
 import android.content.Context
 import android.net.Uri
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.documentfile.provider.DocumentFile
 import com.example.lusonus.ui.utils.search
 import com.example.lusonus.ui.utils.sort
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import java.time.LocalDate
+import java.time.LocalDateTime
 
 open class MediaLibrary {
     // Gets the playlist library.
@@ -23,6 +27,7 @@ open class MediaLibrary {
     val media: StateFlow<List<Media>> = _media.asStateFlow()
 
     // This adds or updates media, since both were similar it's merged.
+    @RequiresApi(Build.VERSION_CODES.O)
     fun modifyMedia(pendingMedia: Map<String, Uri>) {
         val updated = _allMedia.value.toMutableList()
 
@@ -40,7 +45,7 @@ open class MediaLibrary {
                 }
             } else {
                 // If it doesn't exist we add it.
-                updated.add(Media(name, uri))
+                updated.add(Media(name = name, dateAdded = LocalDateTime.now() , lastPlayed = null ,uri = uri))
             }
         }
 
@@ -86,6 +91,7 @@ open class MediaLibrary {
     }
 
     // Sorts the files based on sorting type.
+    @RequiresApi(Build.VERSION_CODES.O)
     fun sortFiles(type: String) {
         // Updates the flow.
         _media.value = sort(_media.value, type)

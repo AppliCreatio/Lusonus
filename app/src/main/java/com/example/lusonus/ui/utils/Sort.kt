@@ -1,6 +1,11 @@
 package com.example.lusonus.ui.utils
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.example.lusonus.data.model.Entries
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 //fun <T : Entries> sortPlaylists(list: SnapshotStateMap<String, SnapshotStateList<String>>, sortType: String): Map<String, SnapshotStateList<String>>{
 //    return when(sortType) {
@@ -9,10 +14,15 @@ import com.example.lusonus.data.model.Entries
 //    }
 //}
 
+@RequiresApi(Build.VERSION_CODES.O)
 fun <T : Entries> sort(mediaList: List<T>, sortType: String): List<T> {
+
+    val dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
 
     return when(sortType){
         "alphabetically" -> mediaList.sortedBy { it.name }
+        "date added" -> mediaList.sortedBy { it.dateAdded }
+        "last played" -> mediaList.sortedByDescending { it.lastPlayed }
         else -> mediaList
     }
 }

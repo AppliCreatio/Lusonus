@@ -1,12 +1,16 @@
 package com.example.lusonus.ui.screens.MediaScreen
 
 import android.graphics.Bitmap
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.example.lusonus.data.model.SharedMediaLibrary
+import java.time.LocalDate
+import java.time.LocalDateTime
 
 // View model for MediaScreen.
 class MediaViewModel(private var mediaName: String) : ViewModel() {
@@ -63,8 +67,11 @@ class MediaViewModel(private var mediaName: String) : ViewModel() {
     fun togglePause() { isPlaying = !isPlaying }
 
     // This is called by BroadcastReceiver in compose when we receive the playback updates.
+    @RequiresApi(Build.VERSION_CODES.O)
     fun updatePlaybackState(isPlaying: Boolean, position: Long, duration: Long, artworkBytes: ByteArray?)
     {
+
+        media!!.lastPlayed = LocalDateTime.now()
 
         // Sets whether it's playing.
         this.isPlaying = isPlaying

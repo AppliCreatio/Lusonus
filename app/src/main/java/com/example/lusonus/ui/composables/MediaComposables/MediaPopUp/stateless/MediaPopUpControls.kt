@@ -19,8 +19,7 @@ fun MediaPopUpControls(
 {
     IconButton(
         onClick = onPrevious,
-        modifier = Modifier,
-        enabled = false) {
+        modifier = Modifier) {
         Icon(
             modifier = Modifier.size(30.dp),
             painter = painterResource(R.drawable.previous_button),
@@ -47,8 +46,7 @@ fun MediaPopUpControls(
 
     IconButton(
         onClick = onNext,
-        modifier = Modifier,
-        enabled = false) {
+        modifier = Modifier) {
         Icon(
             modifier = Modifier.size(30.dp),
             painter = painterResource(R.drawable.next_button),

@@ -1,11 +1,15 @@
 package com.example.lusonus.data.model
 
 import android.net.Uri
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.example.lusonus.ui.utils.search
 import com.example.lusonus.ui.utils.sort
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import java.time.LocalDate
+import java.time.LocalDateTime
 
 open class FolderLibrary {
 
@@ -19,6 +23,7 @@ open class FolderLibrary {
     val folders: StateFlow<List<Folder>> = _folders.asStateFlow()
 
     // Adds a folder if it doesn't already exist.
+    @RequiresApi(Build.VERSION_CODES.O)
     fun addFolder(name: String, uri: Uri, mediaInFolder: List<Media>) {
         // Gets the current flow state.
         val current = _allFolders.value
@@ -29,6 +34,8 @@ open class FolderLibrary {
         // If the folder doesn't exist, we make a new one.
         val newFolder = Folder(
             name = name,
+            dateAdded = LocalDateTime.now(),
+            lastPlayed = null,
             uri = uri,
             media = mediaInFolder.toMutableList()
         )
@@ -68,6 +75,7 @@ open class FolderLibrary {
         _allFolders.value.find { it.name == name }
 
     // Sorts folders by a sorting type.
+    @RequiresApi(Build.VERSION_CODES.O)
     fun sortFolders(type: String) {
         _folders.value = sort(_folders.value, type)
     }
