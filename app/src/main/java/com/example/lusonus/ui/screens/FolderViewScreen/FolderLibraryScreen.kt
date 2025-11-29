@@ -133,7 +133,9 @@ fun FolderLibraryScreen() {
 
             // This is the sort options menu.
             val sortOptions = listOf(
-                MenuItem("Alphabetical") { viewModel.sortFolders("alphabetically") }
+                MenuItem("Alphabetical") { viewModel.sortFolders("alphabetically") },
+                MenuItem("Date Added") { viewModel.sortFolders("date added") },
+                MenuItem("Last Played") { viewModel.sortFolders("last played") }
             )
 
             // Calls the search and sort.
