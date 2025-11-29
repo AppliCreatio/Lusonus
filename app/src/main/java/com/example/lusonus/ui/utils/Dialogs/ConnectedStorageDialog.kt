@@ -24,8 +24,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.example.lusonus.navigation.LocalStorageList
 import com.example.lusonus.data.model.ExternalStorage
+import com.example.lusonus.navigation.LocalStorageList
 
 
 @Composable

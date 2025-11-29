@@ -1,5 +1,7 @@
 package com.example.lusonus.ui.composables.Layout
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -8,13 +10,20 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.compose.currentBackStackEntryAsState
+import com.example.lusonus.navigation.LocalGlobals
+import com.example.lusonus.navigation.LocalNavController
+import com.example.lusonus.navigation.Routes
 import com.example.lusonus.ui.composables.Layout.BottomBar.SharedBottomBar
 import com.example.lusonus.ui.composables.Layout.TopBar.SharedTopBar
+import com.example.lusonus.ui.composables.MediaComposables.MediaPopUp.MediaPopUpScreen
+import com.example.lusonus.ui.screens.MediaScreen.MediaScreen
 
 /**
  * This main layout wraps other composables in a consistent layout. It has the ability to be modular by changing or removing the
  * top bar, bottom bar or floating action button. If nothing is specified, it will default to the default layout
  */
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainLayout(
@@ -24,6 +33,14 @@ fun MainLayout(
     floatingActionButton: @Composable (() -> Unit)? = null, // this is optional
     bottomBar: @Composable (() -> Unit)? = { SharedBottomBar() } // If no specific parameter is passed, set to default bottom bar
 ) {
+
+    val navController = LocalNavController.current
+    val globals = LocalGlobals.current
+    val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
+
+    val screensWithPlayer = listOf(Routes.MediaLibrary.route, Routes.FolderLibrary.route, Routes.PlaylistLibrary.route,
+        Routes.Playlist.route)
+    val showPopUp = currentRoute in screensWithPlayer
     // This is the main scaffold for our app, we will pass Composables to this method which will
     // then modify the contents of the scaffold as needed.
     Scaffold(
@@ -34,7 +51,11 @@ fun MainLayout(
 
         // Gets the bottom bar of the scaffold.
         bottomBar = {
-            bottomBar?.invoke()
+            Column {
+                if(globals.mediaPopUpName.isNotEmpty() && showPopUp)
+                    MediaPopUpScreen(globals.mediaPopUpName)
+                bottomBar?.invoke()
+            }
         },
 
         // Gets the floating action bar if there is one.

@@ -1,5 +1,7 @@
 package com.example.lusonus.ui.screens.FAQScreen
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,6 +18,7 @@ import com.example.lusonus.ui.composables.Layout.MainLayout
 /**
  * A composable which acts as the screen for the about/FAQ page. It shows all Frequently Asked Questions about the app.
  */
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun FAQScreen() {
 

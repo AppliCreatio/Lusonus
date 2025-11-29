@@ -1,5 +1,7 @@
 package com.example.lusonus.ui.screens.FolderScreen
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -20,6 +22,7 @@ import com.example.lusonus.navigation.Routes
 import com.example.lusonus.ui.composables.Layout.MainLayout
 import com.example.lusonus.ui.composables.Layout.SearchAndSort.SearchAndSort
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun FolderScreen(folderName: String) {
     val navController = LocalNavController.current
