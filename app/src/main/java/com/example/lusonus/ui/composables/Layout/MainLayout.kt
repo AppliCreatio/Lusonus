@@ -31,12 +31,16 @@ fun MainLayout(
     screenTitle: String,
     topBar: @Composable (() -> Unit)? = { SharedTopBar(screenTitle) }, // If no specific parameter is passed, set to default top bar
     floatingActionButton: @Composable (() -> Unit)? = null, // this is optional
-    bottomBar: @Composable (() -> Unit)? = { SharedBottomBar() } // If no specific parameter is passed, set to default bottom bar
+    bottomBar: @Composable (() -> Unit)? = {SharedBottomBar()} // this is optional
 ) {
 
     val navController = LocalNavController.current
     val globals = LocalGlobals.current
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
+
+    if (currentRoute == null) {
+        return
+    }
 
     val screensWithPlayer = listOf(Routes.MediaLibrary.route, Routes.FolderLibrary.route, Routes.PlaylistLibrary.route,
         Routes.Playlist.route)

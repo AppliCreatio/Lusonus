@@ -15,6 +15,8 @@ import androidx.compose.ui.Modifier
 import com.example.lusonus.navigation.Routes
 import com.example.organisemedia.Helper.Style.IconTint
 
+// NOTE! THIS IS NO LONGER USED! Please check BarElementSlider!
+
 // Statless method for shared bottom bar
 @Composable
 fun SharedBottomBarStateless(
