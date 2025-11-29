@@ -17,8 +17,7 @@ fun MenuDropDown(){
     val navController = LocalNavController.current
 
     val menuList: List<MenuItem> = listOf(MenuItem("Profile") { navController.navigate(Routes.Profile.route) },
-        MenuItem("Settings") { navController.navigate(Routes.Settings.route) },
-        MenuItem("Folders") { navController.navigate(Routes.FolderLibrary.route) },
+        MenuItem("Settings", ) { navController.navigate(Routes.Settings.route) },
         MenuItem("About Us") { navController.navigate(Routes.FAQ.route) })
 
     MinimalDropdownMenu(menuList, expanded, { expanded = !it }, Icons.Default.MoreVert)

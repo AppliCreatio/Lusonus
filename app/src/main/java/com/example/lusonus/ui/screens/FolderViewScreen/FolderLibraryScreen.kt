@@ -6,6 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -25,6 +26,8 @@ import com.example.lusonus.navigation.LocalNavController
 import com.example.lusonus.navigation.Routes
 import com.example.lusonus.ui.composables.Layout.MainLayout
 import com.example.lusonus.ui.composables.Layout.SearchAndSort.SearchAndSort
+import com.example.lusonus.ui.composables.Layout.TopBar.SharedNavTopBar
+import com.example.lusonus.ui.composables.Layout.TopBar.SharedTopBar
 import com.example.lusonus.ui.screens.FolderViewScreen.FolderLibraryContent
 import com.example.lusonus.ui.screens.FolderViewScreen.FolderLibraryViewModel
 import com.example.lusonus.ui.utils.getName
@@ -122,6 +125,12 @@ fun FolderLibraryScreen() {
 
     // The main layout (the actual visuals)
     MainLayout(
+        topBar = {
+            Column {
+                SharedTopBar("Lusonus")
+                SharedNavTopBar()
+            }
+        },
         content = {
             // When the composition is entered, we reload the folders (checks for updates!).
             LaunchedEffect(Unit) {
@@ -159,7 +168,7 @@ fun FolderLibraryScreen() {
             )
         },
 
-        screenTitle = "Folders",
+        screenTitle = "Lusonus",
 
         floatingActionButton = {
             SharedFloatingActionButton(

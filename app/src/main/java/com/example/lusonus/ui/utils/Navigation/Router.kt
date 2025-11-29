@@ -47,38 +47,6 @@ fun Router(navController: NavHostController, modifier: Modifier = Modifier) {
         navController = navController,
         startDestination = Routes.PlaylistLibrary.route, // the starting screen.
         modifier = modifier.fillMaxSize(),
-        enterTransition = {
-            fadeIn(
-                animationSpec = tween(
-                    durationMillis = 300,
-                    easing = LinearEasing
-                )
-            )
-        },
-        exitTransition = {
-            fadeOut(
-                animationSpec = tween(
-                    durationMillis = 300,
-                    easing = LinearEasing
-                )
-            )
-        },
-        popEnterTransition = {
-            fadeIn(
-                animationSpec = tween(
-                    durationMillis = 300,
-                    easing = LinearEasing
-                )
-            )
-        },
-        popExitTransition = {
-            fadeOut(
-                animationSpec = tween(
-                    durationMillis = 300,
-                    easing = LinearEasing
-                )
-            )
-        }
     ) {
         // Media screen route.
         composable(route = Routes.MediaLibrary.route) {

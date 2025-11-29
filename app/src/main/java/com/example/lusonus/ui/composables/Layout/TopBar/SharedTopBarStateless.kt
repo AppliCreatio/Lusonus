@@ -1,6 +1,7 @@
 package com.example.lusonus.ui.composables.Layout.TopBar
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
@@ -22,7 +23,7 @@ import com.example.lusonus.ui.composables.Layout.Buttons.MenuDropDown.MenuDropDo
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SharedTopBarStateless(
-    screenTitle: String,
+    pageName: String,
     canNavigateBack: Boolean,
     onNavigateBack: () -> Unit
 ) {
@@ -37,7 +38,7 @@ fun SharedTopBarStateless(
         // The title of the top bar.
         title = {
             Text(
-                text = screenTitle,
+                text = pageName,
                 style = MaterialTheme.typography.titleLarge
             )
         },

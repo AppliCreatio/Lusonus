@@ -25,7 +25,7 @@ fun NewPlaylistDialog(
         AlertDialog(
             // Title of the popup.
             title = {
-                Text("New Playlist")
+                Text("Create Playlist")
             },
 
             // The input box of the popup.

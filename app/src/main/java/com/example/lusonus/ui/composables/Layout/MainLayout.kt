@@ -34,13 +34,10 @@ fun MainLayout(
     bottomBar: @Composable (() -> Unit)? = {SharedBottomBar()} // this is optional
 ) {
 
+
     val navController = LocalNavController.current
     val globals = LocalGlobals.current
-    val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
-
-    if (currentRoute == null) {
-        return
-    }
+    val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route ?: return
 
     val screensWithPlayer = listOf(Routes.MediaLibrary.route, Routes.FolderLibrary.route, Routes.PlaylistLibrary.route,
         Routes.Playlist.route)

@@ -18,66 +18,18 @@ import com.example.lusonus.ui.utils.fadeOuterEdge
 
 @Composable
 fun SharedTopBar(
-    screenTitle: String,
-    navController: NavHostController = LocalNavController.current
+    pageName: String,
+    navController: NavHostController = LocalNavController.current,
 ) {
-    Column {
         // Gets whether you can go back a screen.
         val canNavigateBack = navController.previousBackStackEntry != null
 
         // Calls top bar stateless.
         SharedTopBarStateless(
-            screenTitle = screenTitle,
+            pageName,
             canNavigateBack = canNavigateBack,
             onNavigateBack = {
                 if (canNavigateBack) navController.navigateUp()
             }
         )
-
-        // Right under the top bar
-        // Gets the nav stack as a state (so I can have highlighted buttons!)
-        val navBackStackEntry by navController.currentBackStackEntryAsState()
-
-        // Gets the current screen
-        val currentRoute = navBackStackEntry?.destination?.route ?: return
-
-        val sliderItems = listOf(
-            "Playlists" to Routes.PlaylistLibrary.route,
-            "Media" to Routes.MediaLibrary.route,
-            "Folders" to Routes.FolderLibrary.route
-        )
-
-        val currentIndex = sliderItems.indexOfFirst { it.second == currentRoute }
-
-        println("cheese")
-        println(Routes.PlaylistLibrary.route)
-        println(currentRoute)
-        println(currentIndex)
-
-        val pagerState = rememberPagerState(
-            initialPage = currentIndex,
-            pageCount = { sliderItems.size }
-        )
-
-        Box(modifier = Modifier.fadeOuterEdge(isToLeft = true, isToRight = true, fadeWidth = 30.dp, color = MaterialTheme.colorScheme.background)){
-            BarElementSlider(
-                pagerState = pagerState,
-                givenSelectedIndex = currentIndex,
-                onItemSelected = { index ->
-                    val targetRoute = sliderItems[index].second
-                    if (currentRoute != targetRoute) {
-                        navController.navigate(targetRoute) {
-                            // Preserve state across reselects and avoid piling screens
-                            // requires: import androidx.navigation.navOptions
-                            popUpTo(navController.graph.findStartDestination().id) {
-                                saveState = true
-                            }
-                            launchSingleTop = true
-                            restoreState = true
-                        }
-                    }
-                }
-            )
-        }
-    }
 }

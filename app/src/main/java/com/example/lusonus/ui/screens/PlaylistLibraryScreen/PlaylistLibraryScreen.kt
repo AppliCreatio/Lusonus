@@ -3,6 +3,7 @@ package com.example.lusonus.ui.screens.PlaylistLibraryScreen
 import android.os.Build
 import androidx.activity.ComponentActivity
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -15,6 +16,8 @@ import com.example.lusonus.navigation.LocalNavController
 import com.example.lusonus.navigation.Routes
 import com.example.lusonus.ui.composables.Layout.MainLayout
 import com.example.lusonus.ui.composables.Layout.SearchAndSort.SearchAndSort
+import com.example.lusonus.ui.composables.Layout.TopBar.SharedNavTopBar
+import com.example.lusonus.ui.composables.Layout.TopBar.SharedTopBar
 import com.example.organisemedia.Helper.Playlist.NewPlaylistDialog
 import com.example.organisemedia.Layout.FloatingActionButton.SharedFloatingActionButton
 
@@ -57,6 +60,12 @@ fun PlaylistLibraryScreen() {
     }
 
     MainLayout(
+        topBar = {
+            Column {
+                SharedTopBar("Lusonus")
+                SharedNavTopBar()
+            }
+        },
         content = {
 
             val sortOptions = listOf<MenuItem>(
@@ -78,7 +87,7 @@ fun PlaylistLibraryScreen() {
                 }
             )
         },
-        screenTitle = "Playlists",
+        screenTitle = "Lusonus",
         floatingActionButton = {
             SharedFloatingActionButton(
                 onClick = {

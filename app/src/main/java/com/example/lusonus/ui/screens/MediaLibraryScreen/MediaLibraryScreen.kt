@@ -6,6 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -25,6 +26,8 @@ import com.example.lusonus.navigation.LocalGlobals
 import com.example.lusonus.navigation.LocalNavController
 import com.example.lusonus.ui.composables.Layout.MainLayout
 import com.example.lusonus.ui.composables.Layout.SearchAndSort.SearchAndSort
+import com.example.lusonus.ui.composables.Layout.TopBar.SharedNavTopBar
+import com.example.lusonus.ui.composables.Layout.TopBar.SharedTopBar
 import com.example.organisemedia.Layout.FloatingActionButton.SharedFloatingActionButton
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -85,6 +88,12 @@ fun MediaLibraryScreen() {
     }
 
     MainLayout(
+        topBar = {
+            Column {
+                SharedTopBar("Lusonus")
+                SharedNavTopBar()
+            }
+        },
         content = {
             LaunchedEffect(Unit) {
                 viewModel.refreshMedia(context)
@@ -109,7 +118,7 @@ fun MediaLibraryScreen() {
                     }
                 )
                   },
-        screenTitle = "Media",
+        screenTitle = "Lusonus",
         floatingActionButton = {
             SharedFloatingActionButton(
                 onClick = {
