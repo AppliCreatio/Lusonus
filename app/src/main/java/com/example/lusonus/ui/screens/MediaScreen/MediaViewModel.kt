@@ -13,6 +13,7 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 
 // View model for MediaScreen.
+@RequiresApi(Build.VERSION_CODES.O)
 class MediaViewModel(private var mediaName: String) : ViewModel() {
     // Gets shared singleton instance.
     private val mediaLibrary = SharedMediaLibrary
@@ -67,7 +68,6 @@ class MediaViewModel(private var mediaName: String) : ViewModel() {
     fun togglePause() { isPlaying = !isPlaying }
 
     // This is called by BroadcastReceiver in compose when we receive the playback updates.
-    @RequiresApi(Build.VERSION_CODES.O)
     fun updatePlaybackState(isPlaying: Boolean, position: Long, duration: Long, artworkBytes: ByteArray?)
     {
 

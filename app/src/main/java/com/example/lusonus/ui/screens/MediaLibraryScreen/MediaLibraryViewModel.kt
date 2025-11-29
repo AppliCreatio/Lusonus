@@ -2,6 +2,8 @@ package com.example.lusonus.ui.screens.MediaLibraryScreen
 
 import android.content.Context
 import android.net.Uri
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import com.example.lusonus.data.model.Media
 import com.example.lusonus.data.model.SharedMediaLibrary
@@ -9,6 +11,7 @@ import com.example.lusonus.ui.utils.getFileName
 import kotlinx.coroutines.flow.StateFlow
 
 // Media view model to deal with
+@RequiresApi(Build.VERSION_CODES.O)
 class MediaLibraryViewModel : ViewModel() {
     // Gets shared singleton instance.
     private val mediaLibrary = SharedMediaLibrary
@@ -17,6 +20,7 @@ class MediaLibraryViewModel : ViewModel() {
     val mediaFiles: StateFlow<List<Media>> = mediaLibrary.media
 
     // Add files to files.
+
     fun addFiles(context: Context, uris: List<Uri>) {
         // THE RABBIT HOLES! Associate by is really really really cool.
         val map = uris.associateBy { uri -> context.getFileName(uri) }

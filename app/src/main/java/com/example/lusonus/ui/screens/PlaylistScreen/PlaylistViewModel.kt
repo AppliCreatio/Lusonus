@@ -1,6 +1,8 @@
 package com.example.lusonus.ui.screens.PlaylistScreen
 
 import android.content.Context
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.documentfile.provider.DocumentFile
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -15,6 +17,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 // Media view model to deal with
+@RequiresApi(Build.VERSION_CODES.O)
 class PlaylistViewModel(private val playlistName: String) : ViewModel() {
     // Gets shared singleton instance.
     private val playlistLibrary = SharedPlaylistLibrary
