@@ -9,6 +9,7 @@ class PlaylistViewModelFactory(
     private val playlistName: String
 ) : ViewModelProvider.Factory {
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         // This bullsh*t is to make sure T is valid, if we don't do this we get an annoying warning.
         // This is mixed with the stuff from the class notes.
