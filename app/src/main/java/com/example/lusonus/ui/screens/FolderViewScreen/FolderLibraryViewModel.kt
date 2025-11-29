@@ -2,6 +2,8 @@ package com.example.lusonus.ui.screens.FolderViewScreen
 
 import android.content.Context
 import android.net.Uri
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
@@ -18,6 +20,7 @@ import com.example.lusonus.ui.utils.scanFolderRecursive
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
+@RequiresApi(Build.VERSION_CODES.O)
 class FolderLibraryViewModel : ViewModel(), LifecycleEventObserver {
 
     // Gets the singleton instance of the folder library.
@@ -104,6 +107,7 @@ class FolderLibraryViewModel : ViewModel(), LifecycleEventObserver {
     }
 
     // Finalizes the updating of a folder.
+
     private fun updateFolder(folderUri: Uri, newUris: List<Uri>, context: Context) {
         // Gets existing one or returns if it's invalid.
         val existing = folderLibrary.folders.value.find { it.uri == folderUri } ?: return
