@@ -16,7 +16,6 @@ import com.example.lusonus.navigation.LocalNavController
 import com.example.lusonus.navigation.Routes
 import com.example.lusonus.ui.composables.Layout.BottomBar.SharedBottomBar
 import com.example.lusonus.ui.composables.Layout.TopBar.SharedTopBar
-import com.example.lusonus.ui.composables.MediaComposables.MediaPopUp.MediaPopUpScreen
 
 /**
  * This main layout wraps other composables in a consistent layout. It has the ability to be modular by changing or removing the
@@ -53,8 +52,6 @@ fun MainLayout(
         // Gets the bottom bar of the scaffold.
         bottomBar = {
             Column {
-                if(globals.mediaPopUpName.isNotEmpty() && showPopUp)
-                    MediaPopUpScreen(globals.mediaPopUpName)
                 bottomBar?.invoke()
             }
         },

@@ -3,7 +3,6 @@ plugins {
     id("com.google.gms.google-services")
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.plugin.compose")
-    //id("com.google.dagger.hilt.android")
 }
 
 kotlin {
@@ -58,6 +57,7 @@ android {
 }
 
 dependencies {
+    implementation("com.google.android.material:material:1.13.0")
     implementation("androidx.media3:media3-exoplayer:1.8.0")
     implementation("androidx.media3:media3-exoplayer-dash:1.8.0")
     implementation("androidx.media3:media3-ui:1.8.0")
@@ -80,8 +80,6 @@ dependencies {
     implementation("androidx.compose.material:material-icons-extended")
     implementation("androidx.lifecycle:lifecycle-process:2.10.0")
     implementation("androidx.compose.foundation:foundation:1.9.5")
-    //implementation("com.google.dagger:hilt-android:2.57.2")
-    //implementation("com.google.dagger:hilt-android-compiler:2.57.2")
     implementation("androidx.navigation:navigation-compose:2.9.6")
     implementation("com.android.volley:volley:1.2.1")
     debugImplementation("androidx.compose.ui:ui-tooling")
