@@ -140,5 +140,5 @@ fun RegisterScreen() {
             }
         }
 
-    },"My App")
+    }, "My App")
 }

@@ -7,14 +7,10 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.sharp.Menu
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -39,11 +35,10 @@ import com.example.organisemedia.Layout.FloatingActionButton.SharedFloatingActio
 import com.example.lusonus.ui.composables.Layout.MainLayout
 import com.example.lusonus.navigation.LocalNavController
 import com.example.lusonus.navigation.Routes
-import com.example.lusonus.ui.composables.Layout.Buttons.MenuDropDown.MinimalDropdownMenu
 import com.example.lusonus.ui.composables.Layout.SearchAndSort.SearchAndSort
-import com.example.lusonus.ui.composables.Layout.SearchAndSort.SearchBar
 import com.example.lusonus.ui.composables.Layout.TopBar.SharedNavTopBar
 import com.example.lusonus.ui.composables.Layout.TopBar.SharedTopBar
+import com.example.lusonus.ui.composables.Layout.TopBar.TopBarAddButton
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -100,12 +95,6 @@ fun MediaLibraryScreen() {
     }
 
     MainLayout(
-        topBar = {
-            Column {
-                SharedTopBar("Lusonus")
-                SharedNavTopBar()
-            }
-        },
         content = {
             LaunchedEffect(Unit) {
                 viewModel.refreshMedia(context)
@@ -126,7 +115,7 @@ fun MediaLibraryScreen() {
                 colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.secondaryContainer
                 ),
-                modifier = Modifier.fillMaxSize().padding(16.dp).offset(y = 40.dp),
+                modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp).offset(y = 40.dp),
                 shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
                 elevation = CardDefaults.cardElevation(
                     defaultElevation = 4.dp
@@ -145,13 +134,16 @@ fun MediaLibraryScreen() {
 
         },
         screenTitle = "Lusonus",
-        floatingActionButton = {
-            SharedFloatingActionButton(
-                onClick = {
-                    // Launch the file picker
-                    pickFilesLauncher.launch(input = arrayOf("audio/*", "video/*"))
-                }
-            )
+
+        topBar = {
+            Column {
+                SharedTopBar("Lusonus", {
+                    TopBarAddButton(onClick = {
+                        pickFilesLauncher.launch(input = arrayOf("audio/*", "video/*"))
+                    } )
+                })
+                SharedNavTopBar()
+            }
         }
     )
 }

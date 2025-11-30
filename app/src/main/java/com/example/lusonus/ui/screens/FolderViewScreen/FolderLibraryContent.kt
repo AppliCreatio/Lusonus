@@ -28,20 +28,20 @@ fun FolderLibraryContent(
     // Gets the local context.
     val context = LocalContext.current
 
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        )
-        {
-            items(folders) { folder ->
-                FolderItem(
-                    folderName = folder.name,
-                    folderPath = context.getName(folder.uri),
-                    onDelete = onDeleteFolder,
-                    onClick = onClickFolder
-                )
-            }
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    )
+    {
+        items(folders) { folder ->
+            FolderItem(
+                folderName = folder.name,
+                folderPath = context.getName(folder.uri),
+                onDelete = onDeleteFolder,
+                onClick = onClickFolder
+            )
         }
+    }
 }

@@ -19,10 +19,24 @@ import com.example.lusonus.ui.utils.fadeOuterEdge
 @Composable
 fun SharedTopBar(
     pageName: String,
+    actionButton: @Composable (() -> Unit)? = null,
     navController: NavHostController = LocalNavController.current,
 ) {
         // Gets whether you can go back a screen.
-        val canNavigateBack = navController.previousBackStackEntry != null
+        var canNavigateBack = navController.previousBackStackEntry != null
+        val navBackStackEntry by navController.currentBackStackEntryAsState()
+        val currentRoute = navBackStackEntry?.destination?.route ?: return
+
+        val sliderItems = listOf(
+            "Playlists" to Routes.PlaylistLibrary.route,
+            "Media" to Routes.MediaLibrary.route,
+            "Folders" to Routes.FolderLibrary.route
+        )
+
+        if (sliderItems.any { it.second == currentRoute})
+        {
+            canNavigateBack = false
+        }
 
         // Calls top bar stateless.
         SharedTopBarStateless(
@@ -30,6 +44,7 @@ fun SharedTopBar(
             canNavigateBack = canNavigateBack,
             onNavigateBack = {
                 if (canNavigateBack) navController.navigateUp()
-            }
+            },
+            actionButton = actionButton
         )
 }

@@ -37,6 +37,7 @@ import com.example.lusonus.ui.composables.Layout.MainLayout
 import com.example.lusonus.ui.composables.Layout.SearchAndSort.SearchAndSort
 import com.example.lusonus.ui.composables.Layout.TopBar.SharedNavTopBar
 import com.example.lusonus.ui.composables.Layout.TopBar.SharedTopBar
+import com.example.lusonus.ui.composables.Layout.TopBar.TopBarAddButton
 import com.example.lusonus.ui.screens.FolderViewScreen.FolderLibraryContent
 import com.example.lusonus.ui.screens.FolderViewScreen.FolderLibraryViewModel
 import com.example.lusonus.ui.utils.getName
@@ -134,12 +135,6 @@ fun FolderLibraryScreen() {
 
     // The main layout (the actual visuals)
     MainLayout(
-        topBar = {
-            Column {
-                SharedTopBar("Lusonus")
-                SharedNavTopBar()
-            }
-        },
         content = {
             // When the composition is entered, we reload the folders (checks for updates!).
             LaunchedEffect(Unit) {
@@ -172,7 +167,7 @@ fun FolderLibraryScreen() {
                 colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.secondaryContainer
                 ),
-                modifier = Modifier.fillMaxSize().padding(16.dp).offset(y = 40.dp),
+                modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp).offset(y = 40.dp),
                 shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
                 elevation = CardDefaults.cardElevation(
                     defaultElevation = 4.dp
@@ -188,14 +183,17 @@ fun FolderLibraryScreen() {
                 )
             }
         },
-
         screenTitle = "Lusonus",
 
-        floatingActionButton = {
-            SharedFloatingActionButton(
-                // Launches the folder picking :D
-                onClick = { pickFolderLauncher.launch(null) }
-            )
+        topBar = {
+            Column {
+                SharedTopBar("Lusonus", {
+                    TopBarAddButton(onClick = {
+                        pickFolderLauncher.launch(null)
+                    } )
+                })
+                SharedNavTopBar()
+            }
         }
     )
 }

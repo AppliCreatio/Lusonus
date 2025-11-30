@@ -1,16 +1,16 @@
 package com.example.lusonus.ui.theme
 
 import androidx.compose.ui.graphics.Color
-val primaryLight = Color(0xFF2D6CFF)
-val onPrimaryLight = Color.White
-val primaryContainerLight = Color(0xFFDCE7FF)
-val onPrimaryContainerLight = Color(0xFF002C78)
 
-val primaryDark = Color(0xFF4D7CFF)
+val primaryLight = Color(0xFF1941A3)
+val onPrimaryLight = Color.White
+val primaryContainerLight = Color(0xFFCBD9FF)
+val onPrimaryContainerLight = Color(0xFF001A4F)
+
+val primaryDark = Color(0xFF1941A3)
 val onPrimaryDark = Color.White
 val primaryContainerDark = Color(0xFF1A2C55)
 val onPrimaryContainerDark = Color(0xFFD9E2FF)
-
 val secondaryLight = Color(0xFFE6E8ED)
 val onSecondaryLight = Color(0xFF1A1B1E)
 val secondaryContainerLight = Color(0xFFD8DAE1)
@@ -29,15 +29,17 @@ val tertiaryDark = Color(0xFF25C07A)
 val onTertiaryDark = Color(0xFF002115)
 val tertiaryContainerDark = Color(0xFF004A2A)
 val onTertiaryContainerDark = Color(0xFFA9F5CE)
-val errorLight = Color(0xFFB00020)
-val onErrorLight = Color.White
-val errorContainerLight = Color(0xFFFFDAD6)
-val onErrorContainerLight = Color(0xFF410001)
+val errorLight = Color(0xFFF0B63D)
+val onErrorLight = Color.Black
+val errorContainerLight = Color(0xFFFFE6BE)
+val onErrorContainerLight = Color(0xFF3A2500)
 
-val errorDark = Color(0xFFFF5555)
+val errorDark = Color(0xFFF0B63D)
 val onErrorDark = Color.Black
-val errorContainerDark = Color(0xFF720D0D)
-val onErrorContainerDark = Color(0xFFFFDAD6)
+val errorContainerDark = Color(0xFF5A3C00)
+val onErrorContainerDark = Color(0xFFFFE6BE)
+
+// --- SURFACE / BACKGROUND (unchanged) ---
 val backgroundLight = Color(0xFFF9F9FB)
 val onBackgroundLight = Color(0xFF1A1B1E)
 
@@ -70,6 +72,7 @@ val inverseOnSurfaceLight = Color(0xFFE3E5E8)
 
 val inverseSurfaceDark = Color(0xFFE5E7EA)
 val inverseOnSurfaceDark = Color(0xFF1A1B1E)
+
 val surfaceDimLight = Color(0xFFE4E5EA)
 val surfaceBrightLight = Color.White
 val surfaceContainerLowestLight = Color.White

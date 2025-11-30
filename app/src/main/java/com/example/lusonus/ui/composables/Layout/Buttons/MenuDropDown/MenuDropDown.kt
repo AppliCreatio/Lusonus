@@ -1,5 +1,6 @@
 package com.example.lusonus.ui.composables.Layout.Buttons.MenuDropDown
 
+import MinimalDropdownMenu
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.Composable

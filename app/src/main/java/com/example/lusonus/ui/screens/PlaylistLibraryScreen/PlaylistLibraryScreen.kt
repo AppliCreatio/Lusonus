@@ -27,6 +27,7 @@ import com.example.lusonus.ui.composables.Layout.MainLayout
 import com.example.lusonus.ui.composables.Layout.SearchAndSort.SearchAndSort
 import com.example.lusonus.ui.composables.Layout.TopBar.SharedNavTopBar
 import com.example.lusonus.ui.composables.Layout.TopBar.SharedTopBar
+import com.example.lusonus.ui.composables.Layout.TopBar.TopBarAddButton
 import com.example.organisemedia.Helper.Playlist.NewPlaylistDialog
 import com.example.organisemedia.Layout.FloatingActionButton.SharedFloatingActionButton
 
@@ -69,12 +70,6 @@ fun PlaylistLibraryScreen() {
     }
 
     MainLayout(
-        topBar = {
-            Column {
-                SharedTopBar("Lusonus")
-                SharedNavTopBar()
-            }
-        },
         content = {
 
             val sortOptions = listOf(
@@ -92,7 +87,7 @@ fun PlaylistLibraryScreen() {
                 colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.secondaryContainer
                 ),
-                modifier = Modifier.fillMaxSize().padding(16.dp).offset(y = 40.dp),
+                modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp).offset(y = 40.dp),
                 shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
                 elevation = CardDefaults.cardElevation(
                     defaultElevation = 4.dp
@@ -110,12 +105,15 @@ fun PlaylistLibraryScreen() {
             }
         },
         screenTitle = "Lusonus",
-        floatingActionButton = {
-            SharedFloatingActionButton(
-                onClick = {
-                    showDialog = true
-                }
-            )
+        topBar = {
+            Column {
+                SharedTopBar("Lusonus", {
+                    TopBarAddButton(onClick = {
+                        showDialog = true
+                    } )
+                })
+                SharedNavTopBar()
+            }
         }
     )
 }

@@ -1,6 +1,7 @@
 package com.example.lusonus.ui.composables.Layout.TopBar
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
@@ -14,22 +15,35 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.lusonus.R
 import com.example.lusonus.ui.composables.Layout.Buttons.MenuDropDown.MenuDropDown
+import com.example.lusonus.ui.utils.fadeBottomEdge
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SharedTopBarStateless(
     pageName: String,
     canNavigateBack: Boolean,
-    onNavigateBack: () -> Unit
+    onNavigateBack: () -> Unit,
+    actionButton: @Composable (() -> Unit)? = null,
 ) {
+    var isNavigatingBack by rememberSaveable { mutableStateOf(false) }
+
     // The top bar of the scaffold.
     CenterAlignedTopAppBar(
+        modifier = Modifier.height(96.dp).fadeBottomEdge(
+            fadeHeight = 12.dp,
+            color = MaterialTheme.colorScheme.background
+        ),
+
         colors = topAppBarColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer,
             navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
@@ -48,8 +62,11 @@ fun SharedTopBarStateless(
         },
 
         navigationIcon = {
-            if (canNavigateBack) {
-                IconButton(onClick = onNavigateBack) {
+            if (canNavigateBack && !isNavigatingBack) {
+                IconButton(onClick = {
+                    isNavigatingBack = true
+                    onNavigateBack()
+                }) {
                     Icon(
                         imageVector = Icons.Default.ArrowBackIosNew,
                         contentDescription = "Go back"
@@ -59,7 +76,10 @@ fun SharedTopBarStateless(
         },
 
         actions = {
-            MenuDropDown()
+            Row {
+                actionButton?.invoke()
+                MenuDropDown()
+            }
         }
     )
 }

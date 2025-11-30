@@ -69,3 +69,32 @@ fun Modifier.fadeOuterEdge(
         }
     }
 )
+
+fun Modifier.fadeBottomEdge(
+    fadeHeight: Dp,
+    color: Color
+): Modifier = this.then(
+    Modifier.drawWithCache {
+        val fadeHeightPx = fadeHeight.toPx()
+
+        onDrawWithContent {
+            drawContent()
+
+            val brush = Brush.verticalGradient(
+                colors = listOf(
+                    color.copy(alpha = 0f),
+                    color.copy(alpha = 1f),
+                ),
+                startY = size.height - fadeHeightPx,
+                endY = size.height
+            )
+
+            drawRect(
+                brush = brush,
+                topLeft = androidx.compose.ui.geometry.Offset(0f, size.height - fadeHeightPx),
+                size = androidx.compose.ui.geometry.Size(size.width, fadeHeightPx),
+                blendMode = BlendMode.SrcOver
+            )
+        }
+    }
+)
