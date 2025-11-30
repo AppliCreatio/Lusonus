@@ -37,27 +37,32 @@ fun BarElementSlider(
     val items = listOf("Playlists", "Media", "Folders")
 
     // Tracks the last page the Pager is set on.
-    var lastSettledPage by remember { mutableIntStateOf(givenSelectedIndex) }
+    var lastSettledPage by remember { mutableStateOf(givenSelectedIndex) }
 
     // Tracks the last page we told navigation about.
-    var lastNotifiedNavPage by remember { mutableIntStateOf(givenSelectedIndex) }
+    var lastNotifiedNavPage by remember { mutableStateOf(givenSelectedIndex) }
 
-    // This is for the initial page when this composes. Note: we added fades back in because of annoying visual glitches)
+    // Flag to prevent triggering onItemSelected during programmatic scrolls
+    var ignoreNextOnItemSelected by remember { mutableStateOf(false) }
+
+    // Handle external updates (dropdown navigation etc.)
     LaunchedEffect(givenSelectedIndex) {
-        if (givenSelectedIndex != pagerState.currentPage && !pagerState.isScrollInProgress) {
+        if (givenSelectedIndex != pagerState.currentPage) {
+            ignoreNextOnItemSelected = true
             pagerState.scrollToPage(givenSelectedIndex)
-            lastSettledPage = givenSelectedIndex
-            lastNotifiedNavPage = givenSelectedIndex
         }
+        lastSettledPage = givenSelectedIndex
+        lastNotifiedNavPage = givenSelectedIndex
+        ignoreNextOnItemSelected = false
     }
 
-    // This is when the user scrolls. Was a pain to code until I realized we needed a flow.
+    // Handle user scrolls
     LaunchedEffect(pagerState) {
         snapshotFlow { pagerState.isScrollInProgress to pagerState.currentPage }
             .collect { (scrolling, page) ->
                 if (!scrolling && page != lastSettledPage) {
                     lastSettledPage = page
-                    if (page != lastNotifiedNavPage) {
+                    if (!ignoreNextOnItemSelected && page != lastNotifiedNavPage) {
                         lastNotifiedNavPage = page
                         onItemSelected(page)
                     }
@@ -70,4 +75,3 @@ fun BarElementSlider(
         items = items
     )
 }
-

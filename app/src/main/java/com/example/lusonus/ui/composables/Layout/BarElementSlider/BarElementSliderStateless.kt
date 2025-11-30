@@ -39,7 +39,7 @@ fun BarElementSliderStateless(
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp
 
     // Centers it at 220.dp.
-    val sidePadding = ((screenWidth / 2) - 220.dp / 2).coerceAtLeast(0.dp)
+    val sidePadding = ((screenWidth / 2) - 160.dp / 2).coerceAtLeast(0.dp)
 
     Box(
         modifier = Modifier
@@ -53,27 +53,21 @@ fun BarElementSliderStateless(
         ) { pageIndex ->
             Box(
                 modifier = Modifier
-                    .width(220.dp)
+                    .width(160.dp)
                     .height(50.dp)
                     .padding(8.dp),
                 contentAlignment = Alignment.Center
             ) {
-                Card(
-                    shape = RoundedCornerShape(25.dp),
-                    modifier = Modifier.fillMaxWidth(),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier.fillMaxSize()
                 ) {
-                    Box(
-                        contentAlignment = Alignment.Center,
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-                        Text(
-                            text = items[pageIndex],
-                            style = MaterialTheme.typography.titleMedium,
-                            textAlign = TextAlign.Center,
-                            modifier = Modifier.padding(horizontal = 8.dp)
-                        )
-                    }
+                    Text(
+                        text = items[pageIndex],
+                        style = MaterialTheme.typography.titleMedium,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.padding(horizontal = 8.dp)
+                    )
                 }
             }
         }
