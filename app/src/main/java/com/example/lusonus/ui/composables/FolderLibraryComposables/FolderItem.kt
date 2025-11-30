@@ -1,9 +1,12 @@
 package com.example.lusonus.ui.composables.FolderLibraryComposables
 
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -20,27 +23,34 @@ fun FolderItem(
     onDelete: (String) -> Unit,
     onClick: (String) -> Unit
 ) {
-    Surface(
-        color = MaterialTheme.colorScheme.secondaryContainer,
-        contentColor = MaterialTheme.colorScheme.secondary,
+    Card(
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceVariant
+        ),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         shape = MaterialTheme.shapes.medium,
-        shadowElevation = 4.dp,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 4.dp, horizontal = 8.dp)
-            .pointerInput(folderName) {
-                detectTapGestures(
-                    onLongPress = { onDelete(folderName) },
-                    onTap = { onClick(folderName) }
-                )
-            }
+            .padding(8.dp)
     ) {
         Column(
-            modifier = Modifier.padding(12.dp).fillMaxWidth(),
+            modifier = Modifier
+                .combinedClickable(
+                    onClick = { onClick(folderName) },
+                    onLongClick = { onDelete(folderName) }
+                )
+                .padding(12.dp)
+                .fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = folderName, style = MaterialTheme.typography.titleMedium)
-            Text(text = folderPath, style = MaterialTheme.typography.bodySmall)
+            Text(
+                text = folderName,
+                style = MaterialTheme.typography.titleMedium
+            )
+            Text(
+                text = folderPath,
+                style = MaterialTheme.typography.bodySmall
+            )
         }
     }
 }

@@ -16,6 +16,7 @@ import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.lusonus.R
 import com.example.lusonus.ui.composables.Layout.Buttons.MenuDropDown.MenuDropDown
@@ -29,33 +30,36 @@ fun SharedTopBarStateless(
 ) {
     // The top bar of the scaffold.
     CenterAlignedTopAppBar(
-        // The colors of the top bar.
         colors = topAppBarColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer,
-            titleContentColor = MaterialTheme.colorScheme.primary,
+            navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
+            titleContentColor = MaterialTheme.colorScheme.onSurface,
+            actionIconContentColor = MaterialTheme.colorScheme.onSurface,
         ),
 
-        // The title of the top bar.
         title = {
             Text(
                 text = pageName,
-                style = MaterialTheme.typography.titleLarge
+                style = MaterialTheme.typography.titleLarge.copy(
+                    fontWeight = FontWeight.Bold
+                ),
+                color = MaterialTheme.colorScheme.onSurface,
             )
         },
 
-        // The navigation icon of the top bar, "go back" button.
         navigationIcon = {
             if (canNavigateBack) {
-                IconButton(onClick = { onNavigateBack() }) {
-                    Icon(Icons.Default.ArrowBackIosNew, contentDescription = "Go back.")
+                IconButton(onClick = onNavigateBack) {
+                    Icon(
+                        imageVector = Icons.Default.ArrowBackIosNew,
+                        contentDescription = "Go back"
+                    )
                 }
-
             }
         },
 
-//         The options menu (if needed)
         actions = {
             MenuDropDown()
-        },
+        }
     )
 }

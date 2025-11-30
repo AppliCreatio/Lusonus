@@ -4,12 +4,21 @@ import android.os.Build
 import androidx.activity.ComponentActivity
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.lusonus.data.model.MenuItem
 import com.example.lusonus.navigation.LocalNavController
@@ -79,15 +88,26 @@ fun PlaylistLibraryScreen() {
                 viewModel.searchPlaylists( searchInfo.lowercase())
             })
 
-            PlaylistLibraryContent(
-                playlists = playlists.map {it.name},
-                onDeletePlaylist = { playlistName ->
-                    viewModel.deletePlaylist(playlistName)
-                },
-                onClickPlaylist = { playlistName ->
-                    navController.navigate(Routes.Playlist.createRoute(playlistName))
-                }
-            )
+            Card(
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.secondaryContainer
+                ),
+                modifier = Modifier.fillMaxSize().padding(16.dp).offset(y = 40.dp),
+                shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
+                elevation = CardDefaults.cardElevation(
+                    defaultElevation = 4.dp
+                )
+            ) {
+                PlaylistLibraryContent(
+                    playlists = playlists.map { it.name },
+                    onDeletePlaylist = { playlistName ->
+                        viewModel.deletePlaylist(playlistName)
+                    },
+                    onClickPlaylist = { playlistName ->
+                        navController.navigate(Routes.Playlist.createRoute(playlistName))
+                    }
+                )
+            }
         },
         screenTitle = "Lusonus",
         floatingActionButton = {

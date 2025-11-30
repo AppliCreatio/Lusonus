@@ -1,9 +1,15 @@
 package com.example.lusonus.ui.composables.MediaLibraryComposables
 
+import FileRow
 import android.net.Uri
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -18,33 +24,25 @@ fun MediaLibraryItem(
     onDelete: (Uri) -> Unit,
     onClick: (String) -> Unit,
 ) {
-    Surface(
-        color = MaterialTheme.colorScheme.surfaceVariant,
-        contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+    Card(
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceVariant
+        ),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         shape = MaterialTheme.shapes.medium,
-        shadowElevation = 4.dp,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 4.dp, horizontal = 8.dp)
-            // THIS IS SO COOL! It's how you can check for long presses!
-            .pointerInput(media.uri) {
-                detectTapGestures(
-                    // We specify a long press.
-                    onLongPress = {
-                        onDelete(media.uri)
-                    },
-
-                    // AND THEN WE CAN JUST HAVE... ITS AMAZING!
-                    onTap = {
-
-                        onClick(media.name)
-                    }
-                )
-            }
+            .padding(top = 16.dp)
     ) {
-        FileRow(
-            uri = media.uri,
-            modifier = Modifier.padding(12.dp)
-        )
+        Box(
+            modifier = Modifier
+                .clickable { onClick(media.name) }
+                .combinedClickable(
+                    onClick = { onClick(media.name) },
+                    onLongClick = { onDelete(media.uri) }
+                ).padding(8.dp)
+        ) {
+            FileRow(uri = media.uri)
+        }
     }
 }

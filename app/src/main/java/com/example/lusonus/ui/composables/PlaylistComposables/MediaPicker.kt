@@ -1,5 +1,6 @@
 package com.example.lusonus.ui.composables.PlaylistComposables
 
+import FileRow
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.lusonus.data.model.Media
-import com.example.lusonus.ui.composables.MediaLibraryComposables.FileRow
 
 @Composable
 fun MediaPicker(
@@ -51,7 +51,6 @@ fun MediaPicker(
                         onAddToPlaylist(listOf(media))
                     }
             ) {
-                // TODO: swap with entryDisplay maybe?
                 FileRow(
                     uri = media.uri,
                     modifier = Modifier.padding(12.dp)

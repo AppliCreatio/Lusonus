@@ -27,7 +27,6 @@ fun MediaLibraryContent(
     ) {
         items(items = files) {
             media ->
-            // TODO: merge EntryDisplay & MediaLibraryItem (more specifically just replace FileRow with EntryDisplay)
             MediaLibraryItem(
                 media = media,
                 onDelete = onDeleteMedia,

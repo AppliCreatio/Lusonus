@@ -6,10 +6,18 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.sharp.Menu
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -21,6 +29,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
@@ -33,6 +42,8 @@ import com.example.lusonus.navigation.Routes
 import com.example.lusonus.ui.composables.Layout.Buttons.MenuDropDown.MinimalDropdownMenu
 import com.example.lusonus.ui.composables.Layout.SearchAndSort.SearchAndSort
 import com.example.lusonus.ui.composables.Layout.SearchAndSort.SearchBar
+import com.example.lusonus.ui.composables.Layout.TopBar.SharedNavTopBar
+import com.example.lusonus.ui.composables.Layout.TopBar.SharedTopBar
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -89,6 +100,12 @@ fun MediaLibraryScreen() {
     }
 
     MainLayout(
+        topBar = {
+            Column {
+                SharedTopBar("Lusonus")
+                SharedNavTopBar()
+            }
+        },
         content = {
             LaunchedEffect(Unit) {
                 viewModel.refreshMedia(context)
@@ -102,17 +119,32 @@ fun MediaLibraryScreen() {
                 searchInfo = it
                 viewModel.searchMedia( searchInfo.lowercase())
             })
-            MediaLibraryContent(
-                files = files,
-                onDeleteMedia = { uri ->
-                    viewModel.removeFile(uri)
-                },
-                onClickMedia = { mediaName ->
-                    navController.navigate(Routes.MediaPlayer.go(mediaName))
-                }
-            )
+
+
+
+            Card(
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.secondaryContainer
+                ),
+                modifier = Modifier.fillMaxSize().padding(16.dp).offset(y = 40.dp),
+                shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
+                elevation = CardDefaults.cardElevation(
+                    defaultElevation = 4.dp
+                )
+            ) {
+                MediaLibraryContent(
+                    files = files,
+                    onDeleteMedia = { uri ->
+                        viewModel.removeFile(uri)
+                    },
+                    onClickMedia = { mediaName ->
+                        navController.navigate(Routes.MediaPlayer.go(mediaName))
+                    }
+                )
+            }
+
         },
-        screenTitle = "Media",
+        screenTitle = "Lusonus",
         floatingActionButton = {
             SharedFloatingActionButton(
                 onClick = {
