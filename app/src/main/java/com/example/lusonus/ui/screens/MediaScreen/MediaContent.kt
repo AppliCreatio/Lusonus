@@ -1,9 +1,12 @@
 package com.example.lusonus.ui.screens.MediaScreen
 
 
+import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -17,8 +20,12 @@ import androidx.compose.material.icons.filled.FastForward
 import androidx.compose.material.icons.filled.FastRewind
 import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,16 +34,25 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import coil3.compose.AsyncImage
+import com.example.lusonus.ui.theme.AppTheme
 import com.example.lusonus.R
 import com.example.lusonus.data.model.Media
+import com.example.lusonus.services.ACTION_PLAY_URI
+import com.example.lusonus.services.EXTRA_URI
+import com.example.lusonus.services.PlayerService
+import com.example.lusonus.ui.composables.Layout.MainLayout
+import com.example.lusonus.ui.composables.MediaComposables.MediaDetails
+import com.example.lusonus.ui.utils.SongQueue
 import com.example.lusonus.ui.utils.formatTimeFromMilliseconds
 
 
@@ -61,12 +77,21 @@ fun MediaContent(
         verticalArrangement = Arrangement.SpaceAround
     ) {
         // First we want the media art.
-        AsyncImage(
-            model = artworkBitmap?.asImageBitmap() ?: R.drawable.resource_default,
-            contentDescription = "Artwork representing the ${media.name} media.",
-            contentScale = ContentScale.Crop,
-            modifier = Modifier.size(300.dp).clip(RoundedCornerShape(16.dp))
-        )
+        if (artworkBitmap != null) {
+            // Image from media metadata.
+            Image(
+                bitmap = artworkBitmap.asImageBitmap(),
+                contentDescription = "Artwork representing the ${media.name} media.",
+                modifier = Modifier.size(300.dp).clip(RoundedCornerShape(16.dp))
+            )
+        } else {
+            // Image from default.
+            Image(
+                painter = painterResource(id = R.drawable.lusonus_final_nobg),
+                contentDescription = "Artwork representing the ${media.name} media.",
+                modifier = Modifier.size(300.dp).clip(RoundedCornerShape(16.dp))
+            )
+        }
 
         // Second we want the title.
         Text(text = media.name)
@@ -101,7 +126,7 @@ fun MediaContent(
         Slider(
             value = sliderPosition,
             onValueChange = {
-                value ->
+                    value ->
 
                 // When the value is changing we update the UI
                 sliderPosition = value

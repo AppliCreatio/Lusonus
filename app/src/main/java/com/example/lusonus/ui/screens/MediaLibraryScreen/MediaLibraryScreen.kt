@@ -6,7 +6,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.sharp.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -16,28 +19,26 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.lusonus.data.model.MenuItem
-import com.example.lusonus.navigation.LocalGlobals
-import com.example.lusonus.navigation.LocalNavController
-import com.example.lusonus.ui.composables.Layout.MainLayout
-import com.example.lusonus.ui.composables.Layout.SearchAndSort.SearchAndSort
-import com.example.lusonus.ui.composables.Layout.TopBar.SharedNavTopBar
-import com.example.lusonus.ui.composables.Layout.TopBar.SharedTopBar
 import com.example.organisemedia.Layout.FloatingActionButton.SharedFloatingActionButton
+import com.example.lusonus.ui.composables.Layout.MainLayout
+import com.example.lusonus.navigation.LocalNavController
+import com.example.lusonus.navigation.Routes
+import com.example.lusonus.ui.composables.Layout.Buttons.MenuDropDown.MinimalDropdownMenu
+import com.example.lusonus.ui.composables.Layout.SearchAndSort.SearchAndSort
+import com.example.lusonus.ui.composables.Layout.SearchAndSort.SearchBar
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun MediaLibraryScreen() {
     // Gets nav controller
     val navController = LocalNavController.current
-
-    // Gets the current playing media
-    val globals = LocalGlobals.current
 
     // Gets the view model information
     val viewModel: MediaLibraryViewModel = viewModel(viewModelStoreOwner = LocalNavController.current.context as ComponentActivity) // Gets an existing MediaViewModel if it exists.
@@ -88,39 +89,30 @@ fun MediaLibraryScreen() {
     }
 
     MainLayout(
-        topBar = {
-            Column {
-                SharedTopBar("Lusonus")
-                SharedNavTopBar()
-            }
-        },
         content = {
             LaunchedEffect(Unit) {
                 viewModel.refreshMedia(context)
             }
 
-            val sortOptions = listOf(
-                MenuItem("Alphabetical") { viewModel.sortMedia("alphabetically") },
-                MenuItem("Date Added") { viewModel.sortMedia("date added") },
-                MenuItem("Last Played") { viewModel.sortMedia("last played") }
+            val sortOptions = listOf<MenuItem>(
+                MenuItem("Alphabetical") { viewModel.sortMedia("alphabetically") }
             )
 
             SearchAndSort(sortOptions, expanded, { expanded = !it }, searchInfo, {
                 searchInfo = it
                 viewModel.searchMedia( searchInfo.lowercase())
             })
-                MediaLibraryContent(
-                    files = files,
-                    onDeleteMedia = { uri ->
-                        viewModel.removeFile(uri)
-                    },
-                    onClickMedia = { mediaName ->
-//                        navController.navigate(Routes.MediaPlayer.go(mediaName))
-                        globals.setMediaPopUpNameToField(mediaName)
-                    }
-                )
-                  },
-        screenTitle = "Lusonus",
+            MediaLibraryContent(
+                files = files,
+                onDeleteMedia = { uri ->
+                    viewModel.removeFile(uri)
+                },
+                onClickMedia = { mediaName ->
+                    navController.navigate(Routes.MediaPlayer.go(mediaName))
+                }
+            )
+        },
+        screenTitle = "Media",
         floatingActionButton = {
             SharedFloatingActionButton(
                 onClick = {
