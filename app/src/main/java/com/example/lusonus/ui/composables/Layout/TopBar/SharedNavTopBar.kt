@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -19,10 +20,7 @@ import com.example.lusonus.ui.utils.fadeOuterEdge
 fun SharedNavTopBar(
     navController: NavHostController = LocalNavController.current
 ) {
-    // Gets the nav stack as a state
     val navBackStackEntry by navController.currentBackStackEntryAsState()
-
-    // Gets the current screen
     val currentRoute = navBackStackEntry?.destination?.route ?: return
 
     val sliderItems = listOf(
@@ -31,14 +29,22 @@ fun SharedNavTopBar(
         "Folders" to Routes.FolderLibrary.route
     )
 
-    val currentIndex = sliderItems.indexOfFirst { it.second == currentRoute }
+    // Determine the current index for the slider.
+    val currentIndex = sliderItems.indexOfFirst { it.second == currentRoute }.coerceAtLeast(0)
 
     val pagerState = rememberPagerState(
         initialPage = currentIndex,
         pageCount = { sliderItems.size }
     )
 
-    Box(modifier = Modifier.fadeOuterEdge(isToLeft = true, isToRight = true, fadeWidth = 30.dp, color = MaterialTheme.colorScheme.background)){
+    Box(
+        modifier = Modifier.fadeOuterEdge(
+            isToLeft = true,
+            isToRight = true,
+            fadeWidth = 30.dp,
+            color = MaterialTheme.colorScheme.background
+        )
+    ) {
         BarElementSlider(
             pagerState = pagerState,
             givenSelectedIndex = currentIndex,
@@ -46,8 +52,6 @@ fun SharedNavTopBar(
                 val targetRoute = sliderItems[index].second
                 if (currentRoute != targetRoute) {
                     navController.navigate(targetRoute) {
-                        // Preserve state across reselects and avoid piling screens
-                        // requires: import androidx.navigation.navOptions
                         popUpTo(navController.graph.findStartDestination().id) {
                             saveState = true
                         }
@@ -57,5 +61,13 @@ fun SharedNavTopBar(
                 }
             }
         )
+    }
+
+    // Ensure the pager updates if the route changes externally.
+    LaunchedEffect(currentRoute) {
+        val index = sliderItems.indexOfFirst { it.second == currentRoute }.coerceAtLeast(0)
+        if (index != pagerState.currentPage) {
+            pagerState.scrollToPage(index)
+        }
     }
 }

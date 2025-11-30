@@ -19,7 +19,6 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.lusonus.data.model.MenuItem
 import com.example.lusonus.navigation.LocalGlobals
-import com.example.lusonus.navigation.LocalNavController
 import com.example.lusonus.ui.composables.Layout.MainLayout
 import com.example.lusonus.ui.composables.Layout.SearchAndSort.SearchAndSort
 import com.example.lusonus.ui.composables.PlaylistComposables.MediaPicker
@@ -30,9 +29,6 @@ import com.example.organisemedia.Layout.FloatingActionButton.SharedFloatingActio
 fun PlaylistScreen(
     playlistName: String
 ) {
-    // Gets nav controller
-    val navController = LocalNavController.current
-
     // Gets the current playing media
     val globals = LocalGlobals.current
 
