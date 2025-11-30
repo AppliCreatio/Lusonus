@@ -1,11 +1,15 @@
 package com.example.lusonus.data.model
 
 import android.net.Uri
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.toMutableStateList
 import com.example.lusonus.ui.utils.search
 import com.example.lusonus.ui.utils.sort
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import java.time.LocalDate
+import java.time.LocalDateTime
 
 open class PlaylistLibrary {
 
@@ -20,9 +24,10 @@ open class PlaylistLibrary {
 
 
     // Makes a playlist instance and adds it to the list.
+    @RequiresApi(Build.VERSION_CODES.O)
     fun createPlaylist(name: String) {
         if (_allPlaylists.value.none { it.name == name }) {
-            val newPlaylist = Playlist(name = name)
+            val newPlaylist = Playlist(name = name, dateAdded = LocalDateTime.now(), lastPlayed = null)
             _allPlaylists.value = _allPlaylists.value + newPlaylist
             _playlists.value = _playlists.value + newPlaylist
         }
@@ -73,6 +78,7 @@ open class PlaylistLibrary {
         _allPlaylists.value.find { it.name == name }
 
     // Sorts all playlists
+    @RequiresApi(Build.VERSION_CODES.O)
     fun sortPlaylists(type: String) {
         _playlists.value = sort(_playlists.value, type)
     }

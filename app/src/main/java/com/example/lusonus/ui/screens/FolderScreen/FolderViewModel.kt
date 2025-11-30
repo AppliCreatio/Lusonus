@@ -1,6 +1,8 @@
 package com.example.lusonus.ui.screens.FolderScreen
 
 import android.content.Context
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.lusonus.data.model.Media
@@ -15,7 +17,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-
+@RequiresApi(Build.VERSION_CODES.O)
 class FolderViewModel(private val folderName: String) : ViewModel() {
 
     // Gets folder library model.
@@ -48,6 +50,7 @@ class FolderViewModel(private val folderName: String) : ViewModel() {
     }
 
     // Refreshes the media list (cleans up dead links/find new links).
+
     fun refreshMedia(context: Context) {
         // Launch the coroutine.
         viewModelScope.launch(Dispatchers.IO) {

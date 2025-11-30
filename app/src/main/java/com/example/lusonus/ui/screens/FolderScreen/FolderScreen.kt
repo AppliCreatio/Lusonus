@@ -60,7 +60,9 @@ fun FolderScreen(folderName: String) {
             }
 
             val sortOptions = listOf(
-                MenuItem("Alphabetical") { viewModel.sortMedia("alphabetically") }
+                MenuItem("Alphabetical") { viewModel.sortMedia("alphabetically") },
+                MenuItem("Date Added") { viewModel.sortMedia("date added") },
+                MenuItem("Last Played") { viewModel.sortMedia("last played") }
             )
 
             SearchAndSort(

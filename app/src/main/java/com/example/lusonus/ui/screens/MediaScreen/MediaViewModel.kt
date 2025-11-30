@@ -1,14 +1,19 @@
 package com.example.lusonus.ui.screens.MediaScreen
 
 import android.graphics.Bitmap
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.example.lusonus.data.model.SharedMediaLibrary
+import java.time.LocalDate
+import java.time.LocalDateTime
 
 // View model for MediaScreen.
+@RequiresApi(Build.VERSION_CODES.O)
 class MediaViewModel(private var mediaName: String) : ViewModel() {
     // Gets shared singleton instance.
     private val mediaLibrary = SharedMediaLibrary
@@ -65,6 +70,8 @@ class MediaViewModel(private var mediaName: String) : ViewModel() {
     // This is called by BroadcastReceiver in compose when we receive the playback updates.
     fun updatePlaybackState(isPlaying: Boolean, position: Long, duration: Long, artworkBytes: ByteArray?)
     {
+
+        media!!.lastPlayed = LocalDateTime.now()
 
         // Sets whether it's playing.
         this.isPlaying = isPlaying
