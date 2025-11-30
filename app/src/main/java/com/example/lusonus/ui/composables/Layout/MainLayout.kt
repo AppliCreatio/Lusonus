@@ -16,8 +16,6 @@ import com.example.lusonus.navigation.LocalNavController
 import com.example.lusonus.navigation.Routes
 import com.example.lusonus.ui.composables.Layout.BottomBar.SharedBottomBar
 import com.example.lusonus.ui.composables.Layout.TopBar.SharedTopBar
-import com.example.lusonus.ui.composables.MediaComposables.MediaPopUp.MediaPopUpScreen
-import com.example.lusonus.ui.screens.MediaScreen.MediaScreen
 
 /**
  * This main layout wraps other composables in a consistent layout. It has the ability to be modular by changing or removing the
@@ -29,14 +27,16 @@ import com.example.lusonus.ui.screens.MediaScreen.MediaScreen
 fun MainLayout(
     content: @Composable () -> Unit,
     screenTitle: String,
-    topBar: @Composable (() -> Unit)? = { SharedTopBar(screenTitle) }, // If no specific parameter is passed, set to default top bar
+    topbarAddButton: @Composable (() -> Unit)? = null,
     floatingActionButton: @Composable (() -> Unit)? = null, // this is optional
-    bottomBar: @Composable (() -> Unit)? = { SharedBottomBar() } // If no specific parameter is passed, set to default bottom bar
+    topBar: @Composable (() -> Unit)? = { SharedTopBar(screenTitle, topbarAddButton) },// If no specific parameter is passed, set to default top bar
+    bottomBar: @Composable (() -> Unit)? = { SharedBottomBar() } // this is optional){}
 ) {
+
 
     val navController = LocalNavController.current
     val globals = LocalGlobals.current
-    val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
+    val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route ?: return
 
     val screensWithPlayer = listOf(Routes.MediaLibrary.route, Routes.FolderLibrary.route, Routes.PlaylistLibrary.route,
         Routes.Playlist.route)
@@ -52,8 +52,6 @@ fun MainLayout(
         // Gets the bottom bar of the scaffold.
         bottomBar = {
             Column {
-                if(globals.mediaPopUpName.isNotEmpty() && showPopUp)
-                    MediaPopUpScreen(globals.mediaPopUpName)
                 bottomBar?.invoke()
             }
         },

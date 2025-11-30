@@ -1,5 +1,6 @@
 package com.example.lusonus.ui.composables.Layout.Buttons.MenuDropDown
 
+import MinimalDropdownMenu
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.Composable
@@ -17,8 +18,7 @@ fun MenuDropDown(){
     val navController = LocalNavController.current
 
     val menuList: List<MenuItem> = listOf(MenuItem("Profile") { navController.navigate(Routes.Profile.route) },
-        MenuItem("Settings") { navController.navigate(Routes.Settings.route) },
-        MenuItem("Folders") { navController.navigate(Routes.FolderLibrary.route) },
+        MenuItem("Settings", ) { navController.navigate(Routes.Settings.route) },
         MenuItem("About Us") { navController.navigate(Routes.FAQ.route) })
 
     MinimalDropdownMenu(menuList, expanded, { expanded = !it }, Icons.Default.MoreVert)

@@ -5,6 +5,10 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.compositionLocalOf
@@ -43,8 +47,6 @@ fun Router(navController: NavHostController, modifier: Modifier = Modifier) {
         navController = navController,
         startDestination = Routes.PlaylistLibrary.route, // the starting screen.
         modifier = modifier.fillMaxSize(),
-        enterTransition = { EnterTransition.None },
-        exitTransition = { ExitTransition.None }
     ) {
         // Media screen route.
         composable(route = Routes.MediaLibrary.route) {

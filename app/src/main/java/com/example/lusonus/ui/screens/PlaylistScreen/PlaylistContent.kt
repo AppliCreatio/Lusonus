@@ -1,18 +1,33 @@
 package com.example.lusonus.ui.screens.PlaylistScreen
 
+import FileRow
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
 import com.example.lusonus.data.model.Media
-import com.example.lusonus.ui.composables.MediaLibraryComposables.FileRow
 
 @Composable
 fun PlaylistContent(
@@ -20,34 +35,60 @@ fun PlaylistContent(
     removeFromPlaylist: (Media) -> Unit,
     onClickMedia: (String) -> Unit
 ) {
-    LazyColumn {
+    LazyColumn (modifier = Modifier.padding(16.dp)) {
         items(items = playlistFiles) {
             media ->
-            Surface(
-                color = MaterialTheme.colorScheme.surfaceVariant,
+            var deleteMode by rememberSaveable { mutableStateOf(false) }
+
+            val containerColor =
+                if (deleteMode) MaterialTheme.colorScheme.error
+                else MaterialTheme.colorScheme.surfaceVariant
+
+            Card(
+                colors = CardDefaults.cardColors(
+                    containerColor = containerColor
+                ),
+                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+                shape = MaterialTheme.shapes.medium,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(4.dp)
-                    // THIS IS SO COOL! It's how you can check for long presses!
-                    .pointerInput(media) {
-                        detectTapGestures(
-                            // We specify a long press.
-                            onLongPress = {
-                                removeFromPlaylist(media)
-                            },
-
-                            // AND THEN WE CAN JUST HAVE... ITS AMAZING!
-                            onTap = {
-                                onClickMedia(media.name)
-                            }
-                        )
-                    }
+                    .padding(bottom = 16.dp)
             ) {
-                // TODO: need to replace this with entrydisplay when we do do it.
-                FileRow(
-                    uri = media.uri,
-                    modifier = Modifier.padding(12.dp)
-                )
+                Box(
+                    modifier = Modifier
+                        .clickable { onClickMedia(media.name) }
+                        .combinedClickable(
+                            onClick = {
+                                if (deleteMode) {
+                                    removeFromPlaylist(media)
+                                    deleteMode = !deleteMode
+                                }
+                                else {
+                                    onClickMedia(media.name)
+                                }
+                            },
+                            onLongClick = { deleteMode = !deleteMode  }
+                        ).padding(8.dp)
+                ) {
+                    if (deleteMode)
+                    {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(64.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Delete,
+                                contentDescription = "Delete",
+                                tint = MaterialTheme.colorScheme.onError,
+                                modifier = Modifier.size(48.dp)
+                            )
+                        }
+                    } else {
+                        FileRow(uri = media.uri)
+                    }
+                }
             }
         }
     }

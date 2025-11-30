@@ -1,70 +1,85 @@
 package com.example.lusonus.ui.composables.Layout.TopBar
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBackIosNew
+import androidx.compose.material.icons.filled.FastRewind
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.lusonus.R
 import com.example.lusonus.ui.composables.Layout.Buttons.MenuDropDown.MenuDropDown
+import com.example.lusonus.ui.utils.fadeBottomEdge
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SharedTopBarStateless(
-    screenTitle: String,
+    pageName: String,
     canNavigateBack: Boolean,
-    onNavigateBack: () -> Unit
+    onNavigateBack: () -> Unit,
+    actionButton: @Composable (() -> Unit)? = null,
 ) {
+    var isNavigatingBack by rememberSaveable { mutableStateOf(false) }
+
     // The top bar of the scaffold.
     CenterAlignedTopAppBar(
-        // The colors of the top bar.
-        colors = topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer,
-            titleContentColor = MaterialTheme.colorScheme.primary,
+        modifier = Modifier.height(96.dp).fadeBottomEdge(
+            fadeHeight = 12.dp,
+            color = MaterialTheme.colorScheme.background
         ),
 
-        // The title of the top bar.
+        colors = topAppBarColors(
+            containerColor = MaterialTheme.colorScheme.primaryContainer,
+            navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
+            titleContentColor = MaterialTheme.colorScheme.onSurface,
+            actionIconContentColor = MaterialTheme.colorScheme.onSurface,
+        ),
+
         title = {
             Text(
-                text = screenTitle,
-                style = MaterialTheme.typography.titleLarge
+                text = pageName,
+                style = MaterialTheme.typography.titleLarge.copy(
+                    fontWeight = FontWeight.Bold
+                ),
+                color = MaterialTheme.colorScheme.onSurface,
             )
         },
 
-        // The navigation icon of the top bar, "go back" button.
         navigationIcon = {
-            if (canNavigateBack) {
-                IconButton(
-                    onClick = {
-                        onNavigateBack()
-                    }
-                ) {
-                    Image(
-                        painter = painterResource(R.drawable.lusonus_final_nobg),
-                        contentDescription = "Go Back.",
-                        Modifier.size(40.dp)
+            if (canNavigateBack && !isNavigatingBack) {
+                IconButton(onClick = {
+                    isNavigatingBack = true
+                    onNavigateBack()
+                }) {
+                    Icon(
+                        imageVector = Icons.Default.ArrowBackIosNew,
+                        contentDescription = "Go back"
                     )
                 }
             }
-            else {
-                Image(
-                    painter = painterResource(R.drawable.lusonus_final_nobg),
-                    contentDescription = "You are home.",
-                    Modifier.size(40.dp)
-                )
-            }
         },
 
-//         The options menu (if needed)
         actions = {
-            MenuDropDown()
-        },
+            Row {
+                actionButton?.invoke()
+                MenuDropDown()
+            }
+        }
     )
 }

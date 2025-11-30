@@ -6,6 +6,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -30,9 +31,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil3.compose.AsyncImage
 import com.example.lusonus.R
 import com.example.lusonus.navigation.LocalNavController
 import com.example.lusonus.navigation.Routes
@@ -73,17 +74,15 @@ fun RegisterScreen() {
                     verticalArrangement = Arrangement.spacedBy(15.dp),
                 ) {
 
-                    AsyncImage(
-                        model = if (profilePicture != Uri.EMPTY && profilePicture != null) {
-                            profilePicture
-                        } else R.drawable.resource_default,
+                    Image(
+                        painter = painterResource(id = R.drawable.resource_default),
                         contentDescription = null,
                         contentScale = ContentScale.Crop,
                         modifier = Modifier
                             .size(256.dp)
                             .clip(CircleShape)
                             .border(10.dp, Color.LightGray, CircleShape)
-                            .background(MaterialTheme.colorScheme.onBackground),
+                            .background(MaterialTheme.colorScheme.onBackground)
                     )
 
                     Button(onClick = {
@@ -141,5 +140,5 @@ fun RegisterScreen() {
             }
         }
 
-    },"My App")
+    }, "My App")
 }

@@ -22,12 +22,11 @@ fun MediaLibraryContent(
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 16.dp),
+            .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         items(items = files) {
             media ->
-            // TODO: merge EntryDisplay & MediaLibraryItem (more specifically just replace FileRow with EntryDisplay)
             MediaLibraryItem(
                 media = media,
                 onDelete = onDeleteMedia,

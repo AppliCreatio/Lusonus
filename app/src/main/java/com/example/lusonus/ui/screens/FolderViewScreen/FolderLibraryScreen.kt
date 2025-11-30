@@ -6,6 +6,14 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -15,7 +23,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
@@ -25,6 +35,9 @@ import com.example.lusonus.navigation.LocalNavController
 import com.example.lusonus.navigation.Routes
 import com.example.lusonus.ui.composables.Layout.MainLayout
 import com.example.lusonus.ui.composables.Layout.SearchAndSort.SearchAndSort
+import com.example.lusonus.ui.composables.Layout.TopBar.SharedNavTopBar
+import com.example.lusonus.ui.composables.Layout.TopBar.SharedTopBar
+import com.example.lusonus.ui.composables.Layout.TopBar.TopBarAddButton
 import com.example.lusonus.ui.screens.FolderViewScreen.FolderLibraryContent
 import com.example.lusonus.ui.screens.FolderViewScreen.FolderLibraryViewModel
 import com.example.lusonus.ui.utils.getName
@@ -150,24 +163,37 @@ fun FolderLibraryScreen() {
                 }
             )
 
-            // Calls the displaying composables for the folders themselves.
-            FolderLibraryContent(
-                folders = folders,
-                onDeleteFolder = { folderName -> viewModel.deleteFolder(folderName) },
-                onClickFolder = {
-                    folderName ->
-                    navController.navigate(Routes.Folder.createRoute(folderName))
-                }
-            )
+            Card(
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.secondaryContainer
+                ),
+                modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp).offset(y = 40.dp),
+                shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
+                elevation = CardDefaults.cardElevation(
+                    defaultElevation = 4.dp
+                )
+            ) {
+                // Calls the displaying composables for the folders themselves.
+                FolderLibraryContent(
+                    folders = folders,
+                    onDeleteFolder = { folderName -> viewModel.deleteFolder(folderName) },
+                    onClickFolder = { folderName ->
+                        navController.navigate(Routes.Folder.createRoute(folderName))
+                    }
+                )
+            }
         },
+        screenTitle = "Lusonus",
 
-        screenTitle = "Folders",
-
-        floatingActionButton = {
-            SharedFloatingActionButton(
-                // Launches the folder picking :D
-                onClick = { pickFolderLauncher.launch(null) }
-            )
+        topBar = {
+            Column {
+                SharedTopBar("Lusonus", {
+                    TopBarAddButton(onClick = {
+                        pickFolderLauncher.launch(null)
+                    } )
+                })
+                SharedNavTopBar()
+            }
         }
     )
 }
