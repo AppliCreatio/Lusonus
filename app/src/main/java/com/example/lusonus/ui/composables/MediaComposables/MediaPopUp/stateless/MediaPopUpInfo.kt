@@ -1,6 +1,7 @@
 package com.example.lusonus.ui.composables.MediaComposables.MediaPopUp.stateless
 
 import android.graphics.Bitmap
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,8 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import coil3.compose.AsyncImage
 import com.example.lusonus.R
 
 
@@ -23,8 +24,13 @@ import com.example.lusonus.R
 fun MediaPopUpInfo (mediaName: String, mediaArtist: String, mediaImage: Bitmap?) {
     Row(verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-        AsyncImage(
-            model = mediaImage?.asImageBitmap() ?: R.drawable.resource_default,
+
+        val painter = mediaImage?.asImageBitmap()?.let {
+            androidx.compose.ui.graphics.painter.BitmapPainter(it)
+        } ?: painterResource(id = R.drawable.resource_default)
+
+        Image(
+            painter = painter,
             contentDescription = "Artwork representing the $mediaName media.",
             contentScale = ContentScale.Crop,
             modifier = Modifier
