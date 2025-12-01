@@ -28,6 +28,7 @@ import androidx.compose.ui.window.Dialog
 @Composable
 fun BadRegisterDialog(
     onDismissRequest: () -> Unit,
+    message: String = "The following credentials are invalid, please try again."
 ) {
     Dialog(onDismissRequest = { onDismissRequest() }) {
         // Draw a rectangle shape with rounded corners inside the dialog
@@ -56,7 +57,7 @@ fun BadRegisterDialog(
                     }
 
                     Text(
-                        "The following credentials are invalid, please try again.",
+                        message,
                         textAlign = TextAlign.Center
                     )
                 }

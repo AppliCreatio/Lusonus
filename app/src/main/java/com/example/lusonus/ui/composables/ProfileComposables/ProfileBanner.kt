@@ -50,7 +50,7 @@ fun ProfileBanner(modifier: Modifier, name: String, description: String, profile
         val painter = if (bitmap != null) {
             BitmapPainter(bitmap.asImageBitmap())
         } else {
-            painterResource(id = R.drawable.resource_default)
+            painterResource(id = R.drawable.lusonus_placeholder)
         }
 
         Image(

@@ -13,6 +13,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -22,16 +23,24 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.lusonus.navigation.LocalNavController
+import com.example.lusonus.navigation.Routes
 import com.example.lusonus.ui.composables.Layout.MainLayout
 import com.example.lusonus.ui.composables.ProfileComposables.ProfileBanner
+import com.example.lusonus.ui.screens.RegisterScreen.AuthViewModelFactory
 import com.example.lusonus.ui.screens.ProfileScreen.ProfileScreenViewModel
 import com.example.lusonus.ui.utils.Dialogs.DialogToEditProfile
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun ProfileScreen() {
+fun ProfileScreen(viewModel: ProfileScreenViewModel = viewModel(factory = AuthViewModelFactory())) {
 
-    val viewModel: ProfileScreenViewModel = viewModel(viewModelStoreOwner = LocalNavController.current.context as ComponentActivity) // Gets an existing MediaViewModel if it exists.
+    val navController = LocalNavController.current
+
+    val userState = viewModel.currentUser().collectAsState()
+
+    // Makes sure the user is logged in before being able to access the profile screen
+    if(userState.value == null)
+        navController.navigate(Routes.Register.route)
 
     val profile by viewModel.currentProfile.collectAsStateWithLifecycle()
 
@@ -85,5 +94,8 @@ fun ProfileScreen() {
                 )
             }
         }
-    }, "Profile")
+    },
+        screenTitle = "Profile",
+        floatingActionButton = {}
+    )
 }

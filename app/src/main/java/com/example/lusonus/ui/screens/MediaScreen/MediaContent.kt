@@ -64,7 +64,7 @@ fun MediaContent(
     ) {
         // First we want the media art.
         val painter = artworkBitmap?.asImageBitmap()?.let { BitmapPainter(it) }
-            ?: painterResource(id = R.drawable.resource_default)
+            ?: painterResource(id = R.drawable.lusonus_placeholder)
 
         Image(
             painter = painter,
