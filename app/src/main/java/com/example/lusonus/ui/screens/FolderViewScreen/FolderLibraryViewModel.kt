@@ -11,10 +11,10 @@ import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.lusonus.appContext
-import com.example.lusonus.data.model.Folder
-import com.example.lusonus.data.model.Media
-import com.example.lusonus.data.model.SharedFolderLibrary
-import com.example.lusonus.data.model.SharedMediaLibrary
+import com.example.lusonus.data.model.classes.Folder
+import com.example.lusonus.data.model.classes.Media
+import com.example.lusonus.data.model.singletons.SharedFolderLibrary
+import com.example.lusonus.data.model.singletons.SharedMediaLibrary
 import com.example.lusonus.ui.utils.getFileName
 import com.example.lusonus.ui.utils.scanFolderRecursive
 import kotlinx.coroutines.flow.StateFlow

@@ -3,8 +3,8 @@ package com.example.lusonus.ui.screens.PlaylistLibraryScreen
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
-import com.example.lusonus.data.model.Playlist
-import com.example.lusonus.data.model.SharedPlaylistLibrary
+import com.example.lusonus.data.model.classes.Playlist
+import com.example.lusonus.data.model.singletons.SharedPlaylistLibrary
 import kotlinx.coroutines.flow.StateFlow
 
 @RequiresApi(Build.VERSION_CODES.O)

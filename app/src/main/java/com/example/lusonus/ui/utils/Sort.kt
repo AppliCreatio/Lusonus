@@ -2,7 +2,7 @@ package com.example.lusonus.ui.utils
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import com.example.lusonus.data.model.Entries
+import com.example.lusonus.data.model.interfaces.Entries
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter

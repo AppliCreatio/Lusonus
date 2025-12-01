@@ -31,7 +31,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.example.lusonus.data.model.Profile
+import com.example.lusonus.data.model.classes.Profile
 
 /**
  * A composable dialog that is called when a user wants to edit their profile information or image.

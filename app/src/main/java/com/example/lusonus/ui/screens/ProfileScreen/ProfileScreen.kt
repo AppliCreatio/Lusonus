@@ -29,7 +29,7 @@ import com.example.lusonus.ui.utils.Dialogs.DialogToEditProfile
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun DisplayProfile() {
+fun ProfileScreen() {
 
     val viewModel: ProfileScreenViewModel = viewModel(viewModelStoreOwner = LocalNavController.current.context as ComponentActivity) // Gets an existing MediaViewModel if it exists.
 

@@ -6,9 +6,9 @@ import androidx.annotation.RequiresApi
 import androidx.documentfile.provider.DocumentFile
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.lusonus.data.model.Media
-import com.example.lusonus.data.model.SharedMediaLibrary
-import com.example.lusonus.data.model.SharedPlaylistLibrary
+import com.example.lusonus.data.model.classes.Media
+import com.example.lusonus.data.model.singletons.SharedMediaLibrary
+import com.example.lusonus.data.model.singletons.SharedPlaylistLibrary
 import com.example.lusonus.ui.utils.search
 import com.example.lusonus.ui.utils.sort
 import kotlinx.coroutines.flow.MutableStateFlow

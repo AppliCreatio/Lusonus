@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.lusonus.data.model.Media
+import com.example.lusonus.data.model.classes.Media
 import com.example.lusonus.ui.composables.MediaLibraryComposables.MediaLibraryItem
 
 @Composable

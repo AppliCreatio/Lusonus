@@ -89,4 +89,7 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.7.0")
     androidTestImplementation(platform("androidx.compose:compose-bom:2025.11.01"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
+    implementation("com.firebaseui:firebase-ui-auth:9.1.1")
+    implementation("com.google.firebase:firebase-auth")
+    implementation("com.google.firebase:firebase-firestore")
 }

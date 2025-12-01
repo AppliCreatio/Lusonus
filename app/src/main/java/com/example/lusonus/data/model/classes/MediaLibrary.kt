@@ -1,16 +1,16 @@
-package com.example.lusonus.data.model
+package com.example.lusonus.data.model.classes
 
 import android.content.Context
 import android.net.Uri
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.documentfile.provider.DocumentFile
+import com.example.lusonus.data.model.singletons.SharedPlaylistLibrary
 import com.example.lusonus.ui.utils.search
 import com.example.lusonus.ui.utils.sort
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import java.time.LocalDate
 import java.time.LocalDateTime
 
 open class MediaLibrary {

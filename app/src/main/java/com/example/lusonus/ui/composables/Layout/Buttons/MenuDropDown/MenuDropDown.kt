@@ -8,7 +8,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import com.example.lusonus.data.model.MenuItem
+import com.example.lusonus.data.model.classes.MenuItem
 import com.example.lusonus.navigation.LocalNavController
 import com.example.lusonus.navigation.Routes
 

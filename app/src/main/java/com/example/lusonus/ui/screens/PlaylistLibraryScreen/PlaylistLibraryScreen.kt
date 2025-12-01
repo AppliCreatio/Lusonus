@@ -20,7 +20,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.lusonus.data.model.MenuItem
+import com.example.lusonus.data.model.classes.MenuItem
 import com.example.lusonus.navigation.LocalNavController
 import com.example.lusonus.navigation.Routes
 import com.example.lusonus.ui.composables.Layout.MainLayout
@@ -29,7 +29,6 @@ import com.example.lusonus.ui.composables.Layout.TopBar.SharedNavTopBar
 import com.example.lusonus.ui.composables.Layout.TopBar.SharedTopBar
 import com.example.lusonus.ui.composables.Layout.TopBar.TopBarAddButton
 import com.example.organisemedia.Helper.Playlist.NewPlaylistDialog
-import com.example.organisemedia.Layout.FloatingActionButton.SharedFloatingActionButton
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable

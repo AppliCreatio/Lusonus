@@ -1,4 +1,4 @@
-package com.example.lusonus.data.model
+package com.example.lusonus.data.model.classes
 
 import android.net.Uri
 import android.os.Build
@@ -8,7 +8,6 @@ import com.example.lusonus.ui.utils.search
 import com.example.lusonus.ui.utils.sort
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import java.time.LocalDate
 import java.time.LocalDateTime
 
 open class PlaylistLibrary {

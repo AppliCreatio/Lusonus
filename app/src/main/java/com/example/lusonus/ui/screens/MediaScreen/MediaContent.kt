@@ -38,7 +38,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.lusonus.R
-import com.example.lusonus.data.model.Media
+import com.example.lusonus.data.model.classes.Media
 import com.example.lusonus.ui.utils.formatTimeFromMilliseconds
 
 

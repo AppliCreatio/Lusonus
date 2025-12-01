@@ -1,4 +1,4 @@
-package com.example.lusonus.data.model
+package com.example.lusonus.data.model.classes
 
 /**
  * Data class that is use for an option within a drop down menu.

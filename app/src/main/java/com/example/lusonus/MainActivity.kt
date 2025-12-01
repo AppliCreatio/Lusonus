@@ -10,9 +10,8 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.navigation.compose.rememberNavController
-import com.example.lusonus.data.model.Global
+import com.example.lusonus.data.model.singletons.Global
 import com.example.lusonus.data.model.rememberExternalStorageList
 import com.example.lusonus.navigation.LocalGlobals
 import com.example.lusonus.navigation.LocalNavController

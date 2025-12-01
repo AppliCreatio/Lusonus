@@ -30,8 +30,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.lusonus.data.model.MenuItem
-import com.example.organisemedia.Layout.FloatingActionButton.SharedFloatingActionButton
+import com.example.lusonus.data.model.classes.MenuItem
 import com.example.lusonus.ui.composables.Layout.MainLayout
 import com.example.lusonus.navigation.LocalNavController
 import com.example.lusonus.navigation.Routes

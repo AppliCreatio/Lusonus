@@ -1,4 +1,4 @@
-package com.example.lusonus.data.model
+package com.example.lusonus.data.model.singletons
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

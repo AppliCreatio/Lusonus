@@ -30,7 +30,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.lusonus.data.model.MenuItem
+import com.example.lusonus.data.model.classes.MenuItem
 import com.example.lusonus.navigation.LocalNavController
 import com.example.lusonus.navigation.Routes
 import com.example.lusonus.ui.composables.Layout.MainLayout
@@ -42,7 +42,6 @@ import com.example.lusonus.ui.screens.FolderViewScreen.FolderLibraryContent
 import com.example.lusonus.ui.screens.FolderViewScreen.FolderLibraryViewModel
 import com.example.lusonus.ui.utils.getName
 import com.example.lusonus.ui.utils.scanFolderRecursive
-import com.example.organisemedia.Layout.FloatingActionButton.SharedFloatingActionButton
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
