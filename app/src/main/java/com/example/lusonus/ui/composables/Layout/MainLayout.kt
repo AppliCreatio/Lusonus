@@ -30,7 +30,8 @@ fun MainLayout(
     topbarAddButton: @Composable (() -> Unit)? = null,
     floatingActionButton: @Composable (() -> Unit)? = null, // this is optional
     topBar: @Composable (() -> Unit)? = { SharedTopBar(screenTitle, topbarAddButton) },// If no specific parameter is passed, set to default top bar
-    bottomBar: @Composable (() -> Unit)? = { SharedBottomBar() } // this is optional){}
+    bottomBar: @Composable (() -> Unit)? = { SharedBottomBar() }, // this is optional
+    snackbarHost: @Composable () -> Unit = {} // this is optional, mostly used for authentication
 ) {
 
 
@@ -62,6 +63,7 @@ fun MainLayout(
         },
 
         floatingActionButtonPosition = FabPosition.End,
+        snackbarHost = snackbarHost,
 
         containerColor = MaterialTheme.colorScheme.background
     ) {

@@ -8,9 +8,9 @@ interface AuthRepository {
     //   the current authorized user status changes for any reason
     fun currentUser() : StateFlow<User?>
 
-    suspend fun signUp(email: String, password: String): Boolean
+    suspend fun signUp(email: String, password: String): String?
 
-    suspend fun signIn(email: String, password: String): Boolean
+    suspend fun signIn(email: String, password: String): String?
 
     fun signOut()
 

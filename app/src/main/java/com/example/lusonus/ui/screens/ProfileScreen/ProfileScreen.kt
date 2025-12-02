@@ -1,7 +1,6 @@
 package com.example.ass3_appdev.screens.main
 
 import android.os.Build
-import androidx.activity.ComponentActivity
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -26,20 +25,20 @@ import com.example.lusonus.navigation.LocalNavController
 import com.example.lusonus.navigation.Routes
 import com.example.lusonus.ui.composables.Layout.MainLayout
 import com.example.lusonus.ui.composables.ProfileComposables.ProfileBanner
-import com.example.lusonus.ui.screens.RegisterScreen.AuthViewModelFactory
 import com.example.lusonus.ui.screens.ProfileScreen.ProfileScreenViewModel
+import com.example.lusonus.ui.screens.ProfileScreen.ProfileViewModelFactory
 import com.example.lusonus.ui.utils.Dialogs.DialogToEditProfile
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun ProfileScreen(viewModel: ProfileScreenViewModel = viewModel(factory = AuthViewModelFactory())) {
+fun ProfileScreen(viewModel: ProfileScreenViewModel = viewModel(factory = ProfileViewModelFactory())) {
 
     val navController = LocalNavController.current
 
     val userState = viewModel.currentUser().collectAsState()
 
     // Makes sure the user is logged in before being able to access the profile screen
-    if(userState.value == null)
+    if (userState.value == null)
         navController.navigate(Routes.Register.route)
 
     val profile by viewModel.currentProfile.collectAsStateWithLifecycle()
@@ -53,7 +52,7 @@ fun ProfileScreen(viewModel: ProfileScreenViewModel = viewModel(factory = AuthVi
             { openEditDialog = false },
             profile.name,
             profile.description,
-            { viewModel.setProfile(it) },
+            { viewModel.setProfileInfo(it) },
             { viewModel.setPicture(it ?: profile.image) })
 
     // General Container for other information from the profile screen
@@ -65,36 +64,42 @@ fun ProfileScreen(viewModel: ProfileScreenViewModel = viewModel(factory = AuthVi
             shape = RoundedCornerShape(10.dp)
         )
 
-    MainLayout({
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background),
-            verticalArrangement = Arrangement.spacedBy(20.dp)
-        ) {
+    MainLayout(
+        {
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(MaterialTheme.colorScheme.background),
+                verticalArrangement = Arrangement.spacedBy(20.dp)
+            ) {
 
-            item {
-                ProfileBanner(
-                    modifier = Modifier
-                        .padding(top = 10.dp, start = 10.dp, end = 10.dp)
-                        .height(120.dp)
-                        .fillMaxWidth()
-                        .background(
-                            MaterialTheme.colorScheme.tertiaryContainer,
-                            shape = RoundedCornerShape(10.dp)
-                        ),
-                    profile.name, profile.description, profile.image, {openEditDialog = true}
-                )
+                item {
+                    ProfileBanner(
+                        modifier = Modifier
+                            .padding(top = 10.dp, start = 10.dp, end = 10.dp)
+                            .height(120.dp)
+                            .fillMaxWidth()
+                            .background(
+                                MaterialTheme.colorScheme.tertiaryContainer,
+                                shape = RoundedCornerShape(10.dp)
+                            ),
+                        name = profile.name,
+                        description = profile.description,
+                        profileImage = profile.image,
+                        editToggle = { openEditDialog = true },
+                        signOut = { viewModel.signOut() },
+                        delete = { viewModel.delete() }
+                    )
+                }
+                item {
+                    ConnectedStorage(
+                        modifier = containerDisplay
+                            .height(120.dp)
+                            .padding(bottom = 10.dp)
+                    )
+                }
             }
-            item {
-                ConnectedStorage(
-                    modifier = containerDisplay
-                        .height(120.dp)
-                        .padding(bottom = 10.dp)
-                )
-            }
-        }
-    },
+        },
         screenTitle = "Profile",
         floatingActionButton = {}
     )

@@ -25,13 +25,15 @@ class RegisterViewModel(private val authRepository: AuthRepository): ViewModel()
     val signUpResult: StateFlow<ResultAuth<Boolean>?> = _signUpResult
     val signInResult: StateFlow<ResultAuth<Boolean>?> = _signInResult
 
+    var errorMessage: String? = null
+
 
     fun signUp(email: String, password: String) {
         _signUpResult.value = ResultAuth.InProgress
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val success = authRepository.signUp(email, password)
-                _signUpResult.value = ResultAuth.Success(success)
+                errorMessage = authRepository.signUp(email, password)
+                _signUpResult.value = ResultAuth.Success(errorMessage == null)
             } catch (e: FirebaseAuthException) {
                 _signUpResult.value = ResultAuth.Failure(e)
             } finally {
@@ -45,8 +47,8 @@ class RegisterViewModel(private val authRepository: AuthRepository): ViewModel()
     fun signIn(email: String, password: String) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val success = authRepository.signIn(email, password)
-                _signInResult.value = ResultAuth.Success(success)
+                errorMessage = authRepository.signIn(email, password)
+                _signInResult.value = ResultAuth.Success(errorMessage == null)
             } catch (e: FirebaseAuthException) {
                 _signInResult.value = ResultAuth.Failure(e)
             } finally {
@@ -56,17 +58,6 @@ class RegisterViewModel(private val authRepository: AuthRepository): ViewModel()
                 _deleteAccountResult.value = ResultAuth.Inactive
             }
 
-        }
-    }
-    fun signOut() {
-        viewModelScope.launch(Dispatchers.IO) {
-            authRepository.signOut()
-        }
-
-    }
-    fun delete() {
-        viewModelScope.launch(Dispatchers.IO) {
-            authRepository.delete()
         }
     }
 }

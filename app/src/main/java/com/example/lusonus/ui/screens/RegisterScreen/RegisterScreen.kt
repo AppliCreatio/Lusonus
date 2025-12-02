@@ -11,6 +11,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -19,6 +20,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
@@ -47,6 +49,7 @@ import com.example.lusonus.ui.composables.Layout.MainLayout
 import com.example.lusonus.ui.screens.RegisterScreen.AuthViewModelFactory
 import com.example.lusonus.ui.screens.ProfileScreen.ProfileScreenViewModel
 import com.example.lusonus.ui.utils.Dialogs.BadRegisterDialog
+import com.example.lusonus.ui.utils.verifyCredentials
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -54,11 +57,9 @@ fun RegisterScreen(viewModel: RegisterViewModel = viewModel(factory = AuthViewMo
 
     // This is used for the form
     val navController = LocalNavController.current
-    var newName by rememberSaveable { mutableStateOf("") }
+
     var newEmail by rememberSaveable { mutableStateOf("") }
     var newPassword by rememberSaveable { mutableStateOf("") }
-    var newDescription by rememberSaveable { mutableStateOf("") }
-    var profilePicture by rememberSaveable { mutableStateOf(Uri.EMPTY) }
     var badRegisterDialog by rememberSaveable { mutableStateOf(false) }
 
     // This is used for register prompting
@@ -66,56 +67,51 @@ fun RegisterScreen(viewModel: RegisterViewModel = viewModel(factory = AuthViewMo
     val signInResult by viewModel.signInResult.collectAsState(ResultAuth.Inactive)
     var errorMessage = ""
 
-    // Launcher for getting images
-    val singlePhotoPickerLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.PickVisualMedia(),
-        onResult = { uri -> profilePicture = uri }
-    )
-
     val snackbarHostState = remember { SnackbarHostState() } // Material 3 approach
 
     LaunchedEffect(signInResult) {
         signInResult?.let {
-            if (it is ResultAuth.Inactive) {
-                return@LaunchedEffect
-            }
-            if (it is ResultAuth.InProgress) {
-                snackbarHostState.showSnackbar("Sign-in In Progress")
-                return@LaunchedEffect
-            }
-            if (it is ResultAuth.Success && it.data) {
-                snackbarHostState.showSnackbar("Sign-in Successful")
-                navController.navigate(
-                    Routes.Profile.go(
-                        newName,
-                        newDescription,
-                        profilePicture
-                    )
-                )
-            } else if (it is ResultAuth.Failure || it is ResultAuth.Success) { // success(false) case
-                snackbarHostState.showSnackbar("Sign-in Unsuccessful")
+            when (it) {
+                is ResultAuth.Inactive -> return@LaunchedEffect
+                is ResultAuth.InProgress -> {
+                    snackbarHostState.showSnackbar("Sign-in In Progress")
+                }
+                is ResultAuth.Success -> {
+                    if (it.data) {
+                        snackbarHostState.showSnackbar("Sign-in Successful")
+                        navController.navigate(Routes.Profile.route)
+                    } else {
+                        snackbarHostState.showSnackbar("Sign-in Unsuccessful: ${viewModel.errorMessage}")
+                    }
+                }
+                is ResultAuth.Failure -> {
+                    snackbarHostState.showSnackbar("Sign-in Failed: ${it.exception.message}")
+                }
             }
         }
     }
 
     LaunchedEffect(signUpResult) {
         signUpResult?.let {
-            if (it is ResultAuth.Inactive) {
-                return@LaunchedEffect
-            }
-            if (it is ResultAuth.InProgress) {
-                snackbarHostState.showSnackbar("Sign-up In Progress")
-                return@LaunchedEffect
-            }
-            if (it is ResultAuth.Success && it.data) {
-                snackbarHostState.showSnackbar("Sign-up Successful")
-            } else if (it is ResultAuth.Failure || it is ResultAuth.Success) { // success(false) case
-                snackbarHostState.showSnackbar("Sign-up Unsuccessful")
+            when (it) {
+                is ResultAuth.Inactive -> return@LaunchedEffect
+                is ResultAuth.InProgress -> {
+                    snackbarHostState.showSnackbar("Sign-up In Progress")
+                }
+                is ResultAuth.Success -> {
+                    if (it.data) {
+                        snackbarHostState.showSnackbar("Sign-up Successful")
+                        navController.navigate(Routes.Profile.route)
+                    } else {
+                        snackbarHostState.showSnackbar("Sign-up Unsuccessful: ${viewModel.errorMessage}")
+                    }
+                }
+                is ResultAuth.Failure -> {
+                    snackbarHostState.showSnackbar("Sign-up Failed: ${it.exception.message}")
+                }
             }
         }
     }
-
-
 
     MainLayout({
         LazyColumn(
@@ -134,43 +130,6 @@ fun RegisterScreen(viewModel: RegisterViewModel = viewModel(factory = AuthViewMo
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(15.dp),
                 ) {
-
-                    Image(
-                        painter = painterResource(id = R.drawable.lusonus_placeholder),
-                        contentDescription = null,
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier
-                            .size(256.dp)
-                            .clip(CircleShape)
-                            .border(10.dp, Color.LightGray, CircleShape)
-                            .background(MaterialTheme.colorScheme.onBackground)
-                    )
-
-                    Button(onClick = {
-                        singlePhotoPickerLauncher.launch(
-                            PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
-                        )
-                    }) { Text("Profile Picture") }
-
-                    OutlinedTextField(
-                        value = newName,
-                        onValueChange = { newName = it },
-                        label = { Text("Name") },
-                        colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
-                        ),
-                        singleLine = true
-                    )
-
-                    OutlinedTextField(
-                        value = newDescription,
-                        onValueChange = { newDescription = it },
-                        label = { Text("Description") },
-                        colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
-                        ),
-                        singleLine = true
-                    )
 
                     OutlinedTextField(
                         value = newEmail,
@@ -192,33 +151,30 @@ fun RegisterScreen(viewModel: RegisterViewModel = viewModel(factory = AuthViewMo
                         singleLine = true
                     )
 
-                    Button(onClick = {
-
-                        if(newEmail.trim().isNotEmpty() and newPassword.trim().isNotEmpty())
-                            viewModel.signIn(newEmail, newPassword)
-
-                            if(signUpResult)
-                        else {
-                            errorMessage += "Your email and/or password are invalid. Try Again"
-                            badRegisterDialog = true
+                    Row {
+                        Button(onClick = {
+                            errorMessage = ""
+                            if(verifyCredentials(email = newEmail, password = newPassword, modErrorMessage = { errorMessage += it}))
+                                viewModel.signIn(newEmail, newPassword)
+                            else
+                                badRegisterDialog = true
+                        })
+                        {
+                            Text("Sign In")
                         }
 
-
-                        if (newName.trim().isNotEmpty() and newDescription.trim().isNotEmpty()) {
-
-
-                            newName = ""
-                            newDescription = ""
-                            profilePicture = Uri.EMPTY
-                        } else{
-                            errorMessage = "Your name and/or description are empty. Try Again"
-                            badRegisterDialog = true
-
+                        Button(onClick = {
+                            errorMessage = ""
+                            if(verifyCredentials(email = newEmail, password = newPassword, modErrorMessage = { errorMessage += it}))
+                                viewModel.signUp(newEmail, newPassword)
+                            else
+                                badRegisterDialog = true
+                        })
+                        {
+                            Text("Sign Up")
                         }
-                    })
-                    {
-                        Text("Register")
                     }
+
 
                     if (badRegisterDialog)
                         BadRegisterDialog(onDismissRequest = {badRegisterDialog = false}, errorMessage)
@@ -228,5 +184,6 @@ fun RegisterScreen(viewModel: RegisterViewModel = viewModel(factory = AuthViewMo
             }
         }
 
-    }, screenTitle = "Register")
+    }, screenTitle = "Register", snackbarHost = { SnackbarHost(snackbarHostState) })
 }
+

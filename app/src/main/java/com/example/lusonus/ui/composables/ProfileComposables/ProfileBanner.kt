@@ -6,11 +6,14 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,7 +33,7 @@ import java.io.InputStream
  * but I could possibly make the profile attributes into a single local provider
  */
 @Composable
-fun ProfileBanner(modifier: Modifier, name: String, description: String, profileImage: Uri, editToggle: () -> Unit) {
+fun ProfileBanner(modifier: Modifier, name: String, description: String, profileImage: Uri, editToggle: () -> Unit, signOut: () -> Unit, delete: () -> Unit) {
 
     Row(
         modifier = modifier
@@ -64,6 +67,11 @@ fun ProfileBanner(modifier: Modifier, name: String, description: String, profile
         )
 
         ProfileTextInfo(name, description)
+
+        Column {
+            Button(onClick = signOut) { Text("Sign Out") }
+            Button(onClick = delete) { Text("Delete") }
+        }
     }
 }
 
