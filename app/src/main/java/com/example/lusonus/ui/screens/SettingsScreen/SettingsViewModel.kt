@@ -6,10 +6,11 @@ import com.example.lusonus.data.model.Settings
 class SettingsViewModel(var settings: Settings): ViewModel() {
     fun toggleProfile() {
         settings.profileToggle = !settings.profileToggle
-        println("Toggled profile.")
+        println("Disable profile: ${settings.profileToggle}")
     }
 
-    fun changeFileTypeRestriction() {
-        println("Toggled file type restriction.")
+    fun changeFileTypeRestriction(restrictionType: Int) {
+        settings.fileTypeToggle = restrictionType
+        println("Toggled file type restriction: ${settings.fileTypeToggle}")
     }
 }

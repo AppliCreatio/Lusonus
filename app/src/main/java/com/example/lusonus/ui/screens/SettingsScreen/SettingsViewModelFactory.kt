@@ -12,8 +12,6 @@ class SettingsViewModelFactory(
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        // This bullsh*t is to make sure T is valid, if we don't do this we get an annoying warning.
-        // This is mixed with the stuff from the class notes.
         if (modelClass.isAssignableFrom(SettingsViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
             return SettingsViewModel(settings) as T

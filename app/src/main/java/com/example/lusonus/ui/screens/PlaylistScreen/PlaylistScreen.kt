@@ -30,6 +30,7 @@ import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.lusonus.data.model.MenuItem
+import com.example.lusonus.navigation.LocalGlobals
 import com.example.lusonus.navigation.LocalNavController
 import com.example.lusonus.navigation.Routes
 import com.example.lusonus.ui.composables.Layout.MainLayout
@@ -51,9 +52,11 @@ fun PlaylistScreen(
 
     val context = LocalContext.current
 
+    val globals = LocalGlobals.current
+
     // Gets the playlist view model, calls the media factory so we can pass the playlist name to the
     // view model to be able to get the specific playlist.
-    val viewModel: PlaylistViewModel = viewModel(factory = PlaylistViewModelFactory(playlistName))
+    val viewModel: PlaylistViewModel = viewModel(factory = PlaylistViewModelFactory(playlistName, globals.settings))
 
     val playlistFiles by viewModel.playlistFiles.collectAsState()
     val allMediaFiles by viewModel.allMediaFiles.collectAsState()
@@ -63,6 +66,8 @@ fun PlaylistScreen(
     var searchInfo by rememberSaveable { mutableStateOf("") }
 
     val lifecycleOwner = LocalLifecycleOwner.current
+
+    viewModel.filterByFileType(globals.settings.fileTypeToggle)
 
     // Refreshes when the screen appears and when the app returns to the foreground.
     DisposableEffect(lifecycleOwner) {

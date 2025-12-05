@@ -17,8 +17,4 @@ object Global {
     }
 
     var settings by mutableStateOf(Settings(false, 0))
-
-    fun changeSettings(newSettings: Settings) {
-        settings = newSettings
-    }
 }

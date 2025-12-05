@@ -16,6 +16,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.lusonus.navigation.LocalGlobals
 import com.example.lusonus.navigation.LocalNavController
 import com.example.lusonus.ui.composables.Layout.MainLayout
+import com.example.lusonus.ui.composables.SettingsComposables.RadioButtonSingleSelection
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -33,6 +34,9 @@ fun SettingScreen(){
                     profileToggleCheck = viewModel.settings.profileToggle
                 }
             )
+
+            Text("Restrict File Type")
+            RadioButtonSingleSelection(modifier = Modifier, viewModel)
         }
     }, "Settings")
 }
