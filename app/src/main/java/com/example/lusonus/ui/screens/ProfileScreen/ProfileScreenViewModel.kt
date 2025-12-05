@@ -13,6 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -33,9 +34,8 @@ class ProfileScreenViewModel(private val authRepository: AuthRepository, private
     // Loads the user information
     private fun loadProfile() {
         viewModelScope.launch {
-            profileRepository.getProfile().collect {
-                savedProfile ->  _currentProfile.value = savedProfile
-            }
+            val savedProfile = profileRepository.getProfile().first()
+            _currentProfile.value = savedProfile
         }
     }
 

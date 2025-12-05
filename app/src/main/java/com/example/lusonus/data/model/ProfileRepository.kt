@@ -13,7 +13,8 @@ class ProfileRepository() : ProfileRepositoryInterface {
     override suspend fun saveProfile(profileData: Profile) {
         profile.update {
             it.copy(
-                name = profileData.name
+                name = profileData.name,
+                image = profileData.image
             )
         }
     }
