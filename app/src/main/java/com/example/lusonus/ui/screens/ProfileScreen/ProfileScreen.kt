@@ -27,6 +27,7 @@ import com.example.lusonus.ui.composables.Layout.MainLayout
 import com.example.lusonus.ui.composables.ProfileComposables.ProfileBanner
 import com.example.lusonus.ui.screens.ProfileScreen.ProfileScreenViewModel
 import com.example.lusonus.ui.screens.ProfileScreen.ProfileViewModelFactory
+import com.example.lusonus.ui.utils.Dialogs.BasicConfirmCancelDialog
 import com.example.lusonus.ui.utils.Dialogs.DialogToEditProfile
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -40,66 +41,79 @@ fun ProfileScreen(viewModel: ProfileScreenViewModel = viewModel(factory = Profil
     // Makes sure the user is logged in before being able to access the profile screen
     if (userState.value == null)
         navController.navigate(Routes.Register.route)
+    else {
+        val profile by viewModel.currentProfile.collectAsStateWithLifecycle()
 
-    val profile by viewModel.currentProfile.collectAsStateWithLifecycle()
+        var openEditDialog by rememberSaveable { mutableStateOf(false) }
+        var deleting by rememberSaveable { mutableStateOf(false) }
 
-    var openEditDialog by rememberSaveable { mutableStateOf(false) }
+        // When openEditDialog is true, it will display the edit profile dialog box
+        if (openEditDialog)
+            DialogToEditProfile(
+                onDismissRequest = { openEditDialog = false },
+                onConfirmation = { openEditDialog = false },
+                name = "",
+                setProfile = { viewModel.setProfileInfo(it) },
+                setPicture = { viewModel.setPicture(it ?: profile.image) })
 
-    // When openEditDialog is true, it will display the edit profile dialog box
-    if (openEditDialog)
-        DialogToEditProfile(
-            onDismissRequest = { openEditDialog = false },
-            onConfirmation = { openEditDialog = false },
-            name = "",
-            setProfile = { viewModel.setProfileInfo(it) },
-            setPicture = { viewModel.setPicture(it ?: profile.image) })
+        if(deleting)
+            BasicConfirmCancelDialog(
+                onDismissRequest = { deleting = false },
+                onConfirmRequest = {
+                    viewModel.delete()
+                    deleting = false
+                },
+                title = "Account Deletion",
+                description = "You're about to delete this account are you sure?",
+                confirmString = "Delete")
 
-    // General Container for other information from the profile screen
-    val containerDisplay: Modifier = Modifier
-        .padding(horizontal = 10.dp)
-        .fillMaxWidth()
-        .background(
-            MaterialTheme.colorScheme.secondaryContainer,
-            shape = RoundedCornerShape(10.dp)
+        // General Container for other information from the profile screen
+        val containerDisplay: Modifier = Modifier
+            .padding(horizontal = 10.dp)
+            .fillMaxWidth()
+            .background(
+                MaterialTheme.colorScheme.secondaryContainer,
+                shape = RoundedCornerShape(10.dp)
+            )
+
+        MainLayout(
+            {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(MaterialTheme.colorScheme.background),
+                    verticalArrangement = Arrangement.spacedBy(20.dp)
+                ) {
+
+                    item {
+                        ProfileBanner(
+                            modifier = Modifier
+                                .padding(top = 10.dp, start = 10.dp, end = 10.dp)
+                                .height(120.dp)
+                                .fillMaxWidth()
+                                .background(
+                                    MaterialTheme.colorScheme.primaryContainer,
+                                    shape = RoundedCornerShape(10.dp)
+                                ),
+                            name = profile.name,
+                            email = userState.value!!.email ,
+                            profileImage = profile.image,
+                            editToggle = { openEditDialog = true },
+                            signOut = { viewModel.signOut() },
+                            delete = { deleting = true }
+                        )
+                    }
+                    item {
+                        ConnectedStorage(
+                            modifier = containerDisplay
+                                .height(120.dp)
+                                .padding(bottom = 10.dp)
+                        )
+                    }
+                }
+            },
+            screenTitle = "Profile",
+            floatingActionButton = {}
         )
-
-    MainLayout(
-        {
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(MaterialTheme.colorScheme.background),
-                verticalArrangement = Arrangement.spacedBy(20.dp)
-            ) {
-
-                item {
-                    ProfileBanner(
-                        modifier = Modifier
-                            .padding(top = 10.dp, start = 10.dp, end = 10.dp)
-                            .height(120.dp)
-                            .fillMaxWidth()
-                            .background(
-                                MaterialTheme.colorScheme.primaryContainer,
-                                shape = RoundedCornerShape(10.dp)
-                            ),
-                        name = profile.name,
-                        email = userState.value!!.email,
-                        profileImage = profile.image,
-                        editToggle = { openEditDialog = true },
-                        signOut = { viewModel.signOut() },
-                        delete = { viewModel.delete() }
-                    )
-                }
-                item {
-                    ConnectedStorage(
-                        modifier = containerDisplay
-                            .height(120.dp)
-                            .padding(bottom = 10.dp)
-                    )
-                }
-            }
-        },
-        screenTitle = "Profile",
-        floatingActionButton = {}
-    )
+    }
 }

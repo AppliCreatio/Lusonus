@@ -46,6 +46,7 @@ import com.example.lusonus.data.auth.ResultAuth
 import com.example.lusonus.navigation.LocalNavController
 import com.example.lusonus.navigation.Routes
 import com.example.lusonus.ui.composables.Layout.MainLayout
+import com.example.lusonus.ui.composables.Layout.TopBar.SharedTopBarStateless
 import com.example.lusonus.ui.screens.RegisterScreen.AuthViewModelFactory
 import com.example.lusonus.ui.screens.ProfileScreen.ProfileScreenViewModel
 import com.example.lusonus.ui.utils.Dialogs.BadRegisterDialog
@@ -57,6 +58,7 @@ fun RegisterScreen(viewModel: RegisterViewModel = viewModel(factory = AuthViewMo
 
     // This is used for the form
     val navController = LocalNavController.current
+    var canNavigateBack = navController.previousBackStackEntry != null
 
     var newEmail by rememberSaveable { mutableStateOf("") }
     var newPassword by rememberSaveable { mutableStateOf("") }
@@ -79,7 +81,7 @@ fun RegisterScreen(viewModel: RegisterViewModel = viewModel(factory = AuthViewMo
                 is ResultAuth.Success -> {
                     if (it.data) {
                         snackbarHostState.showSnackbar("Sign-in Successful")
-                        navController.navigate(Routes.Profile.route)
+                        navController.navigateUp()
                     } else {
                         snackbarHostState.showSnackbar("Sign-in Unsuccessful: ${viewModel.errorMessage}")
                     }
@@ -101,7 +103,7 @@ fun RegisterScreen(viewModel: RegisterViewModel = viewModel(factory = AuthViewMo
                 is ResultAuth.Success -> {
                     if (it.data) {
                         snackbarHostState.showSnackbar("Sign-up Successful")
-                        navController.navigate(Routes.Profile.route)
+                        navController.navigateUp()
                     } else {
                         snackbarHostState.showSnackbar("Sign-up Unsuccessful: ${viewModel.errorMessage}")
                     }
@@ -184,6 +186,22 @@ fun RegisterScreen(viewModel: RegisterViewModel = viewModel(factory = AuthViewMo
             }
         }
 
-    }, screenTitle = "Register", snackbarHost = { SnackbarHost(snackbarHostState) })
+    },
+        screenTitle = "Register",
+        snackbarHost = { SnackbarHost(snackbarHostState) },
+        topBar = {
+            SharedTopBarStateless(
+                canNavigateBack = canNavigateBack,
+                pageName = "Register",
+                actionButton = {},
+                onNavigateBack = {
+                    if (canNavigateBack){
+                        navController.popBackStack()
+                        navController.popBackStack()
+                    }
+                }
+            )
+        }
+    )
 }
 
