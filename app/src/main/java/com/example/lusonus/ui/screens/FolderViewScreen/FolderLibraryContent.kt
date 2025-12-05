@@ -9,7 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.example.lusonus.data.model.classes.Folder
+import com.example.lusonus.data.dataclasses.Folder
 import com.example.lusonus.ui.composables.FolderLibraryComposables.FolderItem
 import com.example.lusonus.ui.utils.getName
 

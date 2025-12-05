@@ -1,6 +1,6 @@
-package com.example.lusonus.data.model.interfaces
+package com.example.lusonus.data.interfaces
 
-import com.example.lusonus.data.model.classes.Profile
+import com.example.lusonus.data.dataclasses.Profile
 import kotlinx.coroutines.flow.StateFlow
 
 interface ProfileRepositoryInterface {

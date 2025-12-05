@@ -1,14 +1,14 @@
-package com.example.lusonus.data.model
+package com.example.lusonus.data.model.repositories
 
-import com.example.lusonus.data.model.classes.Profile
-import com.example.lusonus.data.model.interfaces.ProfileRepositoryInterface
+import com.example.lusonus.data.dataclasses.Profile
+import com.example.lusonus.data.interfaces.ProfileRepositoryInterface
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 
 class ProfileRepository() : ProfileRepositoryInterface {
 
-    private val profile =  MutableStateFlow(Profile())
+    private val profile = MutableStateFlow(Profile())
 
     override suspend fun saveProfile(profileData: Profile) {
         profile.update {

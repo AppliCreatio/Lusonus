@@ -1,4 +1,4 @@
-package com.example.lusonus.data.model.classes
+package com.example.lusonus.data.dataclasses
 
 import android.net.Uri
 

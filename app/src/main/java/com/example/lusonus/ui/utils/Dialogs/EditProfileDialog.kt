@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.twotone.AccountCircle
+import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
@@ -31,7 +32,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.example.lusonus.data.model.classes.Profile
+import com.example.lusonus.data.dataclasses.Profile
 
 /**
  * A composable dialog that is called when a user wants to edit their profile information or image.
@@ -43,7 +44,7 @@ fun DialogToEditProfile(
     name: String,
     setProfile: (Profile) -> Unit,
     setPicture: (Uri?) -> Unit,
-    ) {
+) {
 
     var newName by rememberSaveable { mutableStateOf(name) }
 
@@ -57,7 +58,7 @@ fun DialogToEditProfile(
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(300.dp)
+                .height(260.dp)
                 .padding(horizontal = 16.dp),
             shape = RoundedCornerShape(16.dp),
         ) {
@@ -79,7 +80,7 @@ fun DialogToEditProfile(
                     onValueChange = { newName = it },
                     label = { Text("Name") },
                     colors = TextFieldDefaults.colors(
-                        unfocusedContainerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                        unfocusedContainerColor = MaterialTheme.colorScheme.primaryContainer,
                     ),
                     singleLine = true
                 )
@@ -92,7 +93,7 @@ fun DialogToEditProfile(
                     },
                     modifier = Modifier.padding(8.dp),
                     colors = ButtonDefaults.textButtonColors(
-                        contentColor = MaterialTheme.colorScheme.onTertiaryContainer
+                        contentColor = MaterialTheme.colorScheme.error
                     )
                 ) {
                     Text("Change Picture")
@@ -107,24 +108,19 @@ fun DialogToEditProfile(
                         onClick = {
                             onDismissRequest()
                         },
-                        modifier = Modifier.padding(8.dp),
                         colors = ButtonDefaults.textButtonColors(
-                            contentColor = MaterialTheme.colorScheme.onTertiaryContainer
+                            contentColor = MaterialTheme.colorScheme.error
                         )
                     ) {
                         Text("Dismiss")
                     }
-                    TextButton(
+                    Button(
                         onClick = {
                             if (newName.isNotBlank())
                                 setProfile(Profile(name = newName.trim()))
 
                             onConfirmation()
                         },
-                        modifier = Modifier.padding(8.dp),
-                        colors = ButtonDefaults.textButtonColors(
-                            contentColor = MaterialTheme.colorScheme.onTertiaryContainer
-                        )
                     ) {
                         Text("Confirm")
                     }

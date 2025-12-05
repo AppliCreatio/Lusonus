@@ -28,7 +28,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.lusonus.data.model.classes.MenuItem
+import com.example.lusonus.data.dataclasses.MenuItem
 import com.example.lusonus.navigation.LocalNavController
 import com.example.lusonus.navigation.Routes
 import com.example.lusonus.ui.composables.Layout.MainLayout
@@ -84,35 +84,41 @@ fun PlaylistScreen(
             }
 
             val sortOptions = listOf(
-                MenuItem(title = "Alphabetical", action = { viewModel.sortMedia("alphabetically") }),
-                MenuItem(title = "Date Added", action = { viewModel.sortMedia("date added") }) ,
+                MenuItem(
+                    title = "Alphabetical",
+                    action = { viewModel.sortMedia("alphabetically") }),
+                MenuItem(title = "Date Added", action = { viewModel.sortMedia("date added") }),
                 MenuItem(title = "Last Played", action = { viewModel.sortMedia("last played") })
             )
 
             SearchAndSort(sortOptions, expanded, { expanded = !it }, searchInfo, {
                 searchInfo = it
-                viewModel.searchMedia( searchInfo.lowercase())
+                viewModel.searchMedia(searchInfo.lowercase())
             })
 
             Card(
                 colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.secondaryContainer
                 ),
-                modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp).offset(y = 40.dp),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 16.dp)
+                    .offset(y = 40.dp),
                 shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
                 elevation = CardDefaults.cardElevation(
                     defaultElevation = 4.dp
                 )
             ) {
-            PlaylistContent(
-                playlistFiles = playlistFiles,
-                removeFromPlaylist = { media ->
-                    viewModel.removeFromPlaylist(media)
-                },
-                onClickMedia = { mediaName ->
-                    navController.navigate(Routes.MediaPlayer.go(mediaName))
-                }
-            )}
+                PlaylistContent(
+                    playlistFiles = playlistFiles,
+                    removeFromPlaylist = { media ->
+                        viewModel.removeFromPlaylist(media)
+                    },
+                    onClickMedia = { mediaName ->
+                        navController.navigate(Routes.MediaPlayer.go(mediaName))
+                    }
+                )
+            }
 
             // This is the picker to add a media to the playlist.
             if (showPicker) {
@@ -136,7 +142,7 @@ fun PlaylistScreen(
                 SharedTopBar(playlistName, {
                     TopBarAddButton(onClick = {
                         showPicker = true
-                    } )
+                    })
                 })
             }
         }

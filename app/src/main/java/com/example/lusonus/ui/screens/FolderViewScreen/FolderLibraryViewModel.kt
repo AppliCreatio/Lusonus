@@ -11,10 +11,10 @@ import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.lusonus.appContext
-import com.example.lusonus.data.model.classes.Folder
-import com.example.lusonus.data.model.classes.Media
-import com.example.lusonus.data.model.singletons.SharedFolderLibrary
-import com.example.lusonus.data.model.singletons.SharedMediaLibrary
+import com.example.lusonus.data.dataclasses.Folder
+import com.example.lusonus.data.dataclasses.Media
+import com.example.lusonus.data.sharedinstances.SharedFolderLibrary
+import com.example.lusonus.data.sharedinstances.SharedMediaLibrary
 import com.example.lusonus.ui.utils.getFileName
 import com.example.lusonus.ui.utils.scanFolderRecursive
 import kotlinx.coroutines.flow.StateFlow
@@ -62,7 +62,12 @@ class FolderLibraryViewModel : ViewModel(), LifecycleEventObserver {
     }
 
     // Adds a folder to the storage along with all the media involved with that folder.
-    fun addFolder(context: Context, folderUri: Uri, folderName: String, folderMediaUris: List<Uri>) {
+    fun addFolder(
+        context: Context,
+        folderUri: Uri,
+        folderName: String,
+        folderMediaUris: List<Uri>
+    ) {
         val media = folderMediaUris.map { uri ->
             val name = context.getFileName(uri)
             mediaLibrary.modifyMedia(mapOf(name to uri))

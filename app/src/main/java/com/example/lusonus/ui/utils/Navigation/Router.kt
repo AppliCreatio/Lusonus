@@ -14,7 +14,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.ass3_appdev.screens.main.ProfileScreen
 import com.example.lusonus.data.model.ExternalStorage
-import com.example.lusonus.data.model.singletons.Global
+import com.example.lusonus.data.sharedinstances.Global
 import com.example.lusonus.ui.screens.FAQScreen.FAQScreen
 import com.example.lusonus.ui.screens.FolderScreen.FolderScreen
 import com.example.lusonus.ui.screens.MediaLibraryScreen.MediaLibraryScreen
@@ -32,6 +32,7 @@ val LocalStorageList =
 
 val LocalGlobals =
     compositionLocalOf<Global> { error("No media list found!") }
+
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 // Router deals with managing our different pages and which route calls which composable.
@@ -51,8 +52,7 @@ fun Router(navController: NavHostController, modifier: Modifier = Modifier) {
         composable(
             route = Routes.MediaPlayer.route,
             arguments = listOf(navArgument(name = "mediaName") { type = NavType.StringType })
-        ) {
-            backStackEntry ->
+        ) { backStackEntry ->
 
             // Gets parameter from the URL.
             val mediaName = backStackEntry.arguments?.getString("mediaName") ?: ""
@@ -69,8 +69,7 @@ fun Router(navController: NavHostController, modifier: Modifier = Modifier) {
         composable(
             route = Routes.Playlist.route,
             arguments = listOf(navArgument(name = "playlistName") { type = NavType.StringType })
-        ) {
-            backStackEntry ->
+        ) { backStackEntry ->
 
             // Gets parameter from the URL.
             val playlistName = backStackEntry.arguments?.getString("playlistName") ?: ""
@@ -96,8 +95,7 @@ fun Router(navController: NavHostController, modifier: Modifier = Modifier) {
         composable(
             route = Routes.Folder.route,
             arguments = listOf(navArgument(name = "folderName") { type = NavType.StringType })
-        ) {
-                backStackEntry ->
+        ) { backStackEntry ->
 
             // Gets parameter from the URL.
             val folderName = backStackEntry.arguments?.getString("folderName") ?: ""

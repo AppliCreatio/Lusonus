@@ -3,7 +3,6 @@ package com.example.lusonus.ui.screens.FAQScreen
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -54,8 +53,8 @@ fun FAQScreen() {
             }
             item {
                 FAQContent(
-                    "Log Out",
-                    "Tap on the floating bottom on the bottom right to prompt log out dialog",
+                    "Log Out and Delete Account",
+                    "Tap on the lock button on the profile banner to log out and hold the banner to delete.",
                     containerDisplay
                 )
             }
@@ -69,7 +68,23 @@ fun FAQScreen() {
             item {
                 FAQContent(
                     "Does this app track my information?",
-                    "Sort of. This app will only keep track of items added to it, and will track statistics if you are logged in. The app does not however track personal information nor send them to 3rd parties.",
+                    "Sort of. This app will only keep track of items added to it, and will track statistics if you are logged in. The app does not however track personal information nor send them to 3rd parties. Everything stays local except your account information.",
+                    containerDisplay
+                )
+            }
+
+            item {
+                FAQContent(
+                    "What kind of files are supported?",
+                    "As of now, only mp3s and mp4s are supported by Lusonus, but some other media file types may become supported in the future.",
+                    containerDisplay
+                )
+            }
+
+            item {
+                FAQContent(
+                    "Is it possible to not have information tracked?",
+                    "You can turn off statistics within the settings and even have no profiles.",
                     containerDisplay
                 )
             }

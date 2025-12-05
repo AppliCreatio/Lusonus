@@ -10,7 +10,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.example.lusonus.data.model.classes.MenuItem
+import com.example.lusonus.data.dataclasses.MenuItem
 
 @Composable
 fun MinimalDropdownMenu(
@@ -32,7 +32,7 @@ fun MinimalDropdownMenu(
             )
         }
 
-        if (navController != null){
+        if (navController != null) {
             val navBackStackEntry by navController.currentBackStackEntryAsState()
 
             DropdownMenu(
@@ -42,7 +42,7 @@ fun MinimalDropdownMenu(
                 menuItems.forEach { option ->
 
                     val currentRoute = navBackStackEntry?.destination?.route
-                    if(currentRoute != option.route)
+                    if (currentRoute != option.route)
                         DropdownMenuItem(
                             text = { Text(option.title) },
                             onClick = {

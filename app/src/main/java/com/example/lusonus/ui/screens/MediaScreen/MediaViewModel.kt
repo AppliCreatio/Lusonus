@@ -8,7 +8,7 @@ import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.example.lusonus.data.model.singletons.SharedMediaLibrary
+import com.example.lusonus.data.sharedinstances.SharedMediaLibrary
 import java.time.LocalDateTime
 
 // View model for MediaScreen.
@@ -38,10 +38,14 @@ class MediaViewModel(private var mediaName: String) : ViewModel() {
     }
 
     // Method that toggles queue property.
-    fun toggleQueue() { isQueueOpen = !isQueueOpen }
+    fun toggleQueue() {
+        isQueueOpen = !isQueueOpen
+    }
 
     // Method that toggles liked property.
-    fun toggleLike() { isLiked = !isLiked }
+    fun toggleLike() {
+        isLiked = !isLiked
+    }
 
     // Playback related states
     var isPlaying by mutableStateOf(false)
@@ -64,11 +68,17 @@ class MediaViewModel(private var mediaName: String) : ViewModel() {
 
     // Method that toggles paused property.
     // Note, this is local. The main one comes from broadcast.
-    fun togglePause() { isPlaying = !isPlaying }
+    fun togglePause() {
+        isPlaying = !isPlaying
+    }
 
     // This is called by BroadcastReceiver in compose when we receive the playback updates.
-    fun updatePlaybackState(isPlaying: Boolean, position: Long, duration: Long, artworkBytes: ByteArray?)
-    {
+    fun updatePlaybackState(
+        isPlaying: Boolean,
+        position: Long,
+        duration: Long,
+        artworkBytes: ByteArray?
+    ) {
 
         media!!.lastPlayed = LocalDateTime.now()
 
@@ -86,9 +96,7 @@ class MediaViewModel(private var mediaName: String) : ViewModel() {
             try {
                 // Uses the android built in gear to get the bitmap for the artwork.
                 artworkBitmap = android.graphics.BitmapFactory.decodeByteArray(it, 0, it.size)
-            }
-            catch (e: Exception)
-            {
+            } catch (e: Exception) {
                 // If we fail to get the bitmap I want to see the error.
                 e.printStackTrace()
             }
@@ -96,8 +104,7 @@ class MediaViewModel(private var mediaName: String) : ViewModel() {
     }
 
     // This is just a proper setter for the bitmap.
-    fun updateArtworkBitmap(bitmap: Bitmap)
-    {
+    fun updateArtworkBitmap(bitmap: Bitmap) {
         artworkBitmap = bitmap
     }
 }

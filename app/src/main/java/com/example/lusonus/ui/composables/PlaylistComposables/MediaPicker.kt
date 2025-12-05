@@ -28,7 +28,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.lusonus.data.model.classes.Media
+import com.example.lusonus.data.dataclasses.Media
 
 @Composable
 fun MediaPicker(
@@ -43,10 +43,12 @@ fun MediaPicker(
     var selectionMode by rememberSaveable { mutableStateOf(false) }
     val selectedItems = remember { mutableStateListOf<Media>() }
 
-    Column(modifier = Modifier
-        .fillMaxWidth()
-        .padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-        
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+
         Text(
             text = if (selectionMode) "Select Media" else "Add Media",
             style = MaterialTheme.typography.titleLarge,
@@ -79,7 +81,9 @@ fun MediaPicker(
             colors = CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.secondaryContainer
             ),
-            modifier = Modifier.fillMaxSize().offset(y = 40.dp),
+            modifier = Modifier
+                .fillMaxSize()
+                .offset(y = 40.dp),
             shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
             elevation = CardDefaults.cardElevation(
                 defaultElevation = 4.dp

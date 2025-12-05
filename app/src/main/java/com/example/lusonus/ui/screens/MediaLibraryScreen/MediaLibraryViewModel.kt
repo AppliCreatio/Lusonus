@@ -5,8 +5,8 @@ import android.net.Uri
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
-import com.example.lusonus.data.model.classes.Media
-import com.example.lusonus.data.model.singletons.SharedMediaLibrary
+import com.example.lusonus.data.dataclasses.Media
+import com.example.lusonus.data.sharedinstances.SharedMediaLibrary
 import com.example.lusonus.ui.utils.getFileName
 import kotlinx.coroutines.flow.StateFlow
 

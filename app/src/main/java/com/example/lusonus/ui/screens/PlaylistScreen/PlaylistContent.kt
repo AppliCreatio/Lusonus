@@ -20,12 +20,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.lusonus.data.model.classes.Media
+import com.example.lusonus.data.dataclasses.Media
 
 @Composable
 fun PlaylistContent(
@@ -33,9 +32,8 @@ fun PlaylistContent(
     removeFromPlaylist: (Media) -> Unit,
     onClickMedia: (String) -> Unit
 ) {
-    LazyColumn (modifier = Modifier.padding(16.dp)) {
-        items(items = playlistFiles) {
-            media ->
+    LazyColumn(modifier = Modifier.padding(16.dp)) {
+        items(items = playlistFiles) { media ->
             var deleteMode by remember { mutableStateOf(false) }
 
             val containerColor =
@@ -60,16 +58,15 @@ fun PlaylistContent(
                                 if (deleteMode) {
                                     removeFromPlaylist(media)
                                     deleteMode = !deleteMode
-                                }
-                                else {
+                                } else {
                                     onClickMedia(media.name)
                                 }
                             },
-                            onLongClick = { deleteMode = !deleteMode  }
-                        ).padding(8.dp)
+                            onLongClick = { deleteMode = !deleteMode }
+                        )
+                        .padding(8.dp)
                 ) {
-                    if (deleteMode)
-                    {
+                    if (deleteMode) {
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()

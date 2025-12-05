@@ -4,14 +4,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.lusonus.data.auth.AuthRepository
 import com.example.lusonus.data.auth.ResultAuth
-import com.example.lusonus.data.model.classes.User
+import com.example.lusonus.data.dataclasses.User
 import com.google.firebase.auth.FirebaseAuthException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class RegisterViewModel(private val authRepository: AuthRepository): ViewModel() {
+class RegisterViewModel(private val authRepository: AuthRepository) : ViewModel() {
 
     fun currentUser(): StateFlow<User?> {
         return authRepository.currentUser()
@@ -44,6 +44,7 @@ class RegisterViewModel(private val authRepository: AuthRepository): ViewModel()
             }
         }
     }
+
     fun signIn(email: String, password: String) {
         viewModelScope.launch(Dispatchers.IO) {
             try {

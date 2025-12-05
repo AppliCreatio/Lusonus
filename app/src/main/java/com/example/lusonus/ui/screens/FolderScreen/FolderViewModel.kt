@@ -5,9 +5,9 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.lusonus.data.model.classes.Media
-import com.example.lusonus.data.model.singletons.SharedFolderLibrary
-import com.example.lusonus.data.model.singletons.SharedMediaLibrary
+import com.example.lusonus.data.dataclasses.Media
+import com.example.lusonus.data.sharedinstances.SharedFolderLibrary
+import com.example.lusonus.data.sharedinstances.SharedMediaLibrary
 import com.example.lusonus.ui.utils.getFileName
 import com.example.lusonus.ui.utils.scanFolderRecursive
 import com.example.lusonus.ui.utils.search
@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+
 @RequiresApi(Build.VERSION_CODES.O)
 class FolderViewModel(private val folderName: String) : ViewModel() {
 
@@ -34,8 +35,7 @@ class FolderViewModel(private val folderName: String) : ViewModel() {
         // Performs coroutine.
         viewModelScope.launch {
             // Collect's current in hot flow so it's easy to get folder name.
-            folderLibrary.folders.collect {
-                folders ->
+            folderLibrary.folders.collect { folders ->
 
                 // Get the folder this view model belongs to.
                 val folder = folders.find { it.name == folderName }
@@ -55,7 +55,8 @@ class FolderViewModel(private val folderName: String) : ViewModel() {
         // Launch the coroutine.
         viewModelScope.launch(Dispatchers.IO) {
             // Get the folder we are in.
-            val folder = folderLibrary.getFolder(folderName) ?: return@launch // again this is an Android studio recommended return.
+            val folder = folderLibrary.getFolder(folderName)
+                ?: return@launch // again this is an Android studio recommended return.
 
             val scannedUris = context.scanFolderRecursive(folder.uri)
 

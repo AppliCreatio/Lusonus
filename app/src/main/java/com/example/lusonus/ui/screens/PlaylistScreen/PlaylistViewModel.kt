@@ -6,9 +6,9 @@ import androidx.annotation.RequiresApi
 import androidx.documentfile.provider.DocumentFile
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.lusonus.data.model.classes.Media
-import com.example.lusonus.data.model.singletons.SharedMediaLibrary
-import com.example.lusonus.data.model.singletons.SharedPlaylistLibrary
+import com.example.lusonus.data.dataclasses.Media
+import com.example.lusonus.data.sharedinstances.SharedMediaLibrary
+import com.example.lusonus.data.sharedinstances.SharedPlaylistLibrary
 import com.example.lusonus.ui.utils.search
 import com.example.lusonus.ui.utils.sort
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -38,7 +38,6 @@ class PlaylistViewModel(private val playlistName: String) : ViewModel() {
             }
         }
     }
-
 
 
     val allMediaFiles: StateFlow<List<Media>> = mediaLibrary.media

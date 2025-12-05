@@ -1,4 +1,4 @@
-package com.example.lusonus.data.model.interfaces
+package com.example.lusonus.data.interfaces
 
 import java.time.LocalDateTime
 

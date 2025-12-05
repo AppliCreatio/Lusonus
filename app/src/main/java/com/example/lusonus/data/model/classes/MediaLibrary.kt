@@ -5,7 +5,8 @@ import android.net.Uri
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.documentfile.provider.DocumentFile
-import com.example.lusonus.data.model.singletons.SharedPlaylistLibrary
+import com.example.lusonus.data.dataclasses.Media
+import com.example.lusonus.data.sharedinstances.SharedPlaylistLibrary
 import com.example.lusonus.ui.utils.search
 import com.example.lusonus.ui.utils.sort
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -45,7 +46,14 @@ open class MediaLibrary {
                 }
             } else {
                 // If it doesn't exist we add it.
-                updated.add(Media(name = name, dateAdded = LocalDateTime.now() , lastPlayed = null ,uri = uri))
+                updated.add(
+                    Media(
+                        name = name,
+                        dateAdded = LocalDateTime.now(),
+                        lastPlayed = null,
+                        uri = uri
+                    )
+                )
             }
         }
 

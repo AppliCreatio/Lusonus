@@ -1,4 +1,4 @@
-package com.example.lusonus.data.model.singletons
+package com.example.lusonus.data.sharedinstances
 
 import com.example.lusonus.data.model.classes.MediaLibrary
 

@@ -3,7 +3,9 @@ package com.example.lusonus.data.model.classes
 import android.net.Uri
 import android.os.Build
 import androidx.annotation.RequiresApi
-import com.example.lusonus.data.model.singletons.SharedMediaLibrary
+import com.example.lusonus.data.dataclasses.Folder
+import com.example.lusonus.data.dataclasses.Media
+import com.example.lusonus.data.sharedinstances.SharedMediaLibrary
 import com.example.lusonus.ui.utils.search
 import com.example.lusonus.ui.utils.sort
 import kotlinx.coroutines.flow.MutableStateFlow

@@ -4,11 +4,10 @@ import android.app.Application
 import android.content.Context
 import android.os.Build
 import androidx.annotation.RequiresApi
-import kotlin.getValue
 import com.example.lusonus.data.auth.AuthRepository
 import com.example.lusonus.data.auth.AuthRepositoryFirebase
-import com.example.lusonus.data.model.ProfileRepository
-import com.example.lusonus.data.model.interfaces.ProfileRepositoryInterface
+import com.example.lusonus.data.interfaces.ProfileRepositoryInterface
+import com.example.lusonus.data.model.repositories.ProfileRepository
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 
@@ -22,7 +21,6 @@ lateinit var appModule: AppModule
 class MyApp : Application() {
 
 
-
     override fun onCreate() {
         super.onCreate()
         appContext = this
@@ -33,11 +31,11 @@ class MyApp : Application() {
 class AppModule(
     private val appContext: Context
 ) {
-    val authRepository : AuthRepository by lazy {
+    val authRepository: AuthRepository by lazy {
         AuthRepositoryFirebase(Firebase.auth) // inject Firebase auth
     }
 
-    val profileRepository : ProfileRepositoryInterface by lazy {
+    val profileRepository: ProfileRepositoryInterface by lazy {
         ProfileRepository() // inject Firebase auth
     }
 }

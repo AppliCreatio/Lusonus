@@ -1,6 +1,6 @@
 package com.example.lusonus.data.auth
 
-import com.example.lusonus.data.model.classes.User
+import com.example.lusonus.data.dataclasses.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.FirebaseUser
@@ -26,9 +26,9 @@ class AuthRepositoryFirebase(private val auth: FirebaseAuth) : AuthRepository {
     * already exist within the firebase */
     override suspend fun signUp(email: String, password: String): String? {
         try {
-            auth.createUserWithEmailAndPassword(email,password).await()
+            auth.createUserWithEmailAndPassword(email, password).await()
             return null
-        } catch (e: FirebaseAuthException){
+        } catch (e: FirebaseAuthException) {
             return when (e.errorCode) {
                 "ERROR_INVALID_EMAIL" -> "Invalid email address"
                 "ERROR_WEAK_PASSWORD" -> "Password is too weak"
@@ -45,7 +45,7 @@ class AuthRepositoryFirebase(private val auth: FirebaseAuth) : AuthRepository {
         try {
             auth.signInWithEmailAndPassword(email, password).await()
             return null
-        } catch(e: FirebaseAuthException){
+        } catch (e: FirebaseAuthException) {
             return when (e.errorCode) {
                 "ERROR_INVALID_EMAIL" -> "Invalid email address"
                 "ERROR_WEAK_PASSWORD" -> "Password is too weak"
@@ -64,7 +64,7 @@ class AuthRepositoryFirebase(private val auth: FirebaseAuth) : AuthRepository {
 
     /* Deletes the current user that is being used and signs them out */
     override suspend fun delete() {
-        if(auth.currentUser != null)
+        if (auth.currentUser != null)
             auth.currentUser!!.delete()
     }
 
@@ -73,7 +73,8 @@ class AuthRepositoryFirebase(private val auth: FirebaseAuth) : AuthRepository {
         return this?.let {
             if (it.email == null) null else
                 User(
-                    email = it.email!!)
+                    email = it.email!!
+                )
         }
     }
 }
