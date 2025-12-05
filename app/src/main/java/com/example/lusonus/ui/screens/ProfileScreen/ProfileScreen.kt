@@ -46,6 +46,7 @@ fun ProfileScreen(viewModel: ProfileScreenViewModel = viewModel(factory = Profil
 
         var openEditDialog by rememberSaveable { mutableStateOf(false) }
         var deleting by rememberSaveable { mutableStateOf(false) }
+        var promptLogOut by rememberSaveable { mutableStateOf(false) }
 
         // When openEditDialog is true, it will display the edit profile dialog box
         if (openEditDialog)
@@ -56,6 +57,7 @@ fun ProfileScreen(viewModel: ProfileScreenViewModel = viewModel(factory = Profil
                 setProfile = { viewModel.setProfileInfo(it) },
                 setPicture = { viewModel.setPicture(it ?: profile.image) })
 
+        // This checks if the confirmation dialog box for deleting should appear on the screen or not
         if(deleting)
             BasicConfirmCancelDialog(
                 onDismissRequest = { deleting = false },
@@ -66,6 +68,18 @@ fun ProfileScreen(viewModel: ProfileScreenViewModel = viewModel(factory = Profil
                 title = "Account Deletion",
                 description = "You're about to delete this account are you sure?",
                 confirmString = "Delete")
+
+        // This checks if the confirmation dialog box for logging should appear on the screen or not
+        if(promptLogOut)
+            BasicConfirmCancelDialog(
+                onDismissRequest = { promptLogOut = false },
+                onConfirmRequest = {
+                    viewModel.signOut()
+                    promptLogOut = false
+                },
+                title = "Logging Out",
+                description = "You're about to log out are you sure?",
+                confirmString = "Log Out")
 
         // General Container for other information from the profile screen
         val containerDisplay: Modifier = Modifier
@@ -99,7 +113,7 @@ fun ProfileScreen(viewModel: ProfileScreenViewModel = viewModel(factory = Profil
                             email = userState.value!!.email ,
                             profileImage = profile.image,
                             editToggle = { openEditDialog = true },
-                            signOut = { viewModel.signOut() },
+                            signOut = { promptLogOut = true },
                             delete = { deleting = true }
                         )
                     }

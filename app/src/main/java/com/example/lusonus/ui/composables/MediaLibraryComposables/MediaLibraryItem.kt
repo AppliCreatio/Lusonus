@@ -24,6 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.lusonus.data.model.classes.Media
+import com.example.lusonus.ui.composables.DeleteRow
 
 @Composable
 fun MediaLibraryItem(
@@ -64,19 +65,7 @@ fun MediaLibraryItem(
         ) {
             if (deleteMode)
             {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(64.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Delete,
-                        contentDescription = "Delete",
-                        tint = MaterialTheme.colorScheme.onError,
-                        modifier = Modifier.size(48.dp)
-                    )
-                }
+                DeleteRow()
             } else {
                 FileRow(uri = media.uri)
             }
