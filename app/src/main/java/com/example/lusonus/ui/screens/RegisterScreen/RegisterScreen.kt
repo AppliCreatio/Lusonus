@@ -13,11 +13,18 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.sharp.AlternateEmail
+import androidx.compose.material.icons.sharp.Key
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.SnackbarHost
@@ -116,47 +123,81 @@ fun RegisterScreen(viewModel: RegisterViewModel = viewModel(factory = AuthViewMo
     }
 
     MainLayout({
-        LazyColumn(
+        Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(horizontal = 20.dp),
             verticalArrangement = Arrangement.SpaceAround,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            item {
-                Text("Welcome to my app!", fontSize = 20.sp)
-            }
 
-            item {
+            Card(colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.secondary
+            ),
+                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+                shape = MaterialTheme.shapes.medium,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 16.dp)) {
+                Text("Register", fontSize = 20.sp)
+
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(15.dp),
                 ) {
 
-                    OutlinedTextField(
-                        value = newEmail,
-                        onValueChange = { newEmail = it },
-                        label = { Text("Email") },
-                        colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
-                        ),
-                        singleLine = true
-                    )
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(10.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            imageVector = Icons.Sharp.AlternateEmail,
+                            contentDescription = "Your email",
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+                        OutlinedTextField(
+                            value = newEmail,
+                            onValueChange = { newEmail = it },
+                            label = { Text("Email") },
+                            colors = TextFieldDefaults.colors(
+                                focusedContainerColor = MaterialTheme.colorScheme.background,
+                                unfocusedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+                            ),
+                            singleLine = true
+                        )
+                    }
 
-                    OutlinedTextField(
-                        value = newPassword,
-                        onValueChange = { newPassword = it },
-                        label = { Text("Password") },
-                        colors = TextFieldDefaults.colors(
-                            unfocusedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
-                        ),
-                        singleLine = true
-                    )
+
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(10.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            imageVector = Icons.Sharp.Key,
+                            contentDescription = "Your email",
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+
+                        OutlinedTextField(
+                            value = newPassword,
+                            onValueChange = { newPassword = it },
+                            label = { Text("Password") },
+                            colors = TextFieldDefaults.colors(
+                                focusedContainerColor = MaterialTheme.colorScheme.background,
+                                unfocusedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+                            ),
+                            singleLine = true
+                        )
+                    }
 
                     Row {
                         Button(onClick = {
                             errorMessage = ""
-                            if(verifyCredentials(email = newEmail, password = newPassword, modErrorMessage = { errorMessage += it}))
+                            if (verifyCredentials(
+                                    email = newEmail,
+                                    password = newPassword,
+                                    modErrorMessage = { errorMessage += it })
+                            )
                                 viewModel.signIn(newEmail, newPassword)
                             else
                                 badRegisterDialog = true
@@ -167,7 +208,11 @@ fun RegisterScreen(viewModel: RegisterViewModel = viewModel(factory = AuthViewMo
 
                         Button(onClick = {
                             errorMessage = ""
-                            if(verifyCredentials(email = newEmail, password = newPassword, modErrorMessage = { errorMessage += it}))
+                            if (verifyCredentials(
+                                    email = newEmail,
+                                    password = newPassword,
+                                    modErrorMessage = { errorMessage += it })
+                            )
                                 viewModel.signUp(newEmail, newPassword)
                             else
                                 badRegisterDialog = true
@@ -179,13 +224,15 @@ fun RegisterScreen(viewModel: RegisterViewModel = viewModel(factory = AuthViewMo
 
 
                     if (badRegisterDialog)
-                        BadRegisterDialog(onDismissRequest = {badRegisterDialog = false}, errorMessage)
+                        BadRegisterDialog(
+                            onDismissRequest = { badRegisterDialog = false },
+                            errorMessage
+                        )
 
 
                 }
             }
         }
-
     },
         screenTitle = "Register",
         snackbarHost = { SnackbarHost(snackbarHostState) },

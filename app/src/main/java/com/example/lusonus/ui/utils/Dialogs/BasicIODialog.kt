@@ -77,6 +77,14 @@ fun BasicConfirmCancelDialog(
                 ) {
                     TextButton(
                         onClick = {
+                            onDismissRequest()
+                        }
+                    ) {
+                        Text("Cancel")
+                    }
+
+                    TextButton(
+                        onClick = {
                             onConfirmRequest()
                         },
                         colors = ButtonDefaults.textButtonColors(
@@ -86,13 +94,7 @@ fun BasicConfirmCancelDialog(
                         Text(confirmString)
                     }
 
-                    TextButton(
-                        onClick = {
-                            onDismissRequest()
-                        }
-                    ) {
-                        Text("Cancel")
-                    }
+
                 }
 
             }

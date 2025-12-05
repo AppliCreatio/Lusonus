@@ -58,7 +58,7 @@ fun ProfileScreen(viewModel: ProfileScreenViewModel = viewModel(factory = Profil
                 setPicture = { viewModel.setPicture(it ?: profile.image) })
 
         // This checks if the confirmation dialog box for deleting should appear on the screen or not
-        if(deleting)
+        if (deleting)
             BasicConfirmCancelDialog(
                 onDismissRequest = { deleting = false },
                 onConfirmRequest = {
@@ -67,19 +67,25 @@ fun ProfileScreen(viewModel: ProfileScreenViewModel = viewModel(factory = Profil
                 },
                 title = "Account Deletion",
                 description = "You're about to delete this account are you sure?",
-                confirmString = "Delete")
+                confirmString = "Delete"
+            )
 
         // This checks if the confirmation dialog box for logging should appear on the screen or not
-        if(promptLogOut)
+        if (promptLogOut)
             BasicConfirmCancelDialog(
-                onDismissRequest = { promptLogOut = false },
+                onDismissRequest = {
+                    promptLogOut = false
+                    deleting = false
+                },
                 onConfirmRequest = {
                     viewModel.signOut()
                     promptLogOut = false
+                    deleting = false
                 },
                 title = "Logging Out",
                 description = "You're about to log out are you sure?",
-                confirmString = "Log Out")
+                confirmString = "Log Out"
+            )
 
         // General Container for other information from the profile screen
         val containerDisplay: Modifier = Modifier
@@ -110,7 +116,7 @@ fun ProfileScreen(viewModel: ProfileScreenViewModel = viewModel(factory = Profil
                                     shape = RoundedCornerShape(10.dp)
                                 ),
                             name = profile.name,
-                            email = userState.value!!.email ,
+                            email = userState.value!!.email,
                             profileImage = profile.image,
                             editToggle = { openEditDialog = true },
                             signOut = { promptLogOut = true },
