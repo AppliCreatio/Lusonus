@@ -5,8 +5,6 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.lusonus.data.model.Settings
-import com.example.lusonus.ui.screens.MediaScreen.MediaViewModel
-
 
 class SettingsViewModelFactory(
     var settings : Settings
