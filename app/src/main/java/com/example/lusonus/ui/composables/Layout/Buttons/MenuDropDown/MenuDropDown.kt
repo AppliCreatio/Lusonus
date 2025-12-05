@@ -17,9 +17,9 @@ fun MenuDropDown(){
     var expanded by rememberSaveable { mutableStateOf(false) }
     val navController = LocalNavController.current
 
-    val menuList: List<MenuItem> = listOf(MenuItem("Profile") { navController.navigate(Routes.Profile.route) },
-        MenuItem("Settings", ) { navController.navigate(Routes.Settings.route) },
-        MenuItem("About Us") { navController.navigate(Routes.FAQ.route) })
+    val menuList: List<MenuItem> = listOf(MenuItem(title ="Profile", route = Routes.Profile.route, action = { navController.navigate(Routes.Profile.route) }) ,
+        MenuItem("Settings", route = Routes.Settings.route, action = { navController.navigate(Routes.Settings.route) }) ,
+        MenuItem("About Us", route = Routes.FAQ.route, action = { navController.navigate(Routes.FAQ.route) }))
 
-    MinimalDropdownMenu(menuList, expanded, { expanded = !it }, Icons.Default.MoreVert)
+    MinimalDropdownMenu(menuList, expanded, { expanded = !it }, Icons.Default.MoreVert, navController)
 }

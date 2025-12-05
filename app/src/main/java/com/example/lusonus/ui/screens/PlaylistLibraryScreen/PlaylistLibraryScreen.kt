@@ -72,9 +72,9 @@ fun PlaylistLibraryScreen() {
         content = {
 
             val sortOptions = listOf(
-                MenuItem("Alphabetical") { viewModel.sortPlaylist("alphabetically") },
-                MenuItem("Date Added") { viewModel.sortPlaylist("date added") },
-                MenuItem("Last Played") { viewModel.sortPlaylist("last played") }
+                MenuItem(title = "Alphabetical", action = { viewModel.sortPlaylist("alphabetically") }),
+                MenuItem(title = "Date Added", action = { viewModel.sortPlaylist("date added") }) ,
+                MenuItem(title = "Last Played", action = { viewModel.sortPlaylist("last played") })
             )
 
             SearchAndSort(sortOptions, expanded, { expanded = !it }, searchInfo, {

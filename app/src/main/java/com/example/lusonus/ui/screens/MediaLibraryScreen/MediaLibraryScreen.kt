@@ -100,7 +100,9 @@ fun MediaLibraryScreen() {
             }
 
             val sortOptions = listOf<MenuItem>(
-                MenuItem("Alphabetical") { viewModel.sortMedia("alphabetically") }
+                MenuItem(title = "Alphabetical", action = { viewModel.sortMedia("alphabetically") }),
+                MenuItem(title = "Date Added", action = { viewModel.sortMedia("date added") }) ,
+                MenuItem(title = "Last Played", action = { viewModel.sortMedia("last played") })
             )
 
             SearchAndSort(sortOptions, expanded, { expanded = !it }, searchInfo, {
