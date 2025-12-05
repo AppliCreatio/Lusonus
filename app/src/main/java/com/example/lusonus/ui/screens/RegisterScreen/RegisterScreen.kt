@@ -199,7 +199,8 @@ fun RegisterScreen(viewModel: RegisterViewModel = viewModel(factory = AuthViewMo
                         navController.popBackStack()
                         navController.popBackStack()
                     }
-                }
+                },
+                showDropDown = false
             )
         }
     )

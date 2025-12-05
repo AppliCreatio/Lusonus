@@ -34,6 +34,7 @@ fun SharedTopBarStateless(
     canNavigateBack: Boolean,
     onNavigateBack: () -> Unit,
     actionButton: @Composable (() -> Unit)? = null,
+    showDropDown: Boolean = true
 ) {
     var isNavigatingBack by rememberSaveable { mutableStateOf(false) }
 
@@ -78,7 +79,8 @@ fun SharedTopBarStateless(
         actions = {
             Row {
                 actionButton?.invoke()
-                MenuDropDown()
+                if(showDropDown)
+                    MenuDropDown()
             }
         }
     )
