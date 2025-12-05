@@ -9,6 +9,6 @@ import com.example.lusonus.appModule
  */
 class ProfileViewModelFactory : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return ProfileScreenViewModel(authRepository = appModule.authRepository) as T
+        return ProfileScreenViewModel(authRepository = appModule.authRepository, profileRepository = appModule.profileRepository) as T
     }
 }

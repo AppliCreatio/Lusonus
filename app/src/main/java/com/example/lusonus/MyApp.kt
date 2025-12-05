@@ -7,6 +7,8 @@ import androidx.annotation.RequiresApi
 import kotlin.getValue
 import com.example.lusonus.data.auth.AuthRepository
 import com.example.lusonus.data.auth.AuthRepositoryFirebase
+import com.example.lusonus.data.model.ProfileRepository
+import com.example.lusonus.data.model.interfaces.ProfileRepositoryInterface
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 
@@ -33,6 +35,10 @@ class AppModule(
 ) {
     val authRepository : AuthRepository by lazy {
         AuthRepositoryFirebase(Firebase.auth) // inject Firebase auth
+    }
+
+    val profileRepository : ProfileRepositoryInterface by lazy {
+        ProfileRepository() // inject Firebase auth
     }
 }
 

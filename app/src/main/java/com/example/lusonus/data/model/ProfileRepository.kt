@@ -1,18 +1,25 @@
 package com.example.lusonus.data.model
 
 import com.example.lusonus.data.model.classes.Profile
-import com.example.lusonus.data.model.interfaces.ProfileRepository
+import com.example.lusonus.data.model.interfaces.ProfileRepositoryInterface
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 
-class ProfileRepository() : ProfileRepository {
+class ProfileRepository() : ProfileRepositoryInterface {
+
+    private val profile =  MutableStateFlow(Profile())
 
     override suspend fun saveProfile(profileData: Profile) {
-        TODO("Not yet implemented")
+        profile.update {
+            it.copy(
+                name = profileData.name
+            )
+        }
     }
 
     override suspend fun getProfile(): StateFlow<Profile> {
-        TODO("Not yet implemented")
+        return profile
     }
 
     override suspend fun clear() {
