@@ -41,13 +41,11 @@ fun DialogToEditProfile(
     onDismissRequest: () -> Unit,
     onConfirmation: () -> Unit,
     name: String,
-    description: String,
     setProfile: (Profile) -> Unit,
     setPicture: (Uri?) -> Unit,
     ) {
 
     var newName by rememberSaveable { mutableStateOf(name) }
-    var newDescription by rememberSaveable { mutableStateOf(description) }
 
     val singlePhotoPickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia(),
@@ -86,16 +84,6 @@ fun DialogToEditProfile(
                     singleLine = true
                 )
 
-                OutlinedTextField(
-                    value = newDescription,
-                    onValueChange = { newDescription = it },
-                    label = { Text("Description") },
-                    colors = TextFieldDefaults.colors(
-                        unfocusedContainerColor = MaterialTheme.colorScheme.tertiaryContainer,
-                    ),
-                    singleLine = true
-                )
-
                 TextButton(
                     onClick = {
                         singlePhotoPickerLauncher.launch(
@@ -128,9 +116,8 @@ fun DialogToEditProfile(
                     }
                     TextButton(
                         onClick = {
-                            if (newName.isNotBlank() && newDescription.isNotBlank())
-                                setProfile(Profile(newName.trim(), newDescription.trim()))
-
+                            if (newName.isNotBlank())
+                                setProfile(Profile(name = newName.trim()))
 
                             onConfirmation()
                         },

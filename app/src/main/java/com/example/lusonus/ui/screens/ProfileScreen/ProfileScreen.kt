@@ -48,12 +48,11 @@ fun ProfileScreen(viewModel: ProfileScreenViewModel = viewModel(factory = Profil
     // When openEditDialog is true, it will display the edit profile dialog box
     if (openEditDialog)
         DialogToEditProfile(
-            { openEditDialog = false },
-            { openEditDialog = false },
-            profile.name,
-            profile.description,
-            { viewModel.setProfileInfo(it) },
-            { viewModel.setPicture(it ?: profile.image) })
+            onDismissRequest = { openEditDialog = false },
+            onConfirmation = { openEditDialog = false },
+            name = "",
+            setProfile = { viewModel.setProfileInfo(it) },
+            setPicture = { viewModel.setPicture(it ?: profile.image) })
 
     // General Container for other information from the profile screen
     val containerDisplay: Modifier = Modifier
@@ -80,11 +79,11 @@ fun ProfileScreen(viewModel: ProfileScreenViewModel = viewModel(factory = Profil
                             .height(120.dp)
                             .fillMaxWidth()
                             .background(
-                                MaterialTheme.colorScheme.tertiaryContainer,
+                                MaterialTheme.colorScheme.primaryContainer,
                                 shape = RoundedCornerShape(10.dp)
                             ),
                         name = profile.name,
-                        description = profile.description,
+                        email = userState.value!!.email,
                         profileImage = profile.image,
                         editToggle = { openEditDialog = true },
                         signOut = { viewModel.signOut() },

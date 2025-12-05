@@ -19,6 +19,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -35,7 +36,7 @@ fun PlaylistContent(
     LazyColumn (modifier = Modifier.padding(16.dp)) {
         items(items = playlistFiles) {
             media ->
-            var deleteMode by rememberSaveable { mutableStateOf(false) }
+            var deleteMode by remember { mutableStateOf(false) }
 
             val containerColor =
                 if (deleteMode) MaterialTheme.colorScheme.error

@@ -11,9 +11,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,13 +31,21 @@ import java.io.InputStream
  * but I could possibly make the profile attributes into a single local provider
  */
 @Composable
-fun ProfileBanner(modifier: Modifier, name: String, description: String, profileImage: Uri, editToggle: () -> Unit, signOut: () -> Unit, delete: () -> Unit) {
+fun ProfileBanner(
+    modifier: Modifier,
+    name: String,
+    email: String,
+    profileImage: Uri,
+    editToggle: () -> Unit,
+    signOut: () -> Unit,
+    delete: () -> Unit
+) {
 
     Row(
         modifier = modifier
             .padding(horizontal = 15.dp)
             .clickable(onClick = editToggle),
-        horizontalArrangement = Arrangement.spacedBy(10.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
         val context = androidx.compose.ui.platform.LocalContext.current
@@ -56,21 +62,23 @@ fun ProfileBanner(modifier: Modifier, name: String, description: String, profile
             painterResource(id = R.drawable.lusonus_placeholder)
         }
 
-        Image(
-            painter = painter,
-            contentDescription = "This is $name's profile picture",
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .size(80.dp)
-                .clip(CircleShape)
-                .background(MaterialTheme.colorScheme.onTertiaryContainer)
-        )
+        Row(horizontalArrangement = Arrangement.spacedBy(10.dp), verticalAlignment = Alignment.CenterVertically) {
+            Image(
+                painter = painter,
+                contentDescription = "This is $name's profile picture",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .size(80.dp)
+                    .clip(CircleShape)
+                    .background(MaterialTheme.colorScheme.onTertiaryContainer)
+            )
 
-        ProfileTextInfo(name, description)
+            ProfileTextInfo(userName = name, email = email)
+        }
+
 
         Column {
-            Button(onClick = signOut) { Text("Sign Out") }
-            Button(onClick = delete) { Text("Delete") }
+            ProfileButtons(signOut = signOut, delete = delete)
         }
     }
 }
