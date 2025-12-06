@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -30,15 +29,14 @@ import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.lusonus.data.model.MenuItem
+import com.example.lusonus.navigation.LocalGlobals
 import com.example.lusonus.navigation.LocalNavController
 import com.example.lusonus.navigation.Routes
 import com.example.lusonus.ui.composables.Layout.MainLayout
 import com.example.lusonus.ui.composables.Layout.SearchAndSort.SearchAndSort
-import com.example.lusonus.ui.composables.Layout.TopBar.SharedNavTopBar
 import com.example.lusonus.ui.composables.Layout.TopBar.SharedTopBar
 import com.example.lusonus.ui.composables.Layout.TopBar.TopBarAddButton
 import com.example.lusonus.ui.composables.PlaylistComposables.MediaPicker
-import com.example.organisemedia.Layout.FloatingActionButton.SharedFloatingActionButton
 
 @OptIn(ExperimentalMaterial3Api::class)
 @RequiresApi(Build.VERSION_CODES.O)
@@ -51,9 +49,12 @@ fun PlaylistScreen(
 
     val context = LocalContext.current
 
+    val globals = LocalGlobals.current
+
     // Gets the playlist view model, calls the media factory so we can pass the playlist name to the
     // view model to be able to get the specific playlist.
-    val viewModel: PlaylistViewModel = viewModel(factory = PlaylistViewModelFactory(playlistName))
+    val viewModel: PlaylistViewModel = viewModel(
+        factory = PlaylistViewModelFactory(playlistName, globals.settings))
 
     val playlistFiles by viewModel.playlistFiles.collectAsState()
     val allMediaFiles by viewModel.allMediaFiles.collectAsState()
@@ -82,8 +83,11 @@ fun PlaylistScreen(
 
     MainLayout(
         content = {
+            println("File Restriction: ${ globals.settings.fileTypeRestriction }")
+
             LaunchedEffect(Unit) {
                 viewModel.refreshMedia(context)
+                viewModel.filterByFileType(globals.settings.fileTypeRestriction)
             }
 
             val sortOptions = listOf(
@@ -101,7 +105,10 @@ fun PlaylistScreen(
                 colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.secondaryContainer
                 ),
-                modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp).offset(y = 40.dp),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 16.dp)
+                    .offset(y = 40.dp),
                 shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
                 elevation = CardDefaults.cardElevation(
                     defaultElevation = 4.dp

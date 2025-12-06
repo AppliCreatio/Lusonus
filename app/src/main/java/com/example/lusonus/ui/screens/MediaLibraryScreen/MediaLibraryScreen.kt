@@ -31,6 +31,7 @@ import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.lusonus.data.model.MenuItem
+import com.example.lusonus.navigation.LocalGlobals
 import com.example.organisemedia.Layout.FloatingActionButton.SharedFloatingActionButton
 import com.example.lusonus.ui.composables.Layout.MainLayout
 import com.example.lusonus.navigation.LocalNavController
@@ -46,10 +47,16 @@ fun MediaLibraryScreen() {
     // Gets nav controller
     val navController = LocalNavController.current
 
-    // Gets the view model information
-    val viewModel: MediaLibraryViewModel = viewModel(viewModelStoreOwner = LocalNavController.current.context as ComponentActivity) // Gets an existing MediaViewModel if it exists.
 
     val context = LocalContext.current
+
+    val globals = LocalGlobals.current
+
+    // Gets the view model information
+    val viewModel: MediaLibraryViewModel = viewModel(
+        viewModelStoreOwner = LocalNavController.current.context as ComponentActivity,
+        factory = (MediaLibraryViewModelFactory(globals.settings)))
+    // Gets an existing MediaViewModel if it exists.
 
     // Gets files from view model... but as a hot flow!
 
@@ -96,8 +103,11 @@ fun MediaLibraryScreen() {
 
     MainLayout(
         content = {
+            println("File Restriction: ${ globals.settings.fileTypeRestriction }")
+
             LaunchedEffect(Unit) {
                 viewModel.refreshMedia(context)
+                viewModel.filterMedia(globals.settings.fileTypeRestriction)
             }
 
             val sortOptions = listOf<MenuItem>(

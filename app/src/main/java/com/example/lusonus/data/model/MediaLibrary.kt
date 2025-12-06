@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.documentfile.provider.DocumentFile
+import com.example.lusonus.ui.utils.filter
 import com.example.lusonus.ui.utils.search
 import com.example.lusonus.ui.utils.sort
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -106,4 +107,13 @@ open class MediaLibrary {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun filterFiles(restrictionType: Int) {
+        _media.value = if (restrictionType == 0) {
+            _allMedia.value
+        }
+        else {
+            filter(_allMedia.value, restrictionType)
+        }
+    }
 }

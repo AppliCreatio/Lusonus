@@ -15,4 +15,6 @@ object Global {
     fun clearMediaPopUpName() {
         mediaPopUpName = ""
     }
+
+    var settings by mutableStateOf(Settings(false, 0))
 }

@@ -82,6 +82,8 @@ dependencies {
     implementation("androidx.compose.foundation:foundation:1.9.5")
     implementation("androidx.navigation:navigation-compose:2.9.6")
     implementation("com.android.volley:volley:1.2.1")
+    implementation("androidx.compose.ui:ui:1.10.0")
+    implementation("androidx.compose.foundation:foundation-layout:1.10.0")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
     testImplementation("junit:junit:4.13.2")
