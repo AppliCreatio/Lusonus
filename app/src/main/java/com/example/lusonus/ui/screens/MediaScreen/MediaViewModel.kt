@@ -26,27 +26,8 @@ class MediaViewModel(
     var hasStarted by mutableStateOf(false)
         private set
 
-    // Property defining whether the Queue is open.
-    var isQueueOpen by mutableStateOf(false)
-        private set
-
-    // Property defining whether the media is liked.
-    // TODO: Add isLiked to media dataclass.
-    var isLiked by mutableStateOf(false)
-        private set
-
     fun toggleStartedPlaying() {
         hasStarted = true
-    }
-
-    // Method that toggles queue property.
-    fun toggleQueue() {
-        isQueueOpen = !isQueueOpen
-    }
-
-    // Method that toggles liked property.
-    fun toggleLike() {
-        isLiked = !isLiked
     }
 
     // Playback related states

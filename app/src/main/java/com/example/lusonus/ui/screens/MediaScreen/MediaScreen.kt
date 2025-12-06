@@ -1,20 +1,25 @@
 package com.example.lusonus.ui.screens.MediaScreen
 
 import android.content.BroadcastReceiver
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.ServiceConnection
 import android.os.Build
+import android.os.IBinder
 import androidx.annotation.RequiresApi
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.media3.exoplayer.ExoPlayer
 import com.example.lusonus.services.ACTION_NEXT
 import com.example.lusonus.services.ACTION_PAUSE
 import com.example.lusonus.services.ACTION_PLAYBACK_STATE
@@ -81,6 +86,22 @@ fun MediaScreen(mediaName: String) {
         }
     }
 
+    val player = remember { mutableStateOf<ExoPlayer?>(null) }
+    val serviceConnection = remember {
+        object : ServiceConnection {
+            override fun onServiceConnected(name: ComponentName?, binder: IBinder?) {
+                val binder = binder as PlayerService.PlayerBinder
+                player.value = binder.getPlayer()
+            }
+            override fun onServiceDisconnected(name: ComponentName?) { player.value = null }
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        val intent = Intent(context, PlayerService::class.java)
+        context.bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)
+    }
+
     // Starts the Media when the page opens.
     LaunchedEffect(viewModel.media) {
         // The PlayerService::class.java is the companion object for PlayerService.
@@ -108,6 +129,7 @@ fun MediaScreen(mediaName: String) {
                 positionMilliseconds = viewModel.positionMilliseconds,
                 durationMilliseconds = viewModel.durationMilliseconds,
                 artworkBitmap = viewModel.artworkBitmap,
+                player = player.value,
                 onPause = {
                     // Sets up the proper intent.
                     val intent =
