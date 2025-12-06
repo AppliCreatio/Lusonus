@@ -13,10 +13,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.lusonus.data.model.MenuItem
+import com.example.lusonus.data.dataclasses.MenuItem
 
 @Composable
-fun SearchAndSort(sortOptions: List<MenuItem>, expanded: Boolean, expandFunc: (Boolean) -> Unit, searchInfo: String, searchFun: (String) -> Unit){
+fun SearchAndSort(
+    sortOptions: List<MenuItem>,
+    expanded: Boolean,
+    expandFunc: (Boolean) -> Unit,
+    searchInfo: String,
+    searchFun: (String) -> Unit
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()

@@ -1,17 +1,17 @@
-package com.example.lusonus.data.model
+package com.example.lusonus.data.model.classes
 
 import android.content.Context
 import android.net.Uri
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.documentfile.provider.DocumentFile
-import com.example.lusonus.ui.utils.filter
+import com.example.lusonus.data.dataclasses.Media
+import com.example.lusonus.data.sharedinstances.SharedPlaylistLibrary
 import com.example.lusonus.ui.utils.search
 import com.example.lusonus.ui.utils.sort
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import java.time.LocalDate
 import java.time.LocalDateTime
 
 open class MediaLibrary {
@@ -46,7 +46,14 @@ open class MediaLibrary {
                 }
             } else {
                 // If it doesn't exist we add it.
-                updated.add(Media(name = name, dateAdded = LocalDateTime.now() , lastPlayed = null ,uri = uri))
+                updated.add(
+                    Media(
+                        name = name,
+                        dateAdded = LocalDateTime.now(),
+                        lastPlayed = null,
+                        uri = uri
+                    )
+                )
             }
         }
 
@@ -107,13 +114,4 @@ open class MediaLibrary {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun filterFiles(restrictionType: Int) {
-        _media.value = if (restrictionType == 0) {
-            _allMedia.value
-        }
-        else {
-            filter(_allMedia.value, restrictionType)
-        }
-    }
 }

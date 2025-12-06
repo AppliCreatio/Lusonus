@@ -28,8 +28,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.lusonus.data.model.MenuItem
-import com.example.lusonus.navigation.LocalGlobals
+import com.example.lusonus.data.dataclasses.MenuItem
 import com.example.lusonus.navigation.LocalNavController
 import com.example.lusonus.navigation.Routes
 import com.example.lusonus.ui.composables.Layout.MainLayout
@@ -49,12 +48,9 @@ fun PlaylistScreen(
 
     val context = LocalContext.current
 
-    val globals = LocalGlobals.current
-
     // Gets the playlist view model, calls the media factory so we can pass the playlist name to the
     // view model to be able to get the specific playlist.
-    val viewModel: PlaylistViewModel = viewModel(
-        factory = PlaylistViewModelFactory(playlistName, globals.settings))
+    val viewModel: PlaylistViewModel = viewModel(factory = PlaylistViewModelFactory(playlistName))
 
     val playlistFiles by viewModel.playlistFiles.collectAsState()
     val allMediaFiles by viewModel.allMediaFiles.collectAsState()
@@ -83,22 +79,21 @@ fun PlaylistScreen(
 
     MainLayout(
         content = {
-            println("File Restriction: ${ globals.settings.fileTypeRestriction }")
-
             LaunchedEffect(Unit) {
                 viewModel.refreshMedia(context)
-                viewModel.filterByFileType(globals.settings.fileTypeRestriction)
             }
 
             val sortOptions = listOf(
-                MenuItem("Alphabetical") { viewModel.sortMedia("alphabetically") },
-                MenuItem("Date Added") { viewModel.sortMedia("date added") },
-                MenuItem("Last Played") { viewModel.sortMedia("last played") }
+                MenuItem(
+                    title = "Alphabetical",
+                    action = { viewModel.sortMedia("alphabetically") }),
+                MenuItem(title = "Date Added", action = { viewModel.sortMedia("date added") }),
+                MenuItem(title = "Last Played", action = { viewModel.sortMedia("last played") })
             )
 
             SearchAndSort(sortOptions, expanded, { expanded = !it }, searchInfo, {
                 searchInfo = it
-                viewModel.searchMedia( searchInfo.lowercase())
+                viewModel.searchMedia(searchInfo.lowercase())
             })
 
             Card(
@@ -114,15 +109,16 @@ fun PlaylistScreen(
                     defaultElevation = 4.dp
                 )
             ) {
-            PlaylistContent(
-                playlistFiles = playlistFiles,
-                removeFromPlaylist = { media ->
-                    viewModel.removeFromPlaylist(media)
-                },
-                onClickMedia = { mediaName ->
-                    navController.navigate(Routes.MediaPlayer.go(mediaName))
-                }
-            )}
+                PlaylistContent(
+                    playlistFiles = playlistFiles,
+                    removeFromPlaylist = { media ->
+                        viewModel.removeFromPlaylist(media)
+                    },
+                    onClickMedia = { mediaName ->
+                        navController.navigate(Routes.MediaPlayer.go(mediaName))
+                    }
+                )
+            }
 
             // This is the picker to add a media to the playlist.
             if (showPicker) {
@@ -146,7 +142,7 @@ fun PlaylistScreen(
                 SharedTopBar(playlistName, {
                     TopBarAddButton(onClick = {
                         showPicker = true
-                    } )
+                    })
                 })
             }
         }

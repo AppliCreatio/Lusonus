@@ -15,14 +15,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.lusonus.data.model.Media
+import com.example.lusonus.data.dataclasses.Media
 
 @Composable
 fun MediaDetails(
     media: Media,
     image: Painter
-    ) {
-    Column (
+) {
+    Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {

@@ -30,12 +30,10 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.lusonus.data.model.MenuItem
-import com.example.lusonus.navigation.LocalGlobals
-import com.example.organisemedia.Layout.FloatingActionButton.SharedFloatingActionButton
-import com.example.lusonus.ui.composables.Layout.MainLayout
+import com.example.lusonus.data.dataclasses.MenuItem
 import com.example.lusonus.navigation.LocalNavController
 import com.example.lusonus.navigation.Routes
+import com.example.lusonus.ui.composables.Layout.MainLayout
 import com.example.lusonus.ui.composables.Layout.SearchAndSort.SearchAndSort
 import com.example.lusonus.ui.composables.Layout.TopBar.SharedNavTopBar
 import com.example.lusonus.ui.composables.Layout.TopBar.SharedTopBar
@@ -47,16 +45,11 @@ fun MediaLibraryScreen() {
     // Gets nav controller
     val navController = LocalNavController.current
 
+    // Gets the view model information
+    val viewModel: MediaLibraryViewModel =
+        viewModel(viewModelStoreOwner = LocalNavController.current.context as ComponentActivity) // Gets an existing MediaViewModel if it exists.
 
     val context = LocalContext.current
-
-    val globals = LocalGlobals.current
-
-    // Gets the view model information
-    val viewModel: MediaLibraryViewModel = viewModel(
-        viewModelStoreOwner = LocalNavController.current.context as ComponentActivity,
-        factory = (MediaLibraryViewModelFactory(globals.settings)))
-    // Gets an existing MediaViewModel if it exists.
 
     // Gets files from view model... but as a hot flow!
 
@@ -76,7 +69,7 @@ fun MediaLibraryScreen() {
             uris?.let {
                 // We map over each uris and convert it to a string.
                 // Has to be in strings because you can't use rememberSaveable on uris.
-                viewModel.addFiles(context,it)
+                viewModel.addFiles(context, it)
             }
         }
 
@@ -103,20 +96,21 @@ fun MediaLibraryScreen() {
 
     MainLayout(
         content = {
-            println("File Restriction: ${ globals.settings.fileTypeRestriction }")
-
             LaunchedEffect(Unit) {
                 viewModel.refreshMedia(context)
-                viewModel.filterMedia(globals.settings.fileTypeRestriction)
             }
 
             val sortOptions = listOf<MenuItem>(
-                MenuItem("Alphabetical") { viewModel.sortMedia("alphabetically") }
+                MenuItem(
+                    title = "Alphabetical",
+                    action = { viewModel.sortMedia("alphabetically") }),
+                MenuItem(title = "Date Added", action = { viewModel.sortMedia("date added") }),
+                MenuItem(title = "Last Played", action = { viewModel.sortMedia("last played") })
             )
 
             SearchAndSort(sortOptions, expanded, { expanded = !it }, searchInfo, {
                 searchInfo = it
-                viewModel.searchMedia( searchInfo.lowercase())
+                viewModel.searchMedia(searchInfo.lowercase())
             })
 
 
@@ -125,7 +119,10 @@ fun MediaLibraryScreen() {
                 colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.secondaryContainer
                 ),
-                modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp).offset(y = 40.dp),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 16.dp)
+                    .offset(y = 40.dp),
                 shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
                 elevation = CardDefaults.cardElevation(
                     defaultElevation = 4.dp
@@ -150,7 +147,7 @@ fun MediaLibraryScreen() {
                 SharedTopBar("Lusonus", {
                     TopBarAddButton(onClick = {
                         pickFilesLauncher.launch(input = arrayOf("audio/*", "video/*"))
-                    } )
+                    })
                 })
                 SharedNavTopBar()
             }

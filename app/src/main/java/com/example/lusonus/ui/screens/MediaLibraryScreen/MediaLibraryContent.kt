@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.lusonus.data.model.Media
+import com.example.lusonus.data.dataclasses.Media
 import com.example.lusonus.ui.composables.MediaLibraryComposables.MediaLibraryItem
 
 @Composable
@@ -25,8 +25,7 @@ fun MediaLibraryContent(
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        items(items = files) {
-            media ->
+        items(items = files) { media ->
             MediaLibraryItem(
                 media = media,
                 onDelete = onDeleteMedia,

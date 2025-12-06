@@ -7,8 +7,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.listSaver
 import androidx.compose.runtime.snapshots.SnapshotStateList
-import com.example.lusonus.data.model.Media
-import java.time.LocalDate
+import com.example.lusonus.data.dataclasses.Media
 import java.time.LocalDateTime
 
 @RequiresApi(Build.VERSION_CODES.O)

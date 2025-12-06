@@ -25,7 +25,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.lusonus.data.model.MenuItem
+import com.example.lusonus.data.dataclasses.MenuItem
 import com.example.lusonus.navigation.LocalNavController
 import com.example.lusonus.navigation.Routes
 import com.example.lusonus.ui.composables.Layout.MainLayout
@@ -69,9 +69,11 @@ fun FolderScreen(folderName: String) {
             }
 
             val sortOptions = listOf(
-                MenuItem("Alphabetical") { viewModel.sortMedia("alphabetically") },
-                MenuItem("Date Added") { viewModel.sortMedia("date added") },
-                MenuItem("Last Played") { viewModel.sortMedia("last played") }
+                MenuItem(
+                    title = "Alphabetical",
+                    action = { viewModel.sortMedia("alphabetically") }),
+                MenuItem(title = "Date Added", action = { viewModel.sortMedia("date added") }),
+                MenuItem(title = "Last Played", action = { viewModel.sortMedia("last played") })
             )
 
             SearchAndSort(
@@ -85,18 +87,21 @@ fun FolderScreen(folderName: String) {
                 colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.secondaryContainer
                 ),
-                modifier = Modifier.fillMaxSize().padding(16.dp).offset(y = 40.dp),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp)
+                    .offset(y = 40.dp),
                 shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
                 elevation = CardDefaults.cardElevation(
                     defaultElevation = 4.dp
                 )
             ) {
-            FolderContent(
-                folderFiles = folderFiles,
-                onClickMedia = { mediaName ->
-                    navController.navigate(Routes.MediaPlayer.go(mediaName))
-                }
-            )
+                FolderContent(
+                    folderFiles = folderFiles,
+                    onClickMedia = { mediaName ->
+                        navController.navigate(Routes.MediaPlayer.go(mediaName))
+                    }
+                )
             }
         },
 

@@ -6,16 +6,21 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.example.lusonus.data.model.MenuItem
+import androidx.navigation.NavController
+import androidx.navigation.compose.currentBackStackEntryAsState
+import com.example.lusonus.data.dataclasses.MenuItem
 
 @Composable
 fun MinimalDropdownMenu(
     menuItems: List<MenuItem>,
     expanded: Boolean,
     toggleAction: (Boolean) -> Unit,
-    icon: ImageVector
+    icon: ImageVector,
+    navController: NavController? = null
 ) {
+
     Box {
         IconButton(
             onClick = { toggleAction(expanded) }
@@ -27,18 +32,40 @@ fun MinimalDropdownMenu(
             )
         }
 
-        DropdownMenu(
-            expanded = expanded,
-            onDismissRequest = { toggleAction(expanded) }
-        ) {
-            menuItems.forEach { option ->
-                DropdownMenuItem(
-                    text = { Text(option.title) },
-                    onClick = {
-                        option.action()
-                        toggleAction(expanded)
-                    }
-                )
+        if (navController != null) {
+            val navBackStackEntry by navController.currentBackStackEntryAsState()
+
+            DropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { toggleAction(expanded) }
+            ) {
+                menuItems.forEach { option ->
+
+                    val currentRoute = navBackStackEntry?.destination?.route
+                    if (currentRoute != option.route)
+                        DropdownMenuItem(
+                            text = { Text(option.title) },
+                            onClick = {
+                                option.action()
+                                toggleAction(expanded)
+                            }
+                        )
+                }
+            }
+        } else {
+            DropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { toggleAction(expanded) }
+            ) {
+                menuItems.forEach { option ->
+                    DropdownMenuItem(
+                        text = { Text(option.title) },
+                        onClick = {
+                            option.action()
+                            toggleAction(expanded)
+                        }
+                    )
+                }
             }
         }
     }

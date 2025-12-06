@@ -1,6 +1,5 @@
-package com.example.lusonus.data.model
+package com.example.lusonus.data.interfaces
 
-import java.time.LocalDate
 import java.time.LocalDateTime
 
 interface Entries {

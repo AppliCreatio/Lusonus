@@ -8,28 +8,35 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import com.example.lusonus.data.model.MenuItem
-import com.example.lusonus.navigation.LocalGlobals
+import com.example.lusonus.data.dataclasses.MenuItem
 import com.example.lusonus.navigation.LocalNavController
 import com.example.lusonus.navigation.Routes
 
 @Composable
-fun MenuDropDown(){
+fun MenuDropDown() {
     var expanded by rememberSaveable { mutableStateOf(false) }
     val navController = LocalNavController.current
-    val settings = LocalGlobals.current.settings
 
-    val menuList: List<MenuItem> = if (!settings.profileToggle) {
-        listOf(
-            MenuItem("Profile") { navController.navigate(Routes.Profile.route) },
-            MenuItem("Settings", ) { navController.navigate(Routes.Settings.route) },
-            MenuItem("About Us") { navController.navigate(Routes.FAQ.route) })
-    }
-    else {
-        listOf(
-            MenuItem("Settings", ) { navController.navigate(Routes.Settings.route) },
-            MenuItem("About Us") { navController.navigate(Routes.FAQ.route) })
-    }
+    val menuList: List<MenuItem> = listOf(
+        MenuItem(
+            title = "Profile",
+            route = Routes.Profile.route,
+            action = { navController.navigate(Routes.Profile.route) }),
+        MenuItem(
+            "Settings",
+            route = Routes.Settings.route,
+            action = { navController.navigate(Routes.Settings.route) }),
+        MenuItem(
+            "About Us",
+            route = Routes.FAQ.route,
+            action = { navController.navigate(Routes.FAQ.route) })
+    )
 
-    MinimalDropdownMenu(menuList, expanded, { expanded = !it }, Icons.Default.MoreVert)
+    MinimalDropdownMenu(
+        menuList,
+        expanded,
+        { expanded = !it },
+        Icons.Default.MoreVert,
+        navController
+    )
 }

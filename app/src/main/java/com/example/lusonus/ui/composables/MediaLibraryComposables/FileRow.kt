@@ -57,7 +57,7 @@ fun FileRow(
             )
         } else {
             Image(
-                painter = androidx.compose.ui.res.painterResource(id = R.drawable.resource_default),
+                painter = androidx.compose.ui.res.painterResource(id = R.drawable.lusonus_placeholder),
                 contentDescription = "File artwork",
                 modifier = Modifier
                     .size(64.dp)

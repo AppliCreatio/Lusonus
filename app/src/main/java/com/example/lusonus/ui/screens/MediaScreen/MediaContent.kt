@@ -38,7 +38,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.lusonus.R
-import com.example.lusonus.data.model.Media
+import com.example.lusonus.data.dataclasses.Media
 import com.example.lusonus.ui.utils.formatTimeFromMilliseconds
 
 
@@ -58,19 +58,23 @@ fun MediaContent(
 ) {
     // Main column that will hold everything.
     Column(
-        modifier = Modifier.fillMaxSize().padding(16.dp),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceAround
     ) {
         // First we want the media art.
         val painter = artworkBitmap?.asImageBitmap()?.let { BitmapPainter(it) }
-            ?: painterResource(id = R.drawable.resource_default)
+            ?: painterResource(id = R.drawable.lusonus_placeholder)
 
         Image(
             painter = painter,
             contentDescription = "Artwork representing the ${media.name} media.",
             contentScale = ContentScale.Crop,
-            modifier = Modifier.size(300.dp).clip(RoundedCornerShape(16.dp))
+            modifier = Modifier
+                .size(300.dp)
+                .clip(RoundedCornerShape(16.dp))
         )
 
         // Second we want the title.
@@ -90,7 +94,14 @@ fun MediaContent(
         //   (like obviously a 10 minute song doesn't have a 5x bigger slider than a 2 minute song in actual visual size)
         // - The coerceIn catches the dumb exceptions we have with division, and makes sure the result is between the given values.
         //   Kotlin is amazing for having this.
-        var sliderPosition by remember { mutableFloatStateOf((positionMilliseconds.toFloat() / duration.toFloat()).coerceIn(0f, 1f)) }
+        var sliderPosition by remember {
+            mutableFloatStateOf(
+                (positionMilliseconds.toFloat() / duration.toFloat()).coerceIn(
+                    0f,
+                    1f
+                )
+            )
+        }
 
         // Whether the user is dragging the slider or not.
         var isUserDragging by remember { mutableStateOf(false) }
@@ -98,15 +109,15 @@ fun MediaContent(
         // This LaunchedEffect updates the slider position.
         LaunchedEffect(positionMilliseconds, duration) {
             if (!isUserDragging) {
-                sliderPosition = (positionMilliseconds.toFloat() / duration.toFloat()).coerceIn(0f, 1f)
+                sliderPosition =
+                    (positionMilliseconds.toFloat() / duration.toFloat()).coerceIn(0f, 1f)
             }
         }
 
         // We set up the slider.
         Slider(
             value = sliderPosition,
-            onValueChange = {
-                value ->
+            onValueChange = { value ->
 
                 // When the value is changing we update the UI
                 sliderPosition = value
@@ -130,7 +141,11 @@ fun MediaContent(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(text = formatTimeFromMilliseconds((sliderPosition * duration).toLong().coerceIn(0L, duration)))
+            Text(
+                text = formatTimeFromMilliseconds(
+                    (sliderPosition * duration).toLong().coerceIn(0L, duration)
+                )
+            )
             Text(text = formatTimeFromMilliseconds(duration))
         }
 

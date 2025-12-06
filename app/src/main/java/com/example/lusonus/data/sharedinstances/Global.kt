@@ -1,4 +1,4 @@
-package com.example.lusonus.data.model
+package com.example.lusonus.data.sharedinstances
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

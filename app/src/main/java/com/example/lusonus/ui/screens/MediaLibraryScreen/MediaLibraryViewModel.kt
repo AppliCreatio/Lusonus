@@ -5,15 +5,14 @@ import android.net.Uri
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
-import com.example.lusonus.data.model.Media
-import com.example.lusonus.data.model.Settings
-import com.example.lusonus.data.model.SharedMediaLibrary
+import com.example.lusonus.data.dataclasses.Media
+import com.example.lusonus.data.sharedinstances.SharedMediaLibrary
 import com.example.lusonus.ui.utils.getFileName
 import kotlinx.coroutines.flow.StateFlow
 
 // Media view model to deal with
 @RequiresApi(Build.VERSION_CODES.O)
-class MediaLibraryViewModel(val settings: Settings) : ViewModel() {
+class MediaLibraryViewModel : ViewModel() {
     // Gets shared singleton instance.
     private val mediaLibrary = SharedMediaLibrary
 
@@ -48,9 +47,5 @@ class MediaLibraryViewModel(val settings: Settings) : ViewModel() {
     // Sorts media by provided sorting type.
     fun sortMedia(type: String) {
         mediaLibrary.sortFiles(type)
-    }
-
-    fun filterMedia(restrictionType: Int) {
-        mediaLibrary.filterFiles(restrictionType)
     }
 }

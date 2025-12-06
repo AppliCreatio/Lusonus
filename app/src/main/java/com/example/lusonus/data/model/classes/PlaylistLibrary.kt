@@ -1,14 +1,15 @@
-package com.example.lusonus.data.model
+package com.example.lusonus.data.model.classes
 
 import android.net.Uri
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.toMutableStateList
+import com.example.lusonus.data.dataclasses.Media
+import com.example.lusonus.data.dataclasses.Playlist
 import com.example.lusonus.ui.utils.search
 import com.example.lusonus.ui.utils.sort
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import java.time.LocalDate
 import java.time.LocalDateTime
 
 open class PlaylistLibrary {
@@ -27,7 +28,8 @@ open class PlaylistLibrary {
     @RequiresApi(Build.VERSION_CODES.O)
     fun createPlaylist(name: String) {
         if (_allPlaylists.value.none { it.name == name }) {
-            val newPlaylist = Playlist(name = name, dateAdded = LocalDateTime.now(), lastPlayed = null)
+            val newPlaylist =
+                Playlist(name = name, dateAdded = LocalDateTime.now(), lastPlayed = null)
             _allPlaylists.value = _allPlaylists.value + newPlaylist
             _playlists.value = _playlists.value + newPlaylist
         }
@@ -43,7 +45,8 @@ open class PlaylistLibrary {
     fun addMediaToPlaylist(playlistName: String, mediaList: List<Media>) {
         _allPlaylists.value = _allPlaylists.value.map { playlist ->
             if (playlist.name == playlistName) {
-                val newMedia = (playlist.media + mediaList.filter { media -> playlist.media.none { it.uri == media.uri } })
+                val newMedia =
+                    (playlist.media + mediaList.filter { media -> playlist.media.none { it.uri == media.uri } })
                 playlist.copy(media = newMedia.toMutableStateList())
             } else playlist
         }

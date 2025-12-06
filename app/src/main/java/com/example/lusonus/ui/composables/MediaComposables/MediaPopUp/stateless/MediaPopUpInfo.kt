@@ -27,7 +27,7 @@ fun MediaPopUpInfo (mediaName: String, mediaArtist: String, mediaImage: Bitmap?)
 
         val painter = mediaImage?.asImageBitmap()?.let {
             androidx.compose.ui.graphics.painter.BitmapPainter(it)
-        } ?: painterResource(id = R.drawable.resource_default)
+        } ?: painterResource(id = R.drawable.lusonus_placeholder)
 
         Image(
             painter = painter,

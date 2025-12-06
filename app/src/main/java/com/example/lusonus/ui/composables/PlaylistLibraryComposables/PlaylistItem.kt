@@ -20,12 +20,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
+import com.example.lusonus.ui.composables.DeleteRow
 
 @Composable
 fun PlaylistItem(
@@ -33,7 +35,7 @@ fun PlaylistItem(
     onDelete: (String) -> Unit,
     onClick: (String) -> Unit
 ) {
-    var deleteMode by rememberSaveable { mutableStateOf(false) }
+    var deleteMode by remember { mutableStateOf(false) }
 
     val containerColor =
         if (deleteMode) MaterialTheme.colorScheme.error
@@ -69,19 +71,7 @@ fun PlaylistItem(
         ) {
             if (deleteMode)
             {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(56.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Delete,
-                        contentDescription = "Delete",
-                        tint = MaterialTheme.colorScheme.onError,
-                        modifier = Modifier.size(48.dp)
-                    )
-                }
+                DeleteRow()
             } else {
                 Box(
                     modifier = Modifier
