@@ -14,6 +14,7 @@ import com.example.lusonus.ui.utils.sort
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 // Media view model to deal with
@@ -78,5 +79,9 @@ class PlaylistViewModel(
     fun sortMedia(type: String) {
         val base = playlistLibrary.getPlaylist(playlistName)?.media ?: return
         _playlistFiles.value = sort(base, type)
+    }
+
+    fun allPlaylistURIs(): ArrayList<String>{
+        return _playlistFiles.value.map { media -> media.uri.toString()  } as ArrayList<String>
     }
 }

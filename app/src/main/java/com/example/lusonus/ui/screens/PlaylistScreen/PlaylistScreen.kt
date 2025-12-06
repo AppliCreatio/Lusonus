@@ -1,15 +1,21 @@
 package com.example.lusonus.ui.screens.PlaylistScreen
 
+import android.content.Intent
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.sharp.PlayArrow
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.runtime.Composable
@@ -31,11 +37,15 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.lusonus.data.dataclasses.MenuItem
 import com.example.lusonus.navigation.LocalNavController
 import com.example.lusonus.navigation.Routes
+import com.example.lusonus.services.ACTION_PLAY_URI
+import com.example.lusonus.services.EXTRA_URI_LIST
+import com.example.lusonus.services.PlayerService
 import com.example.lusonus.ui.composables.Layout.MainLayout
 import com.example.lusonus.ui.composables.Layout.SearchAndSort.SearchAndSort
 import com.example.lusonus.ui.composables.Layout.TopBar.SharedTopBar
 import com.example.lusonus.ui.composables.Layout.TopBar.TopBarAddButton
 import com.example.lusonus.ui.composables.PlaylistComposables.MediaPicker
+import com.example.lusonus.ui.utils.Dialogs.DialogToEditProfile
 
 @OptIn(ExperimentalMaterial3Api::class)
 @RequiresApi(Build.VERSION_CODES.O)
@@ -58,6 +68,16 @@ fun PlaylistScreen(playlistName: String) {
     var searchInfo by rememberSaveable { mutableStateOf("") }
 
     val lifecycleOwner = LocalLifecycleOwner.current
+
+//    if (openEditDialog) {
+//        DialogToEditProfile(
+//            onDismissRequest = { openEditDialog = false },
+//            onConfirmation = { openEditDialog = false },
+//            name = "",
+//            setProfile = { viewModel.setProfileInfo(it) },
+//            setPicture = { viewModel.setPicture(it ?: profile.image) },
+//        )
+//    }
 
     // Refreshes when the screen appears and when the app returns to the foreground.
     DisposableEffect(lifecycleOwner) {
@@ -113,6 +133,10 @@ fun PlaylistScreen(playlistName: String) {
                         defaultElevation = 4.dp,
                     ),
             ) {
+
+
+//                Image(painter = )
+
                 PlaylistContent(
                     playlistFiles = playlistFiles,
                     removeFromPlaylist = { media ->
@@ -150,5 +174,18 @@ fun PlaylistScreen(playlistName: String) {
                 })
             }
         },
+        floatingActionButton = {
+            if(playlistFiles.isNotEmpty())
+                FloatingActionButton(onClick = {
+                    val intent = Intent(context, PlayerService::class.java).apply {
+                        action = ACTION_PLAY_URI
+                        putStringArrayListExtra(EXTRA_URI_LIST, viewModel.allPlaylistURIs())
+                    }
+
+                    context.startService(intent)
+
+                    navController.navigate(Routes.MediaPlayer.go(playlistFiles.first().name))
+                }) { Icon(imageVector = Icons.Sharp.PlayArrow, contentDescription = "The play button on the playlist") }
+        }
     )
 }
