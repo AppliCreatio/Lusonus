@@ -17,7 +17,6 @@ import com.example.lusonus.ui.composables.Layout.MainLayout
 /**
  * A composable which acts as the screen for the about/FAQ page. It shows all Frequently Asked Questions about the app.
  */
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun FAQScreen() {
     val containerDisplay: Modifier =
