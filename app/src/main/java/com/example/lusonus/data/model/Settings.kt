@@ -1,3 +1,3 @@
 package com.example.lusonus.data.model
 
-data class Settings(var profileToggle: Boolean, var fileTypeToggle: Int, )
+data class Settings(var profileToggle: Boolean, var fileTypeRestriction: Int, )

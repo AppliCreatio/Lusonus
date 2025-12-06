@@ -25,9 +25,9 @@ import com.example.lusonus.ui.screens.SettingsScreen.SettingsViewModel
 @Composable
 fun RadioButtonSingleSelection(modifier: Modifier = Modifier, viewModel: SettingsViewModel) {
     val radioOptions = listOf("None", "MP3", "MP4")
-    val selectedOption = remember { mutableStateOf(radioOptions[0]) }
+    val selectedOption = remember { mutableIntStateOf(viewModel.settings.fileTypeRestriction) }
     // Note that Modifier.selectableGroup() is essential to ensure correct accessibility behavior
-    Text(selectedOption.value)
+    Text(radioOptions[selectedOption.intValue])
 
     Column(modifier.selectableGroup()) {
         radioOptions.forEach { text ->
@@ -36,17 +36,17 @@ fun RadioButtonSingleSelection(modifier: Modifier = Modifier, viewModel: Setting
                     .fillMaxWidth()
                     .height(56.dp)
                     .selectable(
-                        selected = (text == selectedOption.value),
+                        selected = (text == radioOptions[selectedOption.intValue]),
                         onClick = {
                             onOptionSelected(radioOptions.indexOf(text), viewModel)
-                            selectedOption.value = text },
+                            selectedOption.intValue = radioOptions.indexOf(text) },
                         role = Role.RadioButton
                     )
                     .padding(horizontal = 16.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 RadioButton(
-                    selected = (text == selectedOption.value),
+                    selected = (text == radioOptions[selectedOption.intValue]),
                     onClick = null // null recommended for accessibility with screen readers
                 )
                 Text(

@@ -10,7 +10,6 @@ class SettingsViewModel(var settings: Settings): ViewModel() {
     }
 
     fun changeFileTypeRestriction(restrictionType: Int) {
-        settings.fileTypeToggle = restrictionType
-        println("Toggled file type restriction: ${settings.fileTypeToggle}")
+        settings.fileTypeRestriction = restrictionType
     }
 }

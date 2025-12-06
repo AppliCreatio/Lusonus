@@ -81,7 +81,6 @@ class PlaylistViewModel(private val playlistName: String, val settings: Settings
 
     fun filterByFileType(restrictionType: Int) {
         val base = playlistLibrary.getPlaylist(playlistName)?.media ?: return
-
         _playlistFiles.value = filter(base, restrictionType)
     }
 }
