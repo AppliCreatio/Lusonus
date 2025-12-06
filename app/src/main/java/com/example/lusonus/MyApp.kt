@@ -19,8 +19,6 @@ lateinit var appModule: AppModule
 
 @RequiresApi(Build.VERSION_CODES.O)
 class MyApp : Application() {
-
-
     override fun onCreate() {
         super.onCreate()
         appContext = this
@@ -29,7 +27,7 @@ class MyApp : Application() {
 }
 
 class AppModule(
-    private val appContext: Context
+    private val appContext: Context,
 ) {
     val authRepository: AuthRepository by lazy {
         AuthRepositoryFirebase(Firebase.auth) // inject Firebase auth
@@ -39,4 +37,3 @@ class AppModule(
         ProfileRepository() // inject Firebase auth
     }
 }
-

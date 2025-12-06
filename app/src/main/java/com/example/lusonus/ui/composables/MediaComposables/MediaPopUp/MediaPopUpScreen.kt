@@ -1,37 +1,37 @@
-//package com.example.lusonus.ui.composables.MediaComposables.MediaPopUp
+// package com.example.lusonus.ui.composables.MediaComposables.MediaPopUp
 //
-//import android.content.BroadcastReceiver
-//import android.content.Context
-//import android.content.Intent
-//import android.content.IntentFilter
-//import android.os.Build
-//import androidx.annotation.RequiresApi
-//import androidx.compose.runtime.Composable
-//import androidx.compose.runtime.DisposableEffect
-//import androidx.compose.runtime.LaunchedEffect
-//import androidx.compose.ui.platform.LocalContext
-//import androidx.core.content.ContextCompat
-//import androidx.lifecycle.viewmodel.compose.viewModel
-//import com.example.lusonus.navigation.LocalNavController
-//import com.example.lusonus.navigation.Routes
-//import com.example.lusonus.services.ACTION_NEXT
-//import com.example.lusonus.services.ACTION_PAUSE
-//import com.example.lusonus.services.ACTION_PLAYBACK_STATE
-//import com.example.lusonus.services.ACTION_PLAY_URI
-//import com.example.lusonus.services.ACTION_PREV
-//import com.example.lusonus.services.ACTION_RESUME
-//import com.example.lusonus.services.EXTRA_ARTWORK_BYTES
-//import com.example.lusonus.services.EXTRA_DURATION
-//import com.example.lusonus.services.EXTRA_IS_PLAYING
-//import com.example.lusonus.services.EXTRA_POSITION
-//import com.example.lusonus.services.EXTRA_URI
-//import com.example.lusonus.services.PlayerService
-//import com.example.lusonus.ui.screens.MediaScreen.MediaViewModel
-//import com.example.lusonus.ui.screens.MediaScreen.MediaViewModelFactory
+// import android.content.BroadcastReceiver
+// import android.content.Context
+// import android.content.Intent
+// import android.content.IntentFilter
+// import android.os.Build
+// import androidx.annotation.RequiresApi
+// import androidx.compose.runtime.Composable
+// import androidx.compose.runtime.DisposableEffect
+// import androidx.compose.runtime.LaunchedEffect
+// import androidx.compose.ui.platform.LocalContext
+// import androidx.core.content.ContextCompat
+// import androidx.lifecycle.viewmodel.compose.viewModel
+// import com.example.lusonus.navigation.LocalNavController
+// import com.example.lusonus.navigation.Routes
+// import com.example.lusonus.services.ACTION_NEXT
+// import com.example.lusonus.services.ACTION_PAUSE
+// import com.example.lusonus.services.ACTION_PLAYBACK_STATE
+// import com.example.lusonus.services.ACTION_PLAY_URI
+// import com.example.lusonus.services.ACTION_PREV
+// import com.example.lusonus.services.ACTION_RESUME
+// import com.example.lusonus.services.EXTRA_ARTWORK_BYTES
+// import com.example.lusonus.services.EXTRA_DURATION
+// import com.example.lusonus.services.EXTRA_IS_PLAYING
+// import com.example.lusonus.services.EXTRA_POSITION
+// import com.example.lusonus.services.EXTRA_URI
+// import com.example.lusonus.services.PlayerService
+// import com.example.lusonus.ui.screens.MediaScreen.MediaViewModel
+// import com.example.lusonus.ui.screens.MediaScreen.MediaViewModelFactory
 //
-//@RequiresApi(Build.VERSION_CODES.O)
-//@Composable
-//fun MediaPopUpScreen(mediaName: String) {
+// @RequiresApi(Build.VERSION_CODES.O)
+// @Composable
+// fun MediaPopUpScreen(mediaName: String) {
 //    val viewModel: MediaViewModel = viewModel(factory = MediaViewModelFactory(mediaName))
 //
 //    if(mediaName != viewModel.media!!.name)
@@ -139,4 +139,4 @@
 //            context.startForegroundService(intent)
 //        },
 //        )
-//}
+// }

@@ -8,7 +8,5 @@ import com.example.lusonus.appModule
       authRepository from the module.
  */
 class AuthViewModelFactory : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return RegisterViewModel(authRepository = appModule.authRepository) as T
-    }
+    override fun <T : ViewModel> create(modelClass: Class<T>): T = RegisterViewModel(authRepository = appModule.authRepository) as T
 }

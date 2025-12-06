@@ -28,29 +28,30 @@ import androidx.compose.ui.window.Dialog
 @Composable
 fun BadRegisterDialog(
     onDismissRequest: () -> Unit,
-    message: String = "The following credentials are invalid, please try again."
+    message: String = "The following credentials are invalid, please try again.",
 ) {
     Dialog(onDismissRequest = { onDismissRequest() }) {
         // Draw a rectangle shape with rounded corners inside the dialog
         Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(200.dp)
-                .padding(horizontal = 16.dp),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .height(200.dp)
+                    .padding(horizontal = 16.dp),
             shape = RoundedCornerShape(16.dp),
         ) {
             Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 20.dp),
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = 20.dp),
                 verticalArrangement = Arrangement.SpaceEvenly,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Row(
                         modifier = Modifier.padding(bottom = 10.dp),
-                        horizontalArrangement = Arrangement.spacedBy(5.dp)
+                        horizontalArrangement = Arrangement.spacedBy(5.dp),
                     ) {
                         Icon(Icons.TwoTone.Warning, "Bad Register Icon")
                         Text("Invalid Registry", fontWeight = FontWeight.Bold)
@@ -58,14 +59,14 @@ fun BadRegisterDialog(
 
                     Text(
                         message,
-                        textAlign = TextAlign.Center
+                        textAlign = TextAlign.Center,
                     )
                 }
 
                 TextButton(
                     onClick = {
                         onDismissRequest()
-                    }
+                    },
                 ) {
                     Text("Close")
                 }

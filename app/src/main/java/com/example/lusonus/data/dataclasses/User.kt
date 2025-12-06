@@ -1,4 +1,5 @@
 package com.example.lusonus.data.dataclasses
 
-data class User(var email: String)
-
+data class User(
+    var email: String,
+)

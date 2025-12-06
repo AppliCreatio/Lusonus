@@ -44,60 +44,67 @@ fun ProfileBanner(
     profileImage: Uri,
     editToggle: () -> Unit,
     signOut: () -> Unit,
-    delete: () -> Unit
+    delete: () -> Unit,
 ) {
-
     var deleteMode by remember { mutableStateOf(false) }
 
     val containerColor =
-        if (deleteMode) MaterialTheme.colorScheme.error
-        else MaterialTheme.colorScheme.primaryContainer
+        if (deleteMode) {
+            MaterialTheme.colorScheme.error
+        } else {
+            MaterialTheme.colorScheme.primaryContainer
+        }
 
     Row(
-        modifier = modifier
-            .background(containerColor, shape = RoundedCornerShape(10.dp))
-            .padding(horizontal = 15.dp)
-            .combinedClickable(
-                onClick = {
-                    if (deleteMode)
-                        delete()
-                    else
-                        editToggle()
-                },
-                onLongClick = { deleteMode = !deleteMode }
-            ),
+        modifier =
+            modifier
+                .background(containerColor, shape = RoundedCornerShape(10.dp))
+                .padding(horizontal = 15.dp)
+                .combinedClickable(
+                    onClick = {
+                        if (deleteMode) {
+                            delete()
+                        } else {
+                            editToggle()
+                        }
+                    },
+                    onLongClick = { deleteMode = !deleteMode },
+                ),
         horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         val context = androidx.compose.ui.platform.LocalContext.current
-        val bitmap = try {
-            val stream: InputStream? = context.contentResolver.openInputStream(profileImage)
-            BitmapFactory.decodeStream(stream)
-        } catch (e: Exception) {
-            null
-        }
+        val bitmap =
+            try {
+                val stream: InputStream? = context.contentResolver.openInputStream(profileImage)
+                BitmapFactory.decodeStream(stream)
+            } catch (e: Exception) {
+                null
+            }
 
-        val painter = if (bitmap != null) {
-            BitmapPainter(bitmap.asImageBitmap())
-        } else {
-            painterResource(id = R.drawable.lusonus_placeholder)
-        }
+        val painter =
+            if (bitmap != null) {
+                BitmapPainter(bitmap.asImageBitmap())
+            } else {
+                painterResource(id = R.drawable.lusonus_placeholder)
+            }
 
         if (deleteMode) {
             DeleteRow()
         } else {
             Row(
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 Image(
                     painter = painter,
                     contentDescription = "This is $name's profile picture",
                     contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .size(80.dp)
-                        .clip(CircleShape)
-                        .background(MaterialTheme.colorScheme.secondaryContainer)
+                    modifier =
+                        Modifier
+                            .size(80.dp)
+                            .clip(CircleShape)
+                            .background(MaterialTheme.colorScheme.secondaryContainer),
                 )
 
                 ProfileTextInfo(userName = name, email = email)
@@ -106,10 +113,6 @@ fun ProfileBanner(
             Column {
                 ProfileButtons(signOut = signOut)
             }
-
-
         }
     }
 }
-
-

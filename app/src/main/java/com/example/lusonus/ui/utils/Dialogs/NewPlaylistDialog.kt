@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 fun NewPlaylistDialog(
     showDialog: Boolean,
     onDismiss: () -> Unit,
-    onConfirm: (String) -> Unit
+    onConfirm: (String) -> Unit,
 ) {
     // So the playlist name is saveable.
     var playlistName by rememberSaveable { mutableStateOf(value = "") }
@@ -39,15 +39,15 @@ fun NewPlaylistDialog(
         title = {
             Text(
                 text = "Create Playlist",
-                style = MaterialTheme.typography.titleLarge.copy(
-                    fontWeight = FontWeight.Bold
-                ),
+                style =
+                    MaterialTheme.typography.titleLarge.copy(
+                        fontWeight = FontWeight.Bold,
+                    ),
                 color = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier.padding(top = 8.dp),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
             )
         },
-
         // The input box of the popup.
         text = {
             Column {
@@ -67,12 +67,11 @@ fun NewPlaylistDialog(
                         text = "Playlist name cannot be empty",
                         color = MaterialTheme.colorScheme.error,
                         style = MaterialTheme.typography.bodySmall,
-                        modifier = Modifier.padding(top = 6.dp)
+                        modifier = Modifier.padding(top = 6.dp),
                     )
                 }
             }
         },
-
         // The confirm button.
         confirmButton = {
             Button(
@@ -84,12 +83,11 @@ fun NewPlaylistDialog(
                         playlistName = ""
                         showError = false
                     }
-                }
+                },
             ) {
                 Text("Create")
             }
         },
-
         // The dismiss button.
         dismissButton = {
             TextButton(
@@ -98,14 +96,14 @@ fun NewPlaylistDialog(
                     showError = false
                     onDismiss()
                 },
-                colors = ButtonDefaults.textButtonColors(
-                    contentColor = MaterialTheme.colorScheme.error
-                )
+                colors =
+                    ButtonDefaults.textButtonColors(
+                        contentColor = MaterialTheme.colorScheme.error,
+                    ),
             ) {
                 Text("Cancel")
             }
         },
-
         // Action when dismissed.
         // e.g. someone click off the sides.
         onDismissRequest = {

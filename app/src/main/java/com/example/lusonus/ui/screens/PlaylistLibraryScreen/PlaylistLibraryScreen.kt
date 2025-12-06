@@ -54,30 +54,29 @@ fun PlaylistLibraryScreen() {
         NewPlaylistDialog(
             // It would always be true in this scenario.
             showDialog = true,
-
             // What happens when dismissed.
             onDismiss = {
                 showDialog = false
             },
-
             // What happens on confirmation.
             onConfirm = { name ->
                 viewModel.createPlaylist(name)
                 showDialog = false
-            }
+            },
         )
     }
 
     MainLayout(
         content = {
-
-            val sortOptions = listOf(
-                MenuItem(
-                    title = "Alphabetical",
-                    action = { viewModel.sortPlaylist("alphabetically") }),
-                MenuItem(title = "Date Added", action = { viewModel.sortPlaylist("date added") }),
-                MenuItem(title = "Last Played", action = { viewModel.sortPlaylist("last played") })
-            )
+            val sortOptions =
+                listOf(
+                    MenuItem(
+                        title = "Alphabetical",
+                        action = { viewModel.sortPlaylist("alphabetically") },
+                    ),
+                    MenuItem(title = "Date Added", action = { viewModel.sortPlaylist("date added") }),
+                    MenuItem(title = "Last Played", action = { viewModel.sortPlaylist("last played") }),
+                )
 
             SearchAndSort(sortOptions, expanded, { expanded = !it }, searchInfo, {
                 searchInfo = it
@@ -85,17 +84,20 @@ fun PlaylistLibraryScreen() {
             })
 
             Card(
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.secondaryContainer
-                ),
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 16.dp)
-                    .offset(y = 40.dp),
+                colors =
+                    CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                    ),
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = 16.dp)
+                        .offset(y = 40.dp),
                 shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
-                elevation = CardDefaults.cardElevation(
-                    defaultElevation = 4.dp
-                )
+                elevation =
+                    CardDefaults.cardElevation(
+                        defaultElevation = 4.dp,
+                    ),
             ) {
                 PlaylistLibraryContent(
                     playlists = playlists.map { it.name },
@@ -104,7 +106,7 @@ fun PlaylistLibraryScreen() {
                     },
                     onClickPlaylist = { playlistName ->
                         navController.navigate(Routes.Playlist.createRoute(playlistName))
-                    }
+                    },
                 )
             }
         },
@@ -118,6 +120,6 @@ fun PlaylistLibraryScreen() {
                 })
                 SharedNavTopBar()
             }
-        }
+        },
     )
 }

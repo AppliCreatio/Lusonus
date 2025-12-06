@@ -20,24 +20,26 @@ import com.example.lusonus.data.dataclasses.Media
 @Composable
 fun MediaDetails(
     media: Media,
-    image: Painter
+    image: Painter,
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Center,
     ) {
         Image(
             painter = image,
             contentDescription = "",
-            modifier = Modifier
-                .clip(RoundedCornerShape(40.dp))
-                .size(350.dp)
+            modifier =
+                Modifier
+                    .clip(RoundedCornerShape(40.dp))
+                    .size(350.dp),
         )
         Text(
             text = media.name,
             style = MaterialTheme.typography.titleLarge,
-            modifier = Modifier
-                .padding(5.dp, 2.dp, 5.dp),
+            modifier =
+                Modifier
+                    .padding(5.dp, 2.dp, 5.dp),
             fontSize = 60.sp,
         )
         Text(
@@ -45,7 +47,7 @@ fun MediaDetails(
             text = media.name,
             style = MaterialTheme.typography.labelLarge,
             modifier = Modifier,
-            fontSize = 25.sp
+            fontSize = 25.sp,
         )
     }
 }

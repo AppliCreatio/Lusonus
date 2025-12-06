@@ -9,7 +9,6 @@ import kotlinx.coroutines.flow.StateFlow
 
 @RequiresApi(Build.VERSION_CODES.O)
 class PlaylistLibraryViewModel : ViewModel() {
-
     private val playlistLibrary = SharedPlaylistLibrary
     val playlists: StateFlow<List<Playlist>> = playlistLibrary.playlists
 

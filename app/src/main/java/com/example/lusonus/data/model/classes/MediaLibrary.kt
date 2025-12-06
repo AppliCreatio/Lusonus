@@ -4,17 +4,30 @@ import android.content.Context
 import android.net.Uri
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.core.net.toUri
 import androidx.documentfile.provider.DocumentFile
+import com.example.lusonus.appContext
 import com.example.lusonus.data.dataclasses.Media
+import com.example.lusonus.data.dataclasses.proto.MediaProto
+import com.example.lusonus.data.dataclasses.proto.MediaLibraryProto
+import com.example.lusonus.data.dataclasses.protodatastore.mediaLibraryDataStore
 import com.example.lusonus.data.sharedinstances.SharedPlaylistLibrary
 import com.example.lusonus.ui.utils.search
 import com.example.lusonus.ui.utils.sort
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 open class MediaLibrary {
+    // Application context.
+    private val context: Context = appContext
+
     // Gets the playlist library.
     private val playlistLibrary = SharedPlaylistLibrary
 
@@ -27,8 +40,88 @@ open class MediaLibrary {
     // A stable more restricted one for UI use. READONLY
     val media: StateFlow<List<Media>> = _media.asStateFlow()
 
+    // Background scope for IO operations.
+    private val scope = CoroutineScope(Dispatchers.IO)
+
+    private val formatter: DateTimeFormatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME
+
+    // Prevent accidental overwrites before initial load finishes.
+    private val _hasRestoredData = MutableStateFlow(false)
+
+    init {
+        restoreFromDataStore()
+    }
+
+    private fun restoreFromDataStore() {
+        scope.launch {
+            try {
+                val stored = context.mediaLibraryDataStore.data.first()
+                val restoredList = stored.itemsList.map { it.toMedia() }
+
+                _allMedia.value = restoredList
+                _media.value = restoredList
+            } catch (e: Exception) {
+                _allMedia.value = emptyList()
+                _media.value = emptyList()
+            } finally {
+                _hasRestoredData.value = true
+            }
+        }
+    }
+
+    // Convert Media dataclass to the generated proto type.
+    private fun Media.toProto(): MediaProto =
+        MediaProto.newBuilder()
+            .setUri(uri.toString())
+            .setName(name)
+            .setDateAdded(dateAdded.format(formatter))
+            .setLastPlayed(lastPlayed?.format(formatter) ?: "")
+            .build()
+
+    // Convert proto to Media dataclass.
+    private fun MediaProto.toMedia(): Media {
+        val parsedDateAdded = runCatching { LocalDateTime.parse(dateAdded, formatter) }.getOrElse { LocalDateTime.now() }
+        val parsedLastPlayed = runCatching {
+            if (lastPlayed.isBlank()) null else LocalDateTime.parse(lastPlayed, formatter)
+        }.getOrNull()
+
+        return Media(
+            name = name,
+            dateAdded = parsedDateAdded,
+            lastPlayed = parsedLastPlayed,
+            uri = uri.toUri()
+        )
+    }
+
+    fun persist(force: Boolean = false) {
+        scope.launch {
+            if (!_hasRestoredData.value && !force) {
+                return@launch
+            }
+
+            val items = _allMedia.value
+            val current = context.mediaLibraryDataStore.data.first()
+
+            val newProtos = items.map { it.toProto() }
+
+            if (!force &&
+                newProtos.size == current.itemsCount &&
+                newProtos.zip(current.itemsList).all { (a, b) -> a == b }
+            ) {
+                return@launch
+            }
+
+            if (!force && items.isEmpty() && current.itemsCount > 0) {
+                return@launch
+            }
+
+            context.mediaLibraryDataStore.updateData { old ->
+                old.toBuilder().clearItems().addAllItems(newProtos).build()
+            }
+        }
+    }
+
     // This adds or updates media, since both were similar it's merged.
-    @RequiresApi(Build.VERSION_CODES.O)
     fun modifyMedia(pendingMedia: Map<String, Uri>) {
         val updated = _allMedia.value.toMutableList()
 
@@ -60,6 +153,9 @@ open class MediaLibrary {
         // Finally, we hot flow the change.
         _allMedia.value = updated
         _media.value = updated
+
+        // Persist the change.
+        persist()
     }
 
     // Removes media from the flow.
@@ -79,6 +175,9 @@ open class MediaLibrary {
 
             // Makes sure to update relevant playlists.
             playlistLibrary.removeMediaFromAllPlaylists(uri)
+
+            // Persist the change.
+            persist()
         }
     }
 
@@ -96,10 +195,12 @@ open class MediaLibrary {
         // Updates the flow.
         _allMedia.value = refreshed
         _media.value = refreshed
+
+        // Persist the refresh.
+        persist()
     }
 
     // Sorts the files based on sorting type.
-    @RequiresApi(Build.VERSION_CODES.O)
     fun sortFiles(type: String) {
         // Updates the flow.
         _media.value = sort(_media.value, type)
@@ -113,5 +214,4 @@ open class MediaLibrary {
             search(_allMedia.value, query)
         }
     }
-
 }

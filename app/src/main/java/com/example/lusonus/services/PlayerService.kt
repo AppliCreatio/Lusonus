@@ -65,39 +65,42 @@ class PlayerService : MediaSessionService() {
         createNotificationChannel()
 
         // Sends updates to update the UI (needed this for time/sliders)
-        progressUpdate = CoroutineScope(Dispatchers.Main).launch {
-            while (isActive) {
-                // Sends broadcast update.
-                sendPlaybackStateBroadcast()
+        progressUpdate =
+            CoroutineScope(Dispatchers.Main).launch {
+                while (isActive) {
+                    // Sends broadcast update.
+                    sendPlaybackStateBroadcast()
 
-                // Updates every second.
-                delay(1000)
+                    // Updates every second.
+                    delay(1000)
+                }
             }
-        }
 
         // This actually sets up the ExoPlayer, check out this link:
         // https://developer.android.com/media/media3/exoplayer/hello-world
-        player = ExoPlayer.Builder(this).build().apply {
-            // Everything in here are special actions that can happen that I needed to change.
+        player =
+            ExoPlayer.Builder(this).build().apply {
+                // Everything in here are special actions that can happen that I needed to change.
 
-            addListener(object: Player.Listener {
-                override fun onIsPlayingChanged(isPlaying: Boolean) {
-                    sendPlaybackStateBroadcast()
+                addListener(
+                    object : Player.Listener {
+                        override fun onIsPlayingChanged(isPlaying: Boolean) {
+                            sendPlaybackStateBroadcast()
 
-                    // We want to place the notification if it's not there.
-                    if (isPlaying) ensureForegroundNotification()
-                }
+                            // We want to place the notification if it's not there.
+                            if (isPlaying) ensureForegroundNotification()
+                        }
 
-                override fun onPlaybackStateChanged(playbackState: Int) {
-                    sendPlaybackStateBroadcast()
-                }
+                        override fun onPlaybackStateChanged(playbackState: Int) {
+                            sendPlaybackStateBroadcast()
+                        }
 
-                override fun onPositionDiscontinuity(reason: Int) {
-                    sendPlaybackStateBroadcast()
-                }
-            })
-        }
-
+                        override fun onPositionDiscontinuity(reason: Int) {
+                            sendPlaybackStateBroadcast()
+                        }
+                    },
+                )
+            }
 
         // This sets up the session with the exoplayer, so we can do stuff anywhere.
         // This also does so so so much behind the scenes. Media3 automatically handles
@@ -106,9 +109,7 @@ class PlayerService : MediaSessionService() {
     }
 
     // This is an inherited method I had to implement. It's basically just a getter.
-    override fun onGetSession(controllerInfo: MediaSession.ControllerInfo): MediaSession? {
-        return session
-    }
+    override fun onGetSession(controllerInfo: MediaSession.ControllerInfo): MediaSession? = session
 
     // We need to override this so we set the media intent properly.
     // There's a lot of stuff going on but from what I understood not doing an
@@ -117,7 +118,11 @@ class PlayerService : MediaSessionService() {
     // but since that was never a focus of our application I opted to not do so.
     // Added this suppress since we REALLY don't want to call the parent version.
     @SuppressLint("MissingSuperCall")
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+    override fun onStartCommand(
+        intent: Intent?,
+        flags: Int,
+        startId: Int,
+    ): Int {
         intent?.let { handleIntent(it) }
 
         // Hover over and read what this does, it's really important.
@@ -126,10 +131,8 @@ class PlayerService : MediaSessionService() {
 
     // Now that we have multiple intents possible, I created this function to manage them
     // all with a switch case statement.
-    private fun handleIntent(intent: Intent)
-    {
-        when (intent.action)
-        {
+    private fun handleIntent(intent: Intent) {
+        when (intent.action) {
             // When the action is "we want to play an uri".
             ACTION_PLAY_URI -> {
                 // Long story short there is information we aren't getting when we import the media
@@ -211,8 +214,11 @@ class PlayerService : MediaSessionService() {
             ACTION_PREV -> {
                 // TODO: this is prepared for queue integration LATER
                 // This checks to see if there is something loaded before playing the previous one.
-                if (player.hasPreviousMediaItem()) player.seekToPrevious()
-                else player.seekTo(0) // Will seek to init uri if there's no previous.
+                if (player.hasPreviousMediaItem()) {
+                    player.seekToPrevious()
+                } else {
+                    player.seekTo(0) // Will seek to init uri if there's no previous.
+                }
             }
 
             // When the action is "stop the application".
@@ -234,29 +240,29 @@ class PlayerService : MediaSessionService() {
     }
 
     // This sends back all the information we can possibly need OUTSIDE of here.
-    private fun sendPlaybackStateBroadcast(){
+    private fun sendPlaybackStateBroadcast() {
         try {
             // We set up an intent with all the extras properly mapped to information.
-            val intent = Intent(ACTION_PLAYBACK_STATE).apply {
-                // We map the isPlaying.
-                putExtra(EXTRA_IS_PLAYING, player.isPlaying)
+            val intent =
+                Intent(ACTION_PLAYBACK_STATE).apply {
+                    // We map the isPlaying.
+                    putExtra(EXTRA_IS_PLAYING, player.isPlaying)
 
-                // We map the position we are at in the media, it's relative to the duration.
-                putExtra(EXTRA_POSITION, player.currentPosition)
+                    // We map the position we are at in the media, it's relative to the duration.
+                    putExtra(EXTRA_POSITION, player.currentPosition)
 
-                // We map the duration.
-                // We check to see if the duration is valid and if it's not we send back 0L
-                // (as in 0 long). We are using longs since it's milliseconds.
-                putExtra(EXTRA_DURATION, if (player.duration > 0) player.duration else 0L)
-            }
+                    // We map the duration.
+                    // We check to see if the duration is valid and if it's not we send back 0L
+                    // (as in 0 long). We are using longs since it's milliseconds.
+                    putExtra(EXTRA_DURATION, if (player.duration > 0) player.duration else 0L)
+                }
 
             // Adds the currently playing media's name.
             val currentItem = player.currentMediaItem
 
             // If the item exists (there could be nothing playing)
             // we go into it and get the meta data from the uri to actually send back the name.
-            currentItem?.localConfiguration?.uri?.let {
-                uri ->
+            currentItem?.localConfiguration?.uri?.let { uri ->
 
                 // Adds an extra to the intent to send back.
                 intent.putExtra(EXTRA_MEDIA_NAME, uri.toString())
@@ -267,8 +273,7 @@ class PlayerService : MediaSessionService() {
             val artworkBytes = extractEmbeddedArtworkBytes()
 
             // If the artwork is not null, meaning it found something, we add it to the intent.
-            if (artworkBytes != null)
-            {
+            if (artworkBytes != null) {
                 intent.putExtra(EXTRA_ARTWORK_BYTES, artworkBytes)
             }
 
@@ -327,8 +332,17 @@ class PlayerService : MediaSessionService() {
         val notificationManager = getSystemService(NotificationManager::class.java)
 
         // This is what build the notification, it's where we info dump.
-        val builder = NotificationCompat.Builder(this, "media_channel").setContentTitle("Lusonus").setContentText("Playing").setSmallIcon(android.R.drawable.ic_media_play).setPriority(
-            NotificationCompat.PRIORITY_LOW).setCategory(NotificationCompat.CATEGORY_TRANSPORT)
+        val builder =
+            NotificationCompat
+                .Builder(
+                    this,
+                    "media_channel",
+                ).setContentTitle("Lusonus")
+                .setContentText("Playing")
+                .setSmallIcon(android.R.drawable.ic_media_play)
+                .setPriority(
+                    NotificationCompat.PRIORITY_LOW,
+                ).setCategory(NotificationCompat.CATEGORY_TRANSPORT)
 
         // This is what starts it in the foreground.
         startForeground(1, builder.build())
@@ -340,15 +354,15 @@ class PlayerService : MediaSessionService() {
         // The options were to OPT Build.VERSION_CODES.O or to validate the version to be
         // greater than that, I did the latter.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-
             // Creates a channel to allow notifications.
-            val channel = NotificationChannel(
-                "media_channel",
-                "Media Playback",
-                NotificationManager.IMPORTANCE_LOW
-            ).apply {
-                description = "Media playback controls."
-            }
+            val channel =
+                NotificationChannel(
+                    "media_channel",
+                    "Media Playback",
+                    NotificationManager.IMPORTANCE_LOW,
+                ).apply {
+                    description = "Media playback controls."
+                }
 
             // This opens the service with the phone to allow notifications.
             val manager = getSystemService(NotificationManager::class.java)

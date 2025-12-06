@@ -6,9 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 
 class PlaylistViewModelFactory(
-    private val playlistName: String
+    private val playlistName: String,
 ) : ViewModelProvider.Factory {
-
     @RequiresApi(Build.VERSION_CODES.O)
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         // This bullsh*t is to make sure T is valid, if we don't do this we get an annoying warning.

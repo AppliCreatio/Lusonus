@@ -9,6 +9,5 @@ data class Playlist(
     override val name: String,
     override val dateAdded: LocalDateTime,
     override var lastPlayed: LocalDateTime?,
-    val media: SnapshotStateList<Media> = mutableStateListOf()
-) :
-    Entries
+    val media: SnapshotStateList<Media> = mutableStateListOf(),
+) : Entries

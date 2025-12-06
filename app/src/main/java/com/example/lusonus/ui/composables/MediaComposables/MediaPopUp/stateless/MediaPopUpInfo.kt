@@ -19,35 +19,41 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.lusonus.R
 
-
 @Composable
-fun MediaPopUpInfo (mediaName: String, mediaArtist: String, mediaImage: Bitmap?) {
-    Row(verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-
-        val painter = mediaImage?.asImageBitmap()?.let {
-            androidx.compose.ui.graphics.painter.BitmapPainter(it)
-        } ?: painterResource(id = R.drawable.lusonus_placeholder)
+fun MediaPopUpInfo(
+    mediaName: String,
+    mediaArtist: String,
+    mediaImage: Bitmap?,
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(10.dp),
+    ) {
+        val painter =
+            mediaImage?.asImageBitmap()?.let {
+                androidx.compose.ui.graphics.painter
+                    .BitmapPainter(it)
+            } ?: painterResource(id = R.drawable.lusonus_placeholder)
 
         Image(
             painter = painter,
             contentDescription = "Artwork representing the $mediaName media.",
             contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .clip(RoundedCornerShape(7.dp))
-                .size(40.dp)
+            modifier =
+                Modifier
+                    .clip(RoundedCornerShape(7.dp))
+                    .size(40.dp),
         )
 
         Column {
             Text(
                 text = mediaName,
-                style = MaterialTheme.typography.labelMedium
+                style = MaterialTheme.typography.labelMedium,
             )
             Text(
                 text = mediaArtist,
-                style = MaterialTheme.typography.labelSmall
+                style = MaterialTheme.typography.labelSmall,
             )
         }
     }
-
 }

@@ -48,12 +48,13 @@ fun FolderScreen(folderName: String) {
 
     // Refreshes when the screen appears and when the app returns to the foreground.
     DisposableEffect(lifecycleOwner) {
-        val observer = LifecycleEventObserver { _, event ->
-            if (event == Lifecycle.Event.ON_RESUME) {
-                // User returned to the app while screen is active.
-                viewModel.refreshMedia(context)
+        val observer =
+            LifecycleEventObserver { _, event ->
+                if (event == Lifecycle.Event.ON_RESUME) {
+                    // User returned to the app while screen is active.
+                    viewModel.refreshMedia(context)
+                }
             }
-        }
 
         lifecycleOwner.lifecycle.addObserver(observer)
 
@@ -68,43 +69,51 @@ fun FolderScreen(folderName: String) {
                 viewModel.refreshMedia(context)
             }
 
-            val sortOptions = listOf(
-                MenuItem(
-                    title = "Alphabetical",
-                    action = { viewModel.sortMedia("alphabetically") }),
-                MenuItem(title = "Date Added", action = { viewModel.sortMedia("date added") }),
-                MenuItem(title = "Last Played", action = { viewModel.sortMedia("last played") })
-            )
+            val sortOptions =
+                listOf(
+                    MenuItem(
+                        title = "Alphabetical",
+                        action = { viewModel.sortMedia("alphabetically") },
+                    ),
+                    MenuItem(title = "Date Added", action = { viewModel.sortMedia("date added") }),
+                    MenuItem(title = "Last Played", action = { viewModel.sortMedia("last played") }),
+                )
 
             SearchAndSort(
-                sortOptions, expanded, { expanded = !it }, searchInfo, {
+                sortOptions,
+                expanded,
+                { expanded = !it },
+                searchInfo,
+                {
                     searchInfo = it
                     viewModel.searchMedia(it.lowercase())
-                }
+                },
             )
 
             Card(
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.secondaryContainer
-                ),
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp)
-                    .offset(y = 40.dp),
+                colors =
+                    CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                    ),
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .padding(16.dp)
+                        .offset(y = 40.dp),
                 shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
-                elevation = CardDefaults.cardElevation(
-                    defaultElevation = 4.dp
-                )
+                elevation =
+                    CardDefaults.cardElevation(
+                        defaultElevation = 4.dp,
+                    ),
             ) {
                 FolderContent(
                     folderFiles = folderFiles,
                     onClickMedia = { mediaName ->
                         navController.navigate(Routes.MediaPlayer.go(mediaName))
-                    }
+                    },
                 )
             }
         },
-
-        screenTitle = folderName
+        screenTitle = folderName,
     )
 }

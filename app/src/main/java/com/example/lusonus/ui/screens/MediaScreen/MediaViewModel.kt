@@ -13,7 +13,9 @@ import java.time.LocalDateTime
 
 // View model for MediaScreen.
 @RequiresApi(Build.VERSION_CODES.O)
-class MediaViewModel(private var mediaName: String) : ViewModel() {
+class MediaViewModel(
+    private var mediaName: String,
+) : ViewModel() {
     // Gets shared singleton instance.
     private val mediaLibrary = SharedMediaLibrary
 
@@ -77,9 +79,8 @@ class MediaViewModel(private var mediaName: String) : ViewModel() {
         isPlaying: Boolean,
         position: Long,
         duration: Long,
-        artworkBytes: ByteArray?
+        artworkBytes: ByteArray?,
     ) {
-
         media!!.lastPlayed = LocalDateTime.now()
 
         // Sets whether it's playing.

@@ -1,5 +1,6 @@
 package com.example.lusonus.ui.screens.MediaLibraryScreen
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import androidx.activity.ComponentActivity
@@ -64,14 +65,21 @@ fun MediaLibraryScreen() {
     // We add them to selectedFile (is below) so we can display them!
     val pickFilesLauncher =
         rememberLauncherForActivityResult(ActivityResultContracts.OpenMultipleDocuments()) { uris: List<Uri>? ->
-            // Reminder: .let lets you use "it" to refer to the thing "." is appended to...
-            // In this case "uris?".
-            uris?.let {
-                // We map over each uris and convert it to a string.
-                // Has to be in strings because you can't use rememberSaveable on uris.
-                viewModel.addFiles(context, it)
+            uris?.let { list ->
+                val contentResolver = context.contentResolver
+
+                list.forEach { uri ->
+                    contentResolver.takePersistableUriPermission(
+                        uri,
+                        Intent.FLAG_GRANT_READ_URI_PERMISSION or
+                                Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                    )
+                }
+
+                viewModel.addFiles(context, list)
             }
         }
+
 
     var expanded by remember { mutableStateOf(false) }
     var searchInfo by rememberSaveable { mutableStateOf("") }
@@ -80,12 +88,13 @@ fun MediaLibraryScreen() {
 
     // Refreshes when the screen appears and when the app returns to the foreground.
     DisposableEffect(lifecycleOwner) {
-        val observer = LifecycleEventObserver { _, event ->
-            if (event == Lifecycle.Event.ON_RESUME) {
-                // User returned to the app while screen is active.
-                viewModel.refreshMedia(context)
+        val observer =
+            LifecycleEventObserver { _, event ->
+                if (event == Lifecycle.Event.ON_RESUME) {
+                    // User returned to the app while screen is active.
+                    viewModel.refreshMedia(context)
+                }
             }
-        }
 
         lifecycleOwner.lifecycle.addObserver(observer)
 
@@ -100,33 +109,36 @@ fun MediaLibraryScreen() {
                 viewModel.refreshMedia(context)
             }
 
-            val sortOptions = listOf<MenuItem>(
-                MenuItem(
-                    title = "Alphabetical",
-                    action = { viewModel.sortMedia("alphabetically") }),
-                MenuItem(title = "Date Added", action = { viewModel.sortMedia("date added") }),
-                MenuItem(title = "Last Played", action = { viewModel.sortMedia("last played") })
-            )
+            val sortOptions =
+                listOf<MenuItem>(
+                    MenuItem(
+                        title = "Alphabetical",
+                        action = { viewModel.sortMedia("alphabetically") },
+                    ),
+                    MenuItem(title = "Date Added", action = { viewModel.sortMedia("date added") }),
+                    MenuItem(title = "Last Played", action = { viewModel.sortMedia("last played") }),
+                )
 
             SearchAndSort(sortOptions, expanded, { expanded = !it }, searchInfo, {
                 searchInfo = it
                 viewModel.searchMedia(searchInfo.lowercase())
             })
 
-
-
             Card(
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.secondaryContainer
-                ),
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 16.dp)
-                    .offset(y = 40.dp),
+                colors =
+                    CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                    ),
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = 16.dp)
+                        .offset(y = 40.dp),
                 shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
-                elevation = CardDefaults.cardElevation(
-                    defaultElevation = 4.dp
-                )
+                elevation =
+                    CardDefaults.cardElevation(
+                        defaultElevation = 4.dp,
+                    ),
             ) {
                 MediaLibraryContent(
                     files = files,
@@ -135,13 +147,11 @@ fun MediaLibraryScreen() {
                     },
                     onClickMedia = { mediaName ->
                         navController.navigate(Routes.MediaPlayer.go(mediaName))
-                    }
+                    },
                 )
             }
-
         },
         screenTitle = "Lusonus",
-
         topBar = {
             Column {
                 SharedTopBar("Lusonus", {
@@ -151,6 +161,6 @@ fun MediaLibraryScreen() {
                 })
                 SharedNavTopBar()
             }
-        }
+        },
     )
 }

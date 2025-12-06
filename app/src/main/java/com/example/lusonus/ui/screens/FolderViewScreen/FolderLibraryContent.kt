@@ -17,24 +17,24 @@ import com.example.lusonus.ui.utils.getName
 fun FolderLibraryContent(
     folders: List<Folder>,
     onDeleteFolder: (String) -> Unit,
-    onClickFolder: (String) -> Unit
+    onClickFolder: (String) -> Unit,
 ) {
     // Gets the local context.
     val context = LocalContext.current
 
     LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(8.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    )
-    {
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .padding(8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
         items(folders) { folder ->
             FolderItem(
                 folderName = folder.name,
                 folderPath = context.getName(folder.uri),
                 onDelete = onDeleteFolder,
-                onClick = onClickFolder
+                onClick = onClickFolder,
             )
         }
     }

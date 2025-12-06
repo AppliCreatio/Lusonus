@@ -6,7 +6,10 @@ import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.snapshots.SnapshotStateList
 
-data class ExternalStorage(val name: String, var isConnected: Boolean)
+data class ExternalStorage(
+    val name: String,
+    var isConnected: Boolean,
+)
 
 val ExternalStorageListSaver: Saver<SnapshotStateList<ExternalStorage>, List<Pair<String, Boolean>>> =
     Saver(
@@ -19,12 +22,12 @@ val ExternalStorageListSaver: Saver<SnapshotStateList<ExternalStorage>, List<Pai
                 newList.add(ExternalStorage(name, isConnected))
             }
             newList
-        }
+        },
     )
 
 @Composable
-fun rememberExternalStorageList(): SnapshotStateList<ExternalStorage> {
-    return rememberSaveable(saver = ExternalStorageListSaver) {
+fun rememberExternalStorageList(): SnapshotStateList<ExternalStorage> =
+    rememberSaveable(saver = ExternalStorageListSaver) {
         mutableStateListOf(
             ExternalStorage("test", false),
             ExternalStorage("test1", false),
@@ -32,4 +35,3 @@ fun rememberExternalStorageList(): SnapshotStateList<ExternalStorage> {
             ExternalStorage("test3", false),
         )
     }
-}

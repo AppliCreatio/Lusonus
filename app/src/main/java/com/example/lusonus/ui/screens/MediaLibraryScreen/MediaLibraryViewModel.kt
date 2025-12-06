@@ -11,7 +11,6 @@ import com.example.lusonus.ui.utils.getFileName
 import kotlinx.coroutines.flow.StateFlow
 
 // Media view model to deal with
-@RequiresApi(Build.VERSION_CODES.O)
 class MediaLibraryViewModel : ViewModel() {
     // Gets shared singleton instance.
     private val mediaLibrary = SharedMediaLibrary
@@ -21,7 +20,10 @@ class MediaLibraryViewModel : ViewModel() {
 
     // Add files to files.
 
-    fun addFiles(context: Context, uris: List<Uri>) {
+    fun addFiles(
+        context: Context,
+        uris: List<Uri>,
+    ) {
         // THE RABBIT HOLES! Associate by is really really really cool.
         val map = uris.associateBy { uri -> context.getFileName(uri) }
 

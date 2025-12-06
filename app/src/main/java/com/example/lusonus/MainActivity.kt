@@ -19,7 +19,6 @@ import com.example.lusonus.navigation.LocalStorageList
 import com.example.lusonus.navigation.Router
 import com.example.lusonus.ui.theme.AppTheme
 
-
 class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,7 +38,6 @@ class MainActivity : ComponentActivity() {
                             Router(navController)
                         }
                     }
-
                 }
             }
         }

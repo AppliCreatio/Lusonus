@@ -45,31 +45,32 @@ fun DialogToEditProfile(
     setProfile: (Profile) -> Unit,
     setPicture: (Uri?) -> Unit,
 ) {
-
     var newName by rememberSaveable { mutableStateOf(name) }
 
-    val singlePhotoPickerLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.PickVisualMedia(),
-        onResult = { uri -> setPicture(uri) }
-    )
+    val singlePhotoPickerLauncher =
+        rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.PickVisualMedia(),
+            onResult = { uri -> setPicture(uri) },
+        )
 
     Dialog(onDismissRequest = { onDismissRequest() }) {
         // Draw a rectangle shape with rounded corners inside the dialog
         Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(260.dp)
-                .padding(horizontal = 16.dp),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .height(260.dp)
+                    .padding(horizontal = 16.dp),
             shape = RoundedCornerShape(16.dp),
         ) {
             Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 20.dp),
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = 20.dp),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-
                 Row(horizontalArrangement = Arrangement.spacedBy(5.dp)) {
                     Icon(Icons.TwoTone.AccountCircle, "Edit Profile")
                     Text("Edit Profile")
@@ -79,45 +80,50 @@ fun DialogToEditProfile(
                     value = newName,
                     onValueChange = { newName = it },
                     label = { Text("Name") },
-                    colors = TextFieldDefaults.colors(
-                        unfocusedContainerColor = MaterialTheme.colorScheme.primaryContainer,
-                    ),
-                    singleLine = true
+                    colors =
+                        TextFieldDefaults.colors(
+                            unfocusedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                        ),
+                    singleLine = true,
                 )
 
                 TextButton(
                     onClick = {
                         singlePhotoPickerLauncher.launch(
-                            PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                            PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly),
                         )
                     },
                     modifier = Modifier.padding(8.dp),
-                    colors = ButtonDefaults.textButtonColors(
-                        contentColor = MaterialTheme.colorScheme.error
-                    )
+                    colors =
+                        ButtonDefaults.textButtonColors(
+                            contentColor = MaterialTheme.colorScheme.error,
+                        ),
                 ) {
                     Text("Change Picture")
                 }
 
                 Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
+                    modifier =
+                        Modifier
+                            .fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center,
                 ) {
                     TextButton(
                         onClick = {
                             onDismissRequest()
                         },
-                        colors = ButtonDefaults.textButtonColors(
-                            contentColor = MaterialTheme.colorScheme.error
-                        )
+                        colors =
+                            ButtonDefaults.textButtonColors(
+                                contentColor = MaterialTheme.colorScheme.error,
+                            ),
                     ) {
                         Text("Dismiss")
                     }
                     Button(
                         onClick = {
-                            if (newName.isNotBlank())
+                            if (newName.isNotBlank()) {
                                 setProfile(Profile(name = newName.trim()))
+                            }
 
                             onConfirmation()
                         },

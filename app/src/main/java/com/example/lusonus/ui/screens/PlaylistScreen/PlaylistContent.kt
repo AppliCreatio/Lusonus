@@ -30,54 +30,60 @@ import com.example.lusonus.data.dataclasses.Media
 fun PlaylistContent(
     playlistFiles: List<Media>,
     removeFromPlaylist: (Media) -> Unit,
-    onClickMedia: (String) -> Unit
+    onClickMedia: (String) -> Unit,
 ) {
     LazyColumn(modifier = Modifier.padding(16.dp)) {
         items(items = playlistFiles) { media ->
             var deleteMode by remember { mutableStateOf(false) }
 
             val containerColor =
-                if (deleteMode) MaterialTheme.colorScheme.error
-                else MaterialTheme.colorScheme.surfaceVariant
+                if (deleteMode) {
+                    MaterialTheme.colorScheme.error
+                } else {
+                    MaterialTheme.colorScheme.surfaceVariant
+                }
 
             Card(
-                colors = CardDefaults.cardColors(
-                    containerColor = containerColor
-                ),
+                colors =
+                    CardDefaults.cardColors(
+                        containerColor = containerColor,
+                    ),
                 elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
                 shape = MaterialTheme.shapes.medium,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 16.dp)
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 16.dp),
             ) {
                 Box(
-                    modifier = Modifier
-                        .clickable { onClickMedia(media.name) }
-                        .combinedClickable(
-                            onClick = {
-                                if (deleteMode) {
-                                    removeFromPlaylist(media)
-                                    deleteMode = !deleteMode
-                                } else {
-                                    onClickMedia(media.name)
-                                }
-                            },
-                            onLongClick = { deleteMode = !deleteMode }
-                        )
-                        .padding(8.dp)
+                    modifier =
+                        Modifier
+                            .clickable { onClickMedia(media.name) }
+                            .combinedClickable(
+                                onClick = {
+                                    if (deleteMode) {
+                                        removeFromPlaylist(media)
+                                        deleteMode = !deleteMode
+                                    } else {
+                                        onClickMedia(media.name)
+                                    }
+                                },
+                                onLongClick = { deleteMode = !deleteMode },
+                            ).padding(8.dp),
                 ) {
                     if (deleteMode) {
                         Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(64.dp),
-                            contentAlignment = Alignment.Center
+                            modifier =
+                                Modifier
+                                    .fillMaxWidth()
+                                    .height(64.dp),
+                            contentAlignment = Alignment.Center,
                         ) {
                             Icon(
                                 imageVector = Icons.Default.Delete,
                                 contentDescription = "Delete",
                                 tint = MaterialTheme.colorScheme.onError,
-                                modifier = Modifier.size(48.dp)
+                                modifier = Modifier.size(48.dp),
                             )
                         }
                     } else {

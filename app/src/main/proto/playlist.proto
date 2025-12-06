@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option java_package = "com.example.lusonus.data.dataclasses.proto";
+option java_multiple_files = true;
+
+import "media.proto";
+
+message PlaylistProto {
+    string name = 1;
+    string dateAdded = 2;
+    string lastPlayed = 3;
+    repeated MediaProto mediaItems = 4;
+}
+
+message PlaylistLibraryProto {
+    repeated PlaylistProto playlists = 1;
+}

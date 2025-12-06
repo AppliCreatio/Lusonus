@@ -54,13 +54,13 @@ import com.example.lusonus.ui.composables.RegisterScreenComposables.RegisterBann
 import com.example.lusonus.ui.composables.RegisterScreenComposables.RegisterButtons
 import com.example.lusonus.ui.composables.RegisterScreenComposables.RegisterInputField
 import com.example.lusonus.ui.composables.RegisterScreenComposables.RegisterSnackbar
+import com.example.lusonus.ui.screens.RegisterScreen.AuthViewModelFactory
 import com.example.lusonus.ui.utils.Dialogs.BadRegisterDialog
 import com.example.lusonus.ui.utils.verifyCredentials
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun RegisterScreen(viewModel: RegisterViewModel = viewModel(factory = AuthViewModelFactory())) {
-
     // This is used for the form
     val navController = LocalNavController.current
     var canNavigateBack = navController.previousBackStackEntry != null
@@ -151,6 +151,7 @@ fun RegisterScreen(viewModel: RegisterViewModel = viewModel(factory = AuthViewMo
                         .height(500.dp)
                         .padding(bottom = 16.dp)
                 ) {
+                    Text("Register", fontSize = 20.sp)
 
                     Column(
                         modifier = Modifier
@@ -205,9 +206,8 @@ fun RegisterScreen(viewModel: RegisterViewModel = viewModel(factory = AuthViewMo
                         navController.popBackStack()
                     }
                 },
-                showDropDown = false
+                showDropDown = false,
             )
-        }
+        },
     )
 }
-
