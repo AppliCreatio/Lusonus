@@ -1,5 +1,3 @@
-import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
-
 plugins {
     id("com.android.application") version "8.13.1" apply false
     id("org.jetbrains.kotlin.android") version "2.2.21" apply false
@@ -10,7 +8,7 @@ plugins {
     id("com.google.protobuf") version "0.9.5" apply false
 }
 
-//ktlint {
+// ktlint {
 //    verbose.set(true)
 //    outputToConsole.set(true)
 //    coloredOutput.set(true)
@@ -22,4 +20,4 @@ plugins {
 //    filter {
 //        exclude("**/style-violations.kt")
 //    }
-//}
+// }
