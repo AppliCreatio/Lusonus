@@ -4,12 +4,11 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.lusonus.data.model.Settings
+import com.example.lusonus.data.dataclasses.Settings
 
 class SettingsViewModelFactory(
-    var settings : Settings
+    var settings: Settings,
 ) : ViewModelProvider.Factory {
-
     @RequiresApi(Build.VERSION_CODES.O)
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(SettingsViewModel::class.java)) {

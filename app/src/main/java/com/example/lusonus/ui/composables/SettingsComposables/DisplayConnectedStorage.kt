@@ -33,10 +33,11 @@ import com.example.lusonus.ui.utils.Dialogs.ConnectedStorageDialog
  as a state that can be remembered through recomposition. When something is saved, it creates a new object that mimics the data class
  and when we want to use it, it creates a new instance of said data class
 */
-val ConnectedStorageSaver = Saver<ExternalStorage, List<Any>>(
-    save = { listOf(it.name, it.isConnected) },
-    restore = { ExternalStorage(it[0] as String, it[1] as Boolean) }
-)
+val ConnectedStorageSaver =
+    Saver<ExternalStorage, List<Any>>(
+        save = { listOf(it.name, it.isConnected) },
+        restore = { ExternalStorage(it[0] as String, it[1] as Boolean) },
+    )
 
 /**
  * A composable which is a container that displays the current storage that is connected to the application/profile
@@ -45,7 +46,6 @@ val ConnectedStorageSaver = Saver<ExternalStorage, List<Any>>(
  */
 @Composable
 fun ConnectedStorage(modifier: Modifier) {
-
     // used online recourses as well as AI to understand how to save a data class as a state
     // mostly gonna be used within the future when I add the option to change storages
     var connectedStorage by rememberSaveable(stateSaver = ConnectedStorageSaver) {
@@ -59,42 +59,44 @@ fun ConnectedStorage(modifier: Modifier) {
 
     Column(
         modifier = modifier.padding(horizontal = 10.dp),
-        verticalArrangement = Arrangement.SpaceAround
+        verticalArrangement = Arrangement.SpaceAround,
     ) {
         Text(
-            "Connected Storage", fontSize = 24.sp,
-            modifier = Modifier
-                .drawBehind { // draws the line at the bottom of the text composable
+            "Connected Storage",
+            fontSize = 24.sp,
+            modifier =
+                Modifier
+                    .drawBehind {
+                        // draws the line at the bottom of the text composable
 
-                    val strokeWidth = 0.5.dp.toPx() * density
-                    val y = size.height - strokeWidth / 2
-                    drawLine(
-                        color = Color.White,
-                        Offset(0f, y),
-                        Offset(size.width, y),
-                        strokeWidth
-                    )
-                }
-                .fillMaxWidth()
-                .padding(3.dp)
+                        val strokeWidth = 0.5.dp.toPx() * density
+                        val y = size.height - strokeWidth / 2
+                        drawLine(
+                            color = Color.White,
+                            Offset(0f, y),
+                            Offset(size.width, y),
+                            strokeWidth,
+                        )
+                    }.fillMaxWidth()
+                    .padding(3.dp),
         )
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable(onClick = { chooseStorageDialog = true }),
-            horizontalArrangement = Arrangement.SpaceBetween
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .clickable(onClick = { chooseStorageDialog = true }),
+            horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             Row(horizontalArrangement = Arrangement.spacedBy(5.dp)) {
                 Icon(
                     Icons.AutoMirrored.TwoTone.List,
                     "The storage icon",
-                    tint = MaterialTheme.colorScheme.primary
+                    tint = MaterialTheme.colorScheme.primary,
                 )
                 Text(connectedStorage.name)
             }
 
             Row(horizontalArrangement = Arrangement.spacedBy(5.dp)) {
-
                 // if the storage is disconnected after selecting, make isConnected = true
                 if (!connectedStorage.isConnected) {
                     connectedStorage.isConnected = true
@@ -104,11 +106,10 @@ fun ConnectedStorage(modifier: Modifier) {
                 Icon(Icons.Rounded.CheckCircle, "Storage is connected", tint = Color.Green)
             }
         }
-
     }
 
     // connected storages dialog
-    if (chooseStorageDialog)
+    if (chooseStorageDialog) {
         ConnectedStorageDialog(
             onRequest = { chooseStorageDialog = false },
             title = "Choose a storage",
@@ -117,7 +118,7 @@ fun ConnectedStorage(modifier: Modifier) {
                 connectedStorages.add(connectedStorage)
                 connectedStorage = it
                 connectedStorage.isConnected = true
-            })
-
+            },
+        )
+    }
 }
-

@@ -6,9 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 
 class FolderViewModelFactory(
-    private val folderName: String
+    private val folderName: String,
 ) : ViewModelProvider.Factory {
-
     @RequiresApi(Build.VERSION_CODES.O)
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(FolderViewModel::class.java)) {

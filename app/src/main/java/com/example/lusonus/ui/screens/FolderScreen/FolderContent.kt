@@ -18,30 +18,32 @@ import com.example.lusonus.data.dataclasses.Media
 @Composable
 fun FolderContent(
     folderFiles: List<Media>,
-    onClickMedia: (String) -> Unit
+    onClickMedia: (String) -> Unit,
 ) {
     LazyColumn(modifier = Modifier.padding(8.dp)) {
         items(folderFiles) { media ->
             Card(
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.surfaceVariant
-                ),
+                colors =
+                    CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.surfaceVariant,
+                    ),
                 elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
                 shape = MaterialTheme.shapes.medium,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp)
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp),
             ) {
                 Box(
-                    modifier = Modifier
-                        .combinedClickable(
-                            onClick = { onClickMedia(media.name) },
-                        )
-                        .padding(12.dp)
+                    modifier =
+                        Modifier
+                            .combinedClickable(
+                                onClick = { onClickMedia(media.name) },
+                            ).padding(12.dp),
                 ) {
                     FileRow(
                         uri = media.uri,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),
                     )
                 }
             }

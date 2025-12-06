@@ -16,20 +16,21 @@ import com.example.lusonus.ui.composables.MediaLibraryComposables.MediaLibraryIt
 fun MediaLibraryContent(
     files: List<Media>,
     onDeleteMedia: (Uri) -> Unit,
-    onClickMedia: (String) -> Unit
+    onClickMedia: (String) -> Unit,
 ) {
     // Lazy column in-case can have a lot of files added
     LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         items(items = files) { media ->
             MediaLibraryItem(
                 media = media,
                 onDelete = onDeleteMedia,
-                onClick = onClickMedia
+                onClick = onClickMedia,
             )
         }
     }

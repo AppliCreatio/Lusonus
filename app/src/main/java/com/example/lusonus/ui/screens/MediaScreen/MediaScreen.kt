@@ -6,10 +6,13 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.lusonus.services.ACTION_NEXT
@@ -44,27 +47,31 @@ fun MediaScreen(mediaName: String) {
         // We add an intent filter for the playback state.
         val filter = IntentFilter(ACTION_PLAYBACK_STATE)
 
-        val receiver = object : BroadcastReceiver() {
-            override fun onReceive(context: Context?, intent: Intent?) {
-                // Quits if the intent is invalid.
-                if (intent == null) return
+        val receiver =
+            object : BroadcastReceiver() {
+                override fun onReceive(
+                    context: Context?,
+                    intent: Intent?,
+                ) {
+                    // Quits if the intent is invalid.
+                    if (intent == null) return
 
-                // Gets info from the intents.
-                val isPlaying = intent.getBooleanExtra(EXTRA_IS_PLAYING, false)
-                val position = intent.getLongExtra(EXTRA_POSITION, 0L)
-                val duration = intent.getLongExtra(EXTRA_DURATION, 0L)
-                val art = intent.getByteArrayExtra(EXTRA_ARTWORK_BYTES)
+                    // Gets info from the intents.
+                    val isPlaying = intent.getBooleanExtra(EXTRA_IS_PLAYING, false)
+                    val position = intent.getLongExtra(EXTRA_POSITION, 0L)
+                    val duration = intent.getLongExtra(EXTRA_DURATION, 0L)
+                    val art = intent.getByteArrayExtra(EXTRA_ARTWORK_BYTES)
 
-                viewModel.updatePlaybackState(isPlaying, position, duration, art)
+                    viewModel.updatePlaybackState(isPlaying, position, duration, art)
+                }
             }
-        }
 
         // Adds the receiver and the filter to the context.
         ContextCompat.registerReceiver(
             context,
             receiver,
             filter,
-            ContextCompat.RECEIVER_NOT_EXPORTED
+            ContextCompat.RECEIVER_NOT_EXPORTED,
         )
 
         // We want to get rid of the register from the context when it's done so it doesn't get
@@ -79,16 +86,19 @@ fun MediaScreen(mediaName: String) {
         // The PlayerService::class.java is the companion object for PlayerService.
 
         // Sets up the proper intent.
-        val intent = Intent(context, PlayerService::class.java).apply {
-            action = if(viewModel.isPlaying || !viewModel.hasStarted) ACTION_PLAY_URI else ACTION_PAUSE
-            putExtra(EXTRA_URI, viewModel.media?.uri.toString())
-        }
+        val intent =
+            Intent(context, PlayerService::class.java).apply {
+                action = if (viewModel.isPlaying || !viewModel.hasStarted) ACTION_PLAY_URI else ACTION_PAUSE
+                putExtra(EXTRA_URI, viewModel.media?.uri.toString())
+            }
 
         viewModel.toggleStartedPlaying()
 
         // Start the foreground service with this intent.
         context.startForegroundService(intent)
     }
+
+    val cleanName = remember(mediaName) { mediaName.substringBeforeLast(".") }
 
     MainLayout(
         content = {
@@ -100,18 +110,20 @@ fun MediaScreen(mediaName: String) {
                 artworkBitmap = viewModel.artworkBitmap,
                 onPause = {
                     // Sets up the proper intent.
-                    val intent = Intent(context, PlayerService::class.java).apply {
-                        action = ACTION_PAUSE
-                    }
+                    val intent =
+                        Intent(context, PlayerService::class.java).apply {
+                            action = ACTION_PAUSE
+                        }
 
                     // Start the foreground service with this intent.
                     context.startForegroundService(intent)
                 },
                 onResume = {
                     // Sets up the proper intent.
-                    val intent = Intent(context, PlayerService::class.java).apply {
-                        action = ACTION_RESUME
-                    }
+                    val intent =
+                        Intent(context, PlayerService::class.java).apply {
+                            action = ACTION_RESUME
+                        }
 
                     // Start the foreground service with this intent.
                     context.startForegroundService(intent)
@@ -119,35 +131,38 @@ fun MediaScreen(mediaName: String) {
                 onSeekTo = { positionMilliseconds ->
 
                     // Sets up the proper intent.
-                    val intent = Intent(context, PlayerService::class.java).apply {
-                        action = ACTION_SEEK_TO
-                        putExtra(EXTRA_SEEK_POSITION, positionMilliseconds)
-                    }
+                    val intent =
+                        Intent(context, PlayerService::class.java).apply {
+                            action = ACTION_SEEK_TO
+                            putExtra(EXTRA_SEEK_POSITION, positionMilliseconds)
+                        }
 
                     // Start the foreground service with this intent.
                     context.startForegroundService(intent)
                 },
                 onNext = {
                     // Sets up the proper intent.
-                    val intent = Intent(context, PlayerService::class.java).apply {
-                        action = ACTION_NEXT
-                    }
+                    val intent =
+                        Intent(context, PlayerService::class.java).apply {
+                            action = ACTION_NEXT
+                        }
 
                     // Start the foreground service with this intent.
                     context.startForegroundService(intent)
                 },
                 onPrevious = {
                     // Sets up the proper intent.
-                    val intent = Intent(context, PlayerService::class.java).apply {
-                        action = ACTION_PREV
-                    }
+                    val intent =
+                        Intent(context, PlayerService::class.java).apply {
+                            action = ACTION_PREV
+                        }
 
                     // Start the foreground service with this intent.
                     context.startForegroundService(intent)
                 },
             )
         },
-        screenTitle = mediaName,
-        bottomBar = {  }
+        screenTitle = cleanName,
+        bottomBar = { },
     )
 }

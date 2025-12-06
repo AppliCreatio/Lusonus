@@ -13,18 +13,22 @@ import androidx.compose.ui.unit.sp
  * A FAQ container that displays info about a FAQ.
  */
 @Composable
-fun FAQContent(title: String, content: String, modifier: Modifier) {
+fun FAQContent(
+    title: String,
+    content: String,
+    modifier: Modifier,
+) {
     Column(modifier = modifier) {
         Text(
             title,
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(start = 10.dp, end = 10.dp, top = 10.dp)
+            modifier = Modifier.padding(start = 10.dp, end = 10.dp, top = 10.dp),
         )
         Text(
             content,
             fontSize = 14.sp,
-            modifier = Modifier.padding(start = 10.dp, end = 10.dp, bottom = 10.dp)
+            modifier = Modifier.padding(start = 10.dp, end = 10.dp, bottom = 10.dp),
         )
     }
 }

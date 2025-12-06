@@ -7,10 +7,10 @@ import androidx.compose.ui.graphics.Color
 fun IconTint(
     currentRoute: String?,
     route: String,
-    colorScheme: ColorScheme
-): Color {
-    return if (currentRoute == route)
+    colorScheme: ColorScheme,
+): Color =
+    if (currentRoute == route) {
         colorScheme.primary
-    else
+    } else {
         colorScheme.onSurfaceVariant
-}
+    }

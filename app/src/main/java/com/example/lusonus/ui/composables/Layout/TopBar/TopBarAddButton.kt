@@ -11,7 +11,7 @@ fun TopBarAddButton(onClick: () -> Unit) {
     IconButton(onClick = onClick) {
         Icon(
             imageVector = Icons.Filled.Add,
-            contentDescription = "Add"
+            contentDescription = "Add",
         )
     }
 }

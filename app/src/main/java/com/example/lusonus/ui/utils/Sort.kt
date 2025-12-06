@@ -5,16 +5,18 @@ import androidx.annotation.RequiresApi
 import com.example.lusonus.data.interfaces.Entries
 import java.time.format.DateTimeFormatter
 
-//fun <T : Entries> sortPlaylists(list: SnapshotStateMap<String, SnapshotStateList<String>>, sortType: String): Map<String, SnapshotStateList<String>>{
+// fun <T : Entries> sortPlaylists(list: SnapshotStateMap<String, SnapshotStateList<String>>, sortType: String): Map<String, SnapshotStateList<String>>{
 //    return when(sortType) {
 //            "alphabetically" -> list.toSortedMap()
 //            else -> list
 //    }
-//}
+// }
 
 @RequiresApi(Build.VERSION_CODES.O)
-fun <T : Entries> sort(mediaList: List<T>, sortType: String): List<T> {
-
+fun <T : Entries> sort(
+    mediaList: List<T>,
+    sortType: String,
+): List<T> {
     DateTimeFormatter.ofPattern("dd-MM-yyyy")
 
     return when (sortType) {

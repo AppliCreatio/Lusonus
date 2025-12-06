@@ -28,33 +28,38 @@ fun MediaLibraryItem(
     var deleteMode by remember { mutableStateOf(false) }
 
     val containerColor =
-        if (deleteMode) MaterialTheme.colorScheme.error
-        else MaterialTheme.colorScheme.surfaceVariant
+        if (deleteMode) {
+            MaterialTheme.colorScheme.error
+        } else {
+            MaterialTheme.colorScheme.surfaceVariant
+        }
 
     Card(
-        colors = CardDefaults.cardColors(
-            containerColor = containerColor
-        ),
+        colors =
+            CardDefaults.cardColors(
+                containerColor = containerColor,
+            ),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         shape = MaterialTheme.shapes.medium,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(bottom = 16.dp)
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp),
     ) {
         Box(
-            modifier = Modifier
-                .combinedClickable(
-                    onClick = {
-                        if (deleteMode) {
-                            onDelete(media.uri)
-                            deleteMode = !deleteMode
-                        } else {
-                            onClick(media.name)
-                        }
-                    },
-                    onLongClick = { deleteMode = !deleteMode }
-                )
-                .padding(8.dp)
+            modifier =
+                Modifier
+                    .combinedClickable(
+                        onClick = {
+                            if (deleteMode) {
+                                onDelete(media.uri)
+                                deleteMode = !deleteMode
+                            } else {
+                                onClick(media.name)
+                            }
+                        },
+                        onLongClick = { deleteMode = !deleteMode },
+                    ).padding(8.dp),
         ) {
             if (deleteMode) {
                 DeleteRow()

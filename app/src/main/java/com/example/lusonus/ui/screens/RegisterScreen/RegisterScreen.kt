@@ -1,23 +1,14 @@
 package com.example.lusonus.ui.screens.RegisterScreen
 
-import android.net.Uri
 import android.os.Build
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.PickVisualMediaRequest
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.sharp.AlternateEmail
 import androidx.compose.material.icons.sharp.Key
@@ -41,28 +32,20 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.lusonus.R
 import com.example.lusonus.data.auth.ResultAuth
 import com.example.lusonus.navigation.LocalNavController
-import com.example.lusonus.navigation.Routes
 import com.example.lusonus.ui.composables.Layout.MainLayout
 import com.example.lusonus.ui.composables.Layout.TopBar.SharedTopBarStateless
 import com.example.lusonus.ui.screens.RegisterScreen.AuthViewModelFactory
-import com.example.lusonus.ui.screens.ProfileScreen.ProfileScreenViewModel
 import com.example.lusonus.ui.utils.Dialogs.BadRegisterDialog
 import com.example.lusonus.ui.utils.verifyCredentials
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun RegisterScreen(viewModel: RegisterViewModel = viewModel(factory = AuthViewModelFactory())) {
-
     // This is used for the form
     val navController = LocalNavController.current
     var canNavigateBack = navController.previousBackStackEntry != null
@@ -122,118 +105,123 @@ fun RegisterScreen(viewModel: RegisterViewModel = viewModel(factory = AuthViewMo
         }
     }
 
-    MainLayout({
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = 20.dp),
-            verticalArrangement = Arrangement.SpaceAround,
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-
-            Card(colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.secondary
-            ),
-                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-                shape = MaterialTheme.shapes.medium,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 16.dp)) {
-                Text("Register", fontSize = 20.sp)
-
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(15.dp),
+    MainLayout(
+        {
+            Column(
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = 20.dp),
+                verticalArrangement = Arrangement.SpaceAround,
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                Card(
+                    colors =
+                        CardDefaults.cardColors(
+                            containerColor = MaterialTheme.colorScheme.secondary,
+                        ),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+                    shape = MaterialTheme.shapes.medium,
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 16.dp),
                 ) {
+                    Text("Register", fontSize = 20.sp)
 
-                    Row(
-                        horizontalArrangement = Arrangement.spacedBy(10.dp),
-                        verticalAlignment = Alignment.CenterVertically
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(15.dp),
                     ) {
-                        Icon(
-                            imageVector = Icons.Sharp.AlternateEmail,
-                            contentDescription = "Your email",
-                            tint = MaterialTheme.colorScheme.primary
-                        )
-                        OutlinedTextField(
-                            value = newEmail,
-                            onValueChange = { newEmail = it },
-                            label = { Text("Email") },
-                            colors = TextFieldDefaults.colors(
-                                focusedContainerColor = MaterialTheme.colorScheme.background,
-                                unfocusedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
-                            ),
-                            singleLine = true
-                        )
-                    }
-
-
-                    Row(
-                        horizontalArrangement = Arrangement.spacedBy(10.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(
-                            imageVector = Icons.Sharp.Key,
-                            contentDescription = "Your email",
-                            tint = MaterialTheme.colorScheme.primary
-                        )
-
-                        OutlinedTextField(
-                            value = newPassword,
-                            onValueChange = { newPassword = it },
-                            label = { Text("Password") },
-                            colors = TextFieldDefaults.colors(
-                                focusedContainerColor = MaterialTheme.colorScheme.background,
-                                unfocusedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
-                            ),
-                            singleLine = true
-                        )
-                    }
-
-                    Row {
-                        Button(onClick = {
-                            errorMessage = ""
-                            if (verifyCredentials(
-                                    email = newEmail,
-                                    password = newPassword,
-                                    modErrorMessage = { errorMessage += it })
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(10.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            Icon(
+                                imageVector = Icons.Sharp.AlternateEmail,
+                                contentDescription = "Your email",
+                                tint = MaterialTheme.colorScheme.primary,
                             )
-                                viewModel.signIn(newEmail, newPassword)
-                            else
-                                badRegisterDialog = true
-                        })
-                        {
-                            Text("Sign In")
+                            OutlinedTextField(
+                                value = newEmail,
+                                onValueChange = { newEmail = it },
+                                label = { Text("Email") },
+                                colors =
+                                    TextFieldDefaults.colors(
+                                        focusedContainerColor = MaterialTheme.colorScheme.background,
+                                        unfocusedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+                                    ),
+                                singleLine = true,
+                            )
                         }
 
-                        Button(onClick = {
-                            errorMessage = ""
-                            if (verifyCredentials(
-                                    email = newEmail,
-                                    password = newPassword,
-                                    modErrorMessage = { errorMessage += it })
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(10.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            Icon(
+                                imageVector = Icons.Sharp.Key,
+                                contentDescription = "Your email",
+                                tint = MaterialTheme.colorScheme.primary,
                             )
-                                viewModel.signUp(newEmail, newPassword)
-                            else
-                                badRegisterDialog = true
-                        })
-                        {
-                            Text("Sign Up")
+
+                            OutlinedTextField(
+                                value = newPassword,
+                                onValueChange = { newPassword = it },
+                                label = { Text("Password") },
+                                colors =
+                                    TextFieldDefaults.colors(
+                                        focusedContainerColor = MaterialTheme.colorScheme.background,
+                                        unfocusedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+                                    ),
+                                singleLine = true,
+                            )
+                        }
+
+                        Row {
+                            Button(onClick = {
+                                errorMessage = ""
+                                if (verifyCredentials(
+                                        email = newEmail,
+                                        password = newPassword,
+                                        modErrorMessage = { errorMessage += it },
+                                    )
+                                ) {
+                                    viewModel.signIn(newEmail, newPassword)
+                                } else {
+                                    badRegisterDialog = true
+                                }
+                            }) {
+                                Text("Sign In")
+                            }
+
+                            Button(onClick = {
+                                errorMessage = ""
+                                if (verifyCredentials(
+                                        email = newEmail,
+                                        password = newPassword,
+                                        modErrorMessage = { errorMessage += it },
+                                    )
+                                ) {
+                                    viewModel.signUp(newEmail, newPassword)
+                                } else {
+                                    badRegisterDialog = true
+                                }
+                            }) {
+                                Text("Sign Up")
+                            }
+                        }
+
+                        if (badRegisterDialog) {
+                            BadRegisterDialog(
+                                onDismissRequest = { badRegisterDialog = false },
+                                errorMessage,
+                            )
                         }
                     }
-
-
-                    if (badRegisterDialog)
-                        BadRegisterDialog(
-                            onDismissRequest = { badRegisterDialog = false },
-                            errorMessage
-                        )
-
-
                 }
             }
-        }
-    },
+        },
         screenTitle = "Register",
         snackbarHost = { SnackbarHost(snackbarHostState) },
         topBar = {
@@ -242,14 +230,13 @@ fun RegisterScreen(viewModel: RegisterViewModel = viewModel(factory = AuthViewMo
                 pageName = "Register",
                 actionButton = {},
                 onNavigateBack = {
-                    if (canNavigateBack){
+                    if (canNavigateBack) {
                         navController.popBackStack()
                         navController.popBackStack()
                     }
                 },
-                showDropDown = false
+                showDropDown = false,
             )
-        }
+        },
     )
 }
-

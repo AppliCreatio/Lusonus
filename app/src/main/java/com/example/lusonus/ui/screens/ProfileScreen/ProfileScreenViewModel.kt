@@ -1,6 +1,5 @@
 package com.example.lusonus.ui.screens.ProfileScreen
 
-
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -18,12 +17,9 @@ import kotlinx.coroutines.launch
 
 class ProfileScreenViewModel(
     private val authRepository: AuthRepository,
-    private val profileRepository: ProfileRepositoryInterface
+    private val profileRepository: ProfileRepositoryInterface,
 ) : ViewModel() {
-
-    fun currentUser(): StateFlow<User?> {
-        return authRepository.currentUser()
-    }
+    fun currentUser(): StateFlow<User?> = authRepository.currentUser()
 
     private val _currentProfile = MutableStateFlow<Profile>(value = Profile())
     val currentProfile: StateFlow<Profile> get() = _currentProfile.asStateFlow()
@@ -42,7 +38,6 @@ class ProfileScreenViewModel(
     }
 
     fun setProfileInfo(newProfile: Profile) {
-
         _currentProfile.update {
             it.copy(name = newProfile.name)
         }
@@ -65,7 +60,6 @@ class ProfileScreenViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             authRepository.signOut()
         }
-
     }
 
     fun delete() {

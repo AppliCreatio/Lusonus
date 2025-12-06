@@ -18,7 +18,9 @@ import kotlinx.coroutines.launch
 
 // Media view model to deal with
 @RequiresApi(Build.VERSION_CODES.O)
-class PlaylistViewModel(private val playlistName: String) : ViewModel() {
+class PlaylistViewModel(
+    private val playlistName: String,
+) : ViewModel() {
     // Gets shared singleton instance.
     private val playlistLibrary = SharedPlaylistLibrary
     private val mediaLibrary = SharedMediaLibrary
@@ -39,20 +41,19 @@ class PlaylistViewModel(private val playlistName: String) : ViewModel() {
         }
     }
 
-
     val allMediaFiles: StateFlow<List<Media>> = mediaLibrary.media
 
     // Refreshes the media list (cleans up dead links).
     fun refreshMedia(context: Context) {
         val base = playlistLibrary.getPlaylist(playlistName)?.media ?: return
 
-        val refreshed = base.filter { media ->
-            DocumentFile.fromSingleUri(context, media.uri)?.exists() == true
-        }
+        val refreshed =
+            base.filter { media ->
+                DocumentFile.fromSingleUri(context, media.uri)?.exists() == true
+            }
 
         _playlistFiles.value = refreshed
     }
-
 
     // Adds selected media to this playlist
     fun addToPlaylist(mediaList: List<Media>) {
@@ -67,8 +68,11 @@ class PlaylistViewModel(private val playlistName: String) : ViewModel() {
     fun searchMedia(query: String) {
         val base = playlistLibrary.getPlaylist(playlistName)?.media ?: return
         _playlistFiles.value =
-            if (query.isBlank()) base
-            else search(base, query)
+            if (query.isBlank()) {
+                base
+            } else {
+                search(base, query)
+            }
     }
 
     fun sortMedia(type: String) {

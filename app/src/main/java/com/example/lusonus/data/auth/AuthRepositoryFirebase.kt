@@ -8,7 +8,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.tasks.await
 
-class AuthRepositoryFirebase(private val auth: FirebaseAuth) : AuthRepository {
+class AuthRepositoryFirebase(
+    private val auth: FirebaseAuth,
+) : AuthRepository {
     private val currentUserStateFlow = MutableStateFlow(auth.currentUser?.toUser())
 
     init {
@@ -17,14 +19,15 @@ class AuthRepositoryFirebase(private val auth: FirebaseAuth) : AuthRepository {
         }
     }
 
-    /* Returns the current user signed in */
-    override fun currentUser(): StateFlow<User?> {
-        return currentUserStateFlow
-    }
+    // Returns the current user signed in
+    override fun currentUser(): StateFlow<User?> = currentUserStateFlow
 
     /* Creates an account in the firebase with the given password and email if the email does not
-    * already exist within the firebase */
-    override suspend fun signUp(email: String, password: String): String? {
+     * already exist within the firebase */
+    override suspend fun signUp(
+        email: String,
+        password: String,
+    ): String? {
         try {
             auth.createUserWithEmailAndPassword(email, password).await()
             return null
@@ -40,8 +43,11 @@ class AuthRepositoryFirebase(private val auth: FirebaseAuth) : AuthRepository {
         }
     }
 
-    /* Signs the user into firebase using the provided email and password they inputted */
-    override suspend fun signIn(email: String, password: String): String? {
+    // Signs the user into firebase using the provided email and password they inputted
+    override suspend fun signIn(
+        email: String,
+        password: String,
+    ): String? {
         try {
             auth.signInWithEmailAndPassword(email, password).await()
             return null
@@ -57,25 +63,25 @@ class AuthRepositoryFirebase(private val auth: FirebaseAuth) : AuthRepository {
         }
     }
 
-    /* Signs out the user from firebase */
-    override fun signOut() {
-        return auth.signOut()
-    }
+    // Signs out the user from firebase
+    override fun signOut() = auth.signOut()
 
-    /* Deletes the current user that is being used and signs them out */
+    // Deletes the current user that is being used and signs them out
     override suspend fun delete() {
-        if (auth.currentUser != null)
+        if (auth.currentUser != null) {
             auth.currentUser!!.delete()
+        }
     }
 
     /** Convert from FirebaseUser to User */
-    private fun FirebaseUser?.toUser(): User? {
-        return this?.let {
-            if (it.email == null) null else
+    private fun FirebaseUser?.toUser(): User? =
+        this?.let {
+            if (it.email == null) {
+                null
+            } else {
                 User(
-                    email = it.email!!
+                    email = it.email!!,
                 )
+            }
         }
-    }
 }
-

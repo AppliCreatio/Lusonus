@@ -17,33 +17,34 @@ import com.example.lusonus.ui.composables.Layout.BarElementSlider.BarElementSlid
 import com.example.lusonus.ui.utils.fadeOuterEdge
 
 @Composable
-fun SharedNavTopBar(
-    navController: NavHostController = LocalNavController.current
-) {
+fun SharedNavTopBar(navController: NavHostController = LocalNavController.current) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route ?: return
 
-    val sliderItems = listOf(
-        "Playlists" to Routes.PlaylistLibrary.route,
-        "Media" to Routes.MediaLibrary.route,
-        "Folders" to Routes.FolderLibrary.route
-    )
+    val sliderItems =
+        listOf(
+            "Playlists" to Routes.PlaylistLibrary.route,
+            "Media" to Routes.MediaLibrary.route,
+            "Folders" to Routes.FolderLibrary.route,
+        )
 
     // Determine the current index for the slider.
     val currentIndex = sliderItems.indexOfFirst { it.second == currentRoute }.coerceAtLeast(0)
 
-    val pagerState = rememberPagerState(
-        initialPage = currentIndex,
-        pageCount = { sliderItems.size }
-    )
+    val pagerState =
+        rememberPagerState(
+            initialPage = currentIndex,
+            pageCount = { sliderItems.size },
+        )
 
     Box(
-        modifier = Modifier.fadeOuterEdge(
-            isToLeft = true,
-            isToRight = true,
-            fadeWidth = 30.dp,
-            color = MaterialTheme.colorScheme.background
-        )
+        modifier =
+            Modifier.fadeOuterEdge(
+                isToLeft = true,
+                isToRight = true,
+                fadeWidth = 30.dp,
+                color = MaterialTheme.colorScheme.background,
+            ),
     ) {
         BarElementSlider(
             pagerState = pagerState,
@@ -59,7 +60,7 @@ fun SharedNavTopBar(
                         restoreState = true
                     }
                 }
-            }
+            },
         )
     }
 

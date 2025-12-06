@@ -14,21 +14,21 @@ import com.example.lusonus.ui.composables.PlaylistLibraryComposables.PlaylistIte
 fun PlaylistLibraryContent(
     playlists: List<String>,
     onDeletePlaylist: (String) -> Unit,
-    onClickPlaylist: (String) -> Unit
+    onClickPlaylist: (String) -> Unit,
 ) {
     // Lazy column in-case can have a lot of files added
     LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding( 16.dp),
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        items(items = playlists) {
-            playlistName ->
+        items(items = playlists) { playlistName ->
             PlaylistItem(
                 playlistName = playlistName,
                 onDelete = onDeletePlaylist,
-                onClick = onClickPlaylist
+                onClick = onClickPlaylist,
             )
         }
     }

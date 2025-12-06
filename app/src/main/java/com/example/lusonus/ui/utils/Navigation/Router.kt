@@ -24,7 +24,6 @@ import com.example.lusonus.ui.screens.PlaylistScreen.PlaylistScreen
 import com.example.lusonus.ui.screens.RegisterScreen.RegisterScreen
 import com.example.lusonus.ui.screens.SettingsScreen.SettingScreen
 
-
 // Allows the passing down of data. (Provider pattern)
 val LocalNavController = compositionLocalOf<NavHostController> { error("No NavController found!") }
 val LocalStorageList =
@@ -33,10 +32,13 @@ val LocalStorageList =
 val LocalGlobals =
     compositionLocalOf<Global> { error("No media list found!") }
 
+// Router deals with managing our different pages and which route calls which composable.
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-// Router deals with managing our different pages and which route calls which composable.
-fun Router(navController: NavHostController, modifier: Modifier = Modifier) {
+fun Router(
+    navController: NavHostController,
+    modifier: Modifier = Modifier,
+) {
     // These are the links between routes and the composables.
     NavHost(
         navController = navController,
@@ -51,7 +53,7 @@ fun Router(navController: NavHostController, modifier: Modifier = Modifier) {
         // Media Player route
         composable(
             route = Routes.MediaPlayer.route,
-            arguments = listOf(navArgument(name = "mediaName") { type = NavType.StringType })
+            arguments = listOf(navArgument(name = "mediaName") { type = NavType.StringType }),
         ) { backStackEntry ->
 
             // Gets parameter from the URL.
@@ -68,7 +70,7 @@ fun Router(navController: NavHostController, modifier: Modifier = Modifier) {
         // Playlist screen route.
         composable(
             route = Routes.Playlist.route,
-            arguments = listOf(navArgument(name = "playlistName") { type = NavType.StringType })
+            arguments = listOf(navArgument(name = "playlistName") { type = NavType.StringType }),
         ) { backStackEntry ->
 
             // Gets parameter from the URL.
@@ -94,7 +96,7 @@ fun Router(navController: NavHostController, modifier: Modifier = Modifier) {
         composable(Routes.FolderLibrary.route) { FolderLibraryScreen() }
         composable(
             route = Routes.Folder.route,
-            arguments = listOf(navArgument(name = "folderName") { type = NavType.StringType })
+            arguments = listOf(navArgument(name = "folderName") { type = NavType.StringType }),
         ) { backStackEntry ->
 
             // Gets parameter from the URL.

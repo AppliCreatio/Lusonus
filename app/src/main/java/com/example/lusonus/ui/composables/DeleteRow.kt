@@ -14,18 +14,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun DeleteRow(){
+fun DeleteRow() {
     Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(64.dp),
-        contentAlignment = Alignment.Center
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .height(64.dp),
+        contentAlignment = Alignment.Center,
     ) {
         Icon(
             imageVector = Icons.Default.Delete,
             contentDescription = "Delete",
             tint = MaterialTheme.colorScheme.onError,
-            modifier = Modifier.size(48.dp)
+            modifier = Modifier.size(48.dp),
         )
     }
 }

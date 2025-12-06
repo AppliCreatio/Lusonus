@@ -18,17 +18,16 @@ fun MinimalDropdownMenu(
     expanded: Boolean,
     toggleAction: (Boolean) -> Unit,
     icon: ImageVector,
-    navController: NavController? = null
+    navController: NavController? = null,
 ) {
-
     Box {
         IconButton(
-            onClick = { toggleAction(expanded) }
+            onClick = { toggleAction(expanded) },
         ) {
             Icon(
                 imageVector = icon,
                 contentDescription = "More options.",
-                tint = MaterialTheme.colorScheme.onSurfaceVariant
+                tint = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
 
@@ -37,25 +36,26 @@ fun MinimalDropdownMenu(
 
             DropdownMenu(
                 expanded = expanded,
-                onDismissRequest = { toggleAction(expanded) }
+                onDismissRequest = { toggleAction(expanded) },
             ) {
                 menuItems.forEach { option ->
 
                     val currentRoute = navBackStackEntry?.destination?.route
-                    if (currentRoute != option.route)
+                    if (currentRoute != option.route) {
                         DropdownMenuItem(
                             text = { Text(option.title) },
                             onClick = {
                                 option.action()
                                 toggleAction(expanded)
-                            }
+                            },
                         )
+                    }
                 }
             }
         } else {
             DropdownMenu(
                 expanded = expanded,
-                onDismissRequest = { toggleAction(expanded) }
+                onDismissRequest = { toggleAction(expanded) },
             ) {
                 menuItems.forEach { option ->
                     DropdownMenuItem(
@@ -63,7 +63,7 @@ fun MinimalDropdownMenu(
                         onClick = {
                             option.action()
                             toggleAction(expanded)
-                        }
+                        },
                     )
                 }
             }

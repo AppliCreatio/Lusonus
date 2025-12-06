@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 fun SearchBar(
     searchInfo: String,
     searchAction: (String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     OutlinedTextField(
         value = searchInfo,
@@ -18,12 +18,13 @@ fun SearchBar(
         singleLine = true,
         modifier = modifier,
         shape = MaterialTheme.shapes.medium,
-        colors = TextFieldDefaults.colors(
-            unfocusedContainerColor = MaterialTheme.colorScheme.surfaceContainer,
-            focusedContainerColor = MaterialTheme.colorScheme.surfaceContainer,
-            cursorColor = MaterialTheme.colorScheme.primary,
-            focusedIndicatorColor = MaterialTheme.colorScheme.primary,
-            unfocusedIndicatorColor = MaterialTheme.colorScheme.outline
-        )
+        colors =
+            TextFieldDefaults.colors(
+                unfocusedContainerColor = MaterialTheme.colorScheme.surfaceContainer,
+                focusedContainerColor = MaterialTheme.colorScheme.surfaceContainer,
+                cursorColor = MaterialTheme.colorScheme.primary,
+                focusedIndicatorColor = MaterialTheme.colorScheme.primary,
+                unfocusedIndicatorColor = MaterialTheme.colorScheme.outline,
+            ),
     )
 }

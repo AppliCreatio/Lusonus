@@ -36,19 +36,21 @@ fun MediaPicker(
     playlistFiles: List<Media>,
     onAddToPlaylist: (List<Media>) -> Unit,
 ) {
-    val availableFiles = allMediaFiles.filter { media ->
-        playlistFiles.none { it.uri == media.uri }
-    }
+    val availableFiles =
+        allMediaFiles.filter { media ->
+            playlistFiles.none { it.uri == media.uri }
+        }
 
     var selectionMode by rememberSaveable { mutableStateOf(false) }
     val selectedItems = remember { mutableStateListOf<Media>() }
 
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-
         Text(
             text = if (selectionMode) "Select Media" else "Add Media",
             style = MaterialTheme.typography.titleLarge,
@@ -61,7 +63,7 @@ fun MediaPicker(
             Text(
                 text = "No media to add",
                 style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             return
         }
@@ -71,23 +73,26 @@ fun MediaPicker(
             FilledTonalButton(
                 onClick = {
                     onAddToPlaylist(selectedItems.toList())
-                }
+                },
             ) {
                 Text("Add (${selectedItems.size})")
             }
         }
 
         Card(
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.secondaryContainer
-            ),
-            modifier = Modifier
-                .fillMaxSize()
-                .offset(y = 40.dp),
+            colors =
+                CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                ),
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .offset(y = 40.dp),
             shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
-            elevation = CardDefaults.cardElevation(
-                defaultElevation = 4.dp
-            )
+            elevation =
+                CardDefaults.cardElevation(
+                    defaultElevation = 4.dp,
+                ),
         ) {
             LazyColumn(modifier = Modifier.padding(16.dp)) {
                 items(availableFiles) { media ->
@@ -95,48 +100,54 @@ fun MediaPicker(
                     val isSelected = media in selectedItems
 
                     Card(
-                        colors = CardDefaults.cardColors(
-                            containerColor =
-                                if (isSelected)
-                                    MaterialTheme.colorScheme.error
-                                else
-                                    MaterialTheme.colorScheme.surfaceVariant
-                        ),
+                        colors =
+                            CardDefaults.cardColors(
+                                containerColor =
+                                    if (isSelected) {
+                                        MaterialTheme.colorScheme.error
+                                    } else {
+                                        MaterialTheme.colorScheme.surfaceVariant
+                                    },
+                            ),
                         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
                         shape = MaterialTheme.shapes.medium,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 16.dp)
-                            .combinedClickable(
-                                onClick = {
-                                    if (selectionMode) {
-                                        if (isSelected) selectedItems.remove(media)
-                                        else selectedItems.add(media)
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 16.dp)
+                                .combinedClickable(
+                                    onClick = {
+                                        if (selectionMode) {
+                                            if (isSelected) {
+                                                selectedItems.remove(media)
+                                            } else {
+                                                selectedItems.add(media)
+                                            }
 
-                                        // Exit selection mode if none left.
-                                        if (selectedItems.isEmpty()) {
-                                            selectionMode = false
+                                            // Exit selection mode if none left.
+                                            if (selectedItems.isEmpty()) {
+                                                selectionMode = false
+                                            }
+                                        } else {
+                                            // Normal single add
+                                            onAddToPlaylist(listOf(media))
                                         }
-                                    } else {
-                                        // Normal single add
-                                        onAddToPlaylist(listOf(media))
-                                    }
-                                },
-                                onLongClick = {
-                                    if (!selectionMode) {
-                                        // Enter multi select.
-                                        selectionMode = true
-                                        selectedItems.add(media)
-                                    } else {
-                                        // Exit multi select.
-                                        selectionMode = false
-                                        selectedItems.clear()
-                                    }
-                                }
-                            )
+                                    },
+                                    onLongClick = {
+                                        if (!selectionMode) {
+                                            // Enter multi select.
+                                            selectionMode = true
+                                            selectedItems.add(media)
+                                        } else {
+                                            // Exit multi select.
+                                            selectionMode = false
+                                            selectedItems.clear()
+                                        }
+                                    },
+                                ),
                     ) {
                         Box(
-                            modifier = Modifier.padding(8.dp)
+                            modifier = Modifier.padding(8.dp),
                         ) {
                             FileRow(uri = media.uri)
                         }

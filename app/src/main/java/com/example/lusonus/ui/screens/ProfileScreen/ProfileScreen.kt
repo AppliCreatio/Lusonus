@@ -33,15 +33,14 @@ import com.example.lusonus.ui.utils.Dialogs.DialogToEditProfile
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ProfileScreen(viewModel: ProfileScreenViewModel = viewModel(factory = ProfileViewModelFactory())) {
-
     val navController = LocalNavController.current
 
     val userState = viewModel.currentUser().collectAsState()
 
     // Makes sure the user is logged in before being able to access the profile screen
-    if (userState.value == null)
+    if (userState.value == null) {
         navController.navigate(Routes.Register.route)
-    else {
+    } else {
         val profile by viewModel.currentProfile.collectAsStateWithLifecycle()
 
         var openEditDialog by rememberSaveable { mutableStateOf(false) }
@@ -49,16 +48,18 @@ fun ProfileScreen(viewModel: ProfileScreenViewModel = viewModel(factory = Profil
         var promptLogOut by rememberSaveable { mutableStateOf(false) }
 
         // When openEditDialog is true, it will display the edit profile dialog box
-        if (openEditDialog)
+        if (openEditDialog) {
             DialogToEditProfile(
                 onDismissRequest = { openEditDialog = false },
                 onConfirmation = { openEditDialog = false },
                 name = "",
                 setProfile = { viewModel.setProfileInfo(it) },
-                setPicture = { viewModel.setPicture(it ?: profile.image) })
+                setPicture = { viewModel.setPicture(it ?: profile.image) },
+            )
+        }
 
         // This checks if the confirmation dialog box for deleting should appear on the screen or not
-        if (deleting)
+        if (deleting) {
             BasicConfirmCancelDialog(
                 onDismissRequest = { deleting = false },
                 onConfirmRequest = {
@@ -67,11 +68,12 @@ fun ProfileScreen(viewModel: ProfileScreenViewModel = viewModel(factory = Profil
                 },
                 title = "Account Deletion",
                 description = "You're about to delete this account are you sure?",
-                confirmString = "Delete"
+                confirmString = "Delete",
             )
+        }
 
         // This checks if the confirmation dialog box for logging should appear on the screen or not
-        if (promptLogOut)
+        if (promptLogOut) {
             BasicConfirmCancelDialog(
                 onDismissRequest = {
                     promptLogOut = false
@@ -84,56 +86,60 @@ fun ProfileScreen(viewModel: ProfileScreenViewModel = viewModel(factory = Profil
                 },
                 title = "Logging Out",
                 description = "You're about to log out are you sure?",
-                confirmString = "Log Out"
+                confirmString = "Log Out",
             )
+        }
 
         // General Container for other information from the profile screen
-        val containerDisplay: Modifier = Modifier
-            .padding(horizontal = 10.dp)
-            .fillMaxWidth()
-            .background(
-                MaterialTheme.colorScheme.secondaryContainer,
-                shape = RoundedCornerShape(10.dp)
-            )
+        val containerDisplay: Modifier =
+            Modifier
+                .padding(horizontal = 10.dp)
+                .fillMaxWidth()
+                .background(
+                    MaterialTheme.colorScheme.secondaryContainer,
+                    shape = RoundedCornerShape(10.dp),
+                )
 
         MainLayout(
             {
                 LazyColumn(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(MaterialTheme.colorScheme.background),
-                    verticalArrangement = Arrangement.spacedBy(20.dp)
+                    modifier =
+                        Modifier
+                            .fillMaxSize()
+                            .background(MaterialTheme.colorScheme.background),
+                    verticalArrangement = Arrangement.spacedBy(20.dp),
                 ) {
-
                     item {
                         ProfileBanner(
-                            modifier = Modifier
-                                .padding(top = 10.dp, start = 10.dp, end = 10.dp)
-                                .height(120.dp)
-                                .fillMaxWidth()
-                                .background(
-                                    MaterialTheme.colorScheme.primaryContainer,
-                                    shape = RoundedCornerShape(10.dp)
-                                ),
+                            modifier =
+                                Modifier
+                                    .padding(top = 10.dp, start = 10.dp, end = 10.dp)
+                                    .height(120.dp)
+                                    .fillMaxWidth()
+                                    .background(
+                                        MaterialTheme.colorScheme.primaryContainer,
+                                        shape = RoundedCornerShape(10.dp),
+                                    ),
                             name = profile.name,
                             email = userState.value!!.email,
                             profileImage = profile.image,
                             editToggle = { openEditDialog = true },
                             signOut = { promptLogOut = true },
-                            delete = { deleting = true }
+                            delete = { deleting = true },
                         )
                     }
                     item {
                         ConnectedStorage(
-                            modifier = containerDisplay
-                                .height(120.dp)
-                                .padding(bottom = 10.dp)
+                            modifier =
+                                containerDisplay
+                                    .height(120.dp)
+                                    .padding(bottom = 10.dp),
                         )
                     }
                 }
             },
             screenTitle = "Profile",
-            floatingActionButton = {}
+            floatingActionButton = {},
         )
     }
 }

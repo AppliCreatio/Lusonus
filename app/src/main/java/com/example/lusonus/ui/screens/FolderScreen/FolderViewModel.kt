@@ -19,8 +19,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 @RequiresApi(Build.VERSION_CODES.O)
-class FolderViewModel(private val folderName: String) : ViewModel() {
-
+class FolderViewModel(
+    private val folderName: String,
+) : ViewModel() {
     // Gets folder library model.
     private val folderLibrary = SharedFolderLibrary
 
@@ -54,28 +55,30 @@ class FolderViewModel(private val folderName: String) : ViewModel() {
     fun refreshMedia(context: Context) {
         // Launch the coroutine.
         viewModelScope.launch(Dispatchers.IO) {
-            // Get the folder we are in.
-            val folder = folderLibrary.getFolder(folderName)
-                ?: return@launch // again this is an Android studio recommended return.
-
-            val scannedUris = context.scanFolderRecursive(folder.uri)
-
-            // Maps new Uris to medias.
-            val scannedMedia = scannedUris.mapNotNull { uri ->
-                val name = context.getFileName(uri)
-                SharedMediaLibrary.modifyMedia(mapOf(name to uri))
-                SharedMediaLibrary.getMedia(name)
-            }
-
-            // Updates the flow.
-            _folderFiles.value = scannedMedia
-
-            // Updates the original folder.
-            folderLibrary.replaceFolder(
-                folder.copy(
-                    media = scannedMedia.toMutableList()
-                )
-            )
+//            // Get the folder we are in.
+//            val folder =
+//                folderLibrary.getFolder(folderName)
+//                    ?: return@launch // again this is an Android studio recommended return.
+//
+//            val scannedUris = context.scanFolderRecursive(folder.uri)
+//
+//            // Maps new Uris to medias.
+//            val scannedMedia =
+//                scannedUris.mapNotNull { uri ->
+//                    val name = context.getFileName(uri)
+//                    SharedMediaLibrary.modifyMedia(mapOf(name to uri))
+//                    SharedMediaLibrary.getMedia(name)
+//                }
+//
+//            // Updates the flow.
+//            _folderFiles.value = scannedMedia
+//
+//            // Updates the original folder.
+//            folderLibrary.replaceFolder(
+//                folder.copy(
+//                    media = scannedMedia.toMutableList(),
+//                ),
+//            )
         }
     }
 
@@ -91,8 +94,10 @@ class FolderViewModel(private val folderName: String) : ViewModel() {
         val base = folderLibrary.getFolder(folderName)?.media ?: return
 
         _folderFiles.value =
-            if (query.isBlank()) base
-            else search(base, query)
+            if (query.isBlank()) {
+                base
+            } else {
+                search(base, query)
+            }
     }
-
 }

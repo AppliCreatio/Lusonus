@@ -13,7 +13,6 @@ import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,7 +22,10 @@ import com.example.lusonus.ui.screens.SettingsScreen.SettingsViewModel
 
 // Creating using template from https://developer.android.com/develop/ui/compose/components/radio-button
 @Composable
-fun RadioButtonSingleSelection(modifier: Modifier = Modifier, viewModel: SettingsViewModel) {
+fun RadioButtonSingleSelection(
+    modifier: Modifier = Modifier,
+    viewModel: SettingsViewModel,
+) {
     val radioOptions = listOf("None", "MP3", "MP4")
     val selectedOption = remember { mutableIntStateOf(viewModel.settings.fileTypeRestriction) }
     // Note that Modifier.selectableGroup() is essential to ensure correct accessibility behavior
@@ -39,26 +41,29 @@ fun RadioButtonSingleSelection(modifier: Modifier = Modifier, viewModel: Setting
                         selected = (text == radioOptions[selectedOption.intValue]),
                         onClick = {
                             onOptionSelected(radioOptions.indexOf(text), viewModel)
-                            selectedOption.intValue = radioOptions.indexOf(text) },
-                        role = Role.RadioButton
-                    )
-                    .padding(horizontal = 16.dp),
-                verticalAlignment = Alignment.CenterVertically
+                            selectedOption.intValue = radioOptions.indexOf(text)
+                        },
+                        role = Role.RadioButton,
+                    ).padding(horizontal = 16.dp),
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 RadioButton(
                     selected = (text == radioOptions[selectedOption.intValue]),
-                    onClick = null // null recommended for accessibility with screen readers
+                    onClick = null, // null recommended for accessibility with screen readers
                 )
                 Text(
                     text = text,
                     style = MaterialTheme.typography.bodyLarge,
-                    modifier = Modifier.padding(start = 16.dp)
+                    modifier = Modifier.padding(start = 16.dp),
                 )
             }
         }
     }
 }
 
-private fun ColumnScope.onOptionSelected(index: Int, viewModel: SettingsViewModel) {
+private fun ColumnScope.onOptionSelected(
+    index: Int,
+    viewModel: SettingsViewModel,
+) {
     viewModel.changeFileTypeRestriction(index)
 }
