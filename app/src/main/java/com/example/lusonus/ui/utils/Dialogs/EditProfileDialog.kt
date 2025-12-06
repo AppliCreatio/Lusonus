@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.twotone.AccountCircle
+import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
@@ -31,7 +32,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.example.lusonus.data.model.Profile
+import com.example.lusonus.data.dataclasses.Profile
 
 /**
  * A composable dialog that is called when a user wants to edit their profile information or image.
@@ -41,36 +42,35 @@ fun DialogToEditProfile(
     onDismissRequest: () -> Unit,
     onConfirmation: () -> Unit,
     name: String,
-    description: String,
     setProfile: (Profile) -> Unit,
     setPicture: (Uri?) -> Unit,
-    ) {
-
+) {
     var newName by rememberSaveable { mutableStateOf(name) }
-    var newDescription by rememberSaveable { mutableStateOf(description) }
 
-    val singlePhotoPickerLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.PickVisualMedia(),
-        onResult = { uri -> setPicture(uri) }
-    )
+    val singlePhotoPickerLauncher =
+        rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.PickVisualMedia(),
+            onResult = { uri -> setPicture(uri) },
+        )
 
     Dialog(onDismissRequest = { onDismissRequest() }) {
         // Draw a rectangle shape with rounded corners inside the dialog
         Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(300.dp)
-                .padding(horizontal = 16.dp),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .height(260.dp)
+                    .padding(horizontal = 16.dp),
             shape = RoundedCornerShape(16.dp),
         ) {
             Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 20.dp),
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = 20.dp),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-
                 Row(horizontalArrangement = Arrangement.spacedBy(5.dp)) {
                     Icon(Icons.TwoTone.AccountCircle, "Edit Profile")
                     Text("Edit Profile")
@@ -80,64 +80,53 @@ fun DialogToEditProfile(
                     value = newName,
                     onValueChange = { newName = it },
                     label = { Text("Name") },
-                    colors = TextFieldDefaults.colors(
-                        unfocusedContainerColor = MaterialTheme.colorScheme.tertiaryContainer,
-                    ),
-                    singleLine = true
-                )
-
-                OutlinedTextField(
-                    value = newDescription,
-                    onValueChange = { newDescription = it },
-                    label = { Text("Description") },
-                    colors = TextFieldDefaults.colors(
-                        unfocusedContainerColor = MaterialTheme.colorScheme.tertiaryContainer,
-                    ),
-                    singleLine = true
+                    colors =
+                        TextFieldDefaults.colors(
+                            unfocusedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                        ),
+                    singleLine = true,
                 )
 
                 TextButton(
                     onClick = {
                         singlePhotoPickerLauncher.launch(
-                            PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                            PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly),
                         )
                     },
                     modifier = Modifier.padding(8.dp),
-                    colors = ButtonDefaults.textButtonColors(
-                        contentColor = MaterialTheme.colorScheme.onTertiaryContainer
-                    )
+                    colors =
+                        ButtonDefaults.textButtonColors(
+                            contentColor = MaterialTheme.colorScheme.error,
+                        ),
                 ) {
                     Text("Change Picture")
                 }
 
                 Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
+                    modifier =
+                        Modifier
+                            .fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center,
                 ) {
                     TextButton(
                         onClick = {
                             onDismissRequest()
                         },
-                        modifier = Modifier.padding(8.dp),
-                        colors = ButtonDefaults.textButtonColors(
-                            contentColor = MaterialTheme.colorScheme.onTertiaryContainer
-                        )
+                        colors =
+                            ButtonDefaults.textButtonColors(
+                                contentColor = MaterialTheme.colorScheme.error,
+                            ),
                     ) {
                         Text("Dismiss")
                     }
-                    TextButton(
+                    Button(
                         onClick = {
-                            if (newName.isNotBlank() && newDescription.isNotBlank())
-                                setProfile(Profile(newName.trim(), newDescription.trim()))
-
+                            if (newName.isNotBlank()) {
+                                setProfile(Profile(name = newName.trim()))
+                            }
 
                             onConfirmation()
                         },
-                        modifier = Modifier.padding(8.dp),
-                        colors = ButtonDefaults.textButtonColors(
-                            contentColor = MaterialTheme.colorScheme.onTertiaryContainer
-                        )
                     ) {
                         Text("Confirm")
                     }

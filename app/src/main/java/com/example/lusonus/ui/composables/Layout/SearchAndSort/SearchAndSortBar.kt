@@ -13,21 +13,28 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.lusonus.data.model.MenuItem
+import com.example.lusonus.data.dataclasses.MenuItem
 
 @Composable
-fun SearchAndSort(sortOptions: List<MenuItem>, expanded: Boolean, expandFunc: (Boolean) -> Unit, searchInfo: String, searchFun: (String) -> Unit){
+fun SearchAndSort(
+    sortOptions: List<MenuItem>,
+    expanded: Boolean,
+    expandFunc: (Boolean) -> Unit,
+    searchInfo: String,
+    searchFun: (String) -> Unit,
+) {
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(start = 16.dp, end = 16.dp, top = 8.dp),
-        verticalAlignment = Alignment.CenterVertically
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(start = 16.dp, end = 16.dp, top = 8.dp),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         MinimalDropdownMenu(
             menuItems = sortOptions,
             expanded = expanded,
             toggleAction = expandFunc,
-            icon = Icons.Sharp.Menu
+            icon = Icons.Sharp.Menu,
         )
 
         Spacer(Modifier.width(12.dp))
@@ -35,7 +42,7 @@ fun SearchAndSort(sortOptions: List<MenuItem>, expanded: Boolean, expandFunc: (B
         SearchBar(
             searchInfo = searchInfo,
             searchAction = searchFun,
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
         )
     }
 }

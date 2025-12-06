@@ -15,29 +15,31 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.lusonus.data.model.Media
+import com.example.lusonus.data.dataclasses.Media
 
 @Composable
 fun MediaDetails(
     media: Media,
-    image: Painter
-    ) {
-    Column (
+    image: Painter,
+) {
+    Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Center,
     ) {
         Image(
             painter = image,
             contentDescription = "",
-            modifier = Modifier
-                .clip(RoundedCornerShape(40.dp))
-                .size(350.dp)
+            modifier =
+                Modifier
+                    .clip(RoundedCornerShape(40.dp))
+                    .size(350.dp),
         )
         Text(
             text = media.name,
             style = MaterialTheme.typography.titleLarge,
-            modifier = Modifier
-                .padding(5.dp, 2.dp, 5.dp),
+            modifier =
+                Modifier
+                    .padding(5.dp, 2.dp, 5.dp),
             fontSize = 60.sp,
         )
         Text(
@@ -45,7 +47,7 @@ fun MediaDetails(
             text = media.name,
             style = MaterialTheme.typography.labelLarge,
             modifier = Modifier,
-            fontSize = 25.sp
+            fontSize = 25.sp,
         )
     }
 }

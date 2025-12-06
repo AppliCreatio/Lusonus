@@ -21,7 +21,7 @@ import com.example.organisemedia.Helper.Style.IconTint
 @Composable
 fun SharedBottomBarStateless(
     currentRoute: String?,
-    onNavigateTo: (String) -> Unit
+    onNavigateTo: (String) -> Unit,
 ) {
     // The bottom bar of the scaffold.
     BottomAppBar(
@@ -30,11 +30,10 @@ fun SharedBottomBarStateless(
         contentColor = MaterialTheme.colorScheme.primary,
     ) {
         // I'm not using the actions parameter since I want custom spacing.
-        Row (
+        Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceEvenly
-        )
-        {
+            horizontalArrangement = Arrangement.SpaceEvenly,
+        ) {
             // Gets the color scheme used.
             val colorScheme = MaterialTheme.colorScheme
 
@@ -42,12 +41,12 @@ fun SharedBottomBarStateless(
             IconButton(
                 onClick = {
                     onNavigateTo(Routes.PlaylistLibrary.route)
-                }
+                },
             ) {
                 Icon(
                     imageVector = Icons.Filled.Menu,
                     contentDescription = "Go to Playlist Screen.",
-                    tint = IconTint(currentRoute, Routes.PlaylistLibrary.route, colorScheme)
+                    tint = IconTint(currentRoute, Routes.PlaylistLibrary.route, colorScheme),
                 )
             }
 
@@ -68,12 +67,12 @@ fun SharedBottomBarStateless(
             IconButton(
                 onClick = {
                     onNavigateTo(Routes.MediaLibrary.route)
-                }
+                },
             ) {
                 Icon(
                     imageVector = Icons.Filled.PlayArrow,
                     contentDescription = "Go to Media Screen.",
-                    tint = IconTint(currentRoute, Routes.MediaLibrary.route, colorScheme)
+                    tint = IconTint(currentRoute, Routes.MediaLibrary.route, colorScheme),
                 )
             }
         }

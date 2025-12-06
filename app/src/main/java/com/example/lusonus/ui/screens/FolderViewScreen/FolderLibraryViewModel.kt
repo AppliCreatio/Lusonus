@@ -11,18 +11,18 @@ import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.lusonus.appContext
-import com.example.lusonus.data.model.Folder
-import com.example.lusonus.data.model.Media
-import com.example.lusonus.data.model.SharedFolderLibrary
-import com.example.lusonus.data.model.SharedMediaLibrary
+import com.example.lusonus.data.dataclasses.Folder
+import com.example.lusonus.data.dataclasses.Media
+import com.example.lusonus.data.sharedinstances.SharedFolderLibrary
+import com.example.lusonus.data.sharedinstances.SharedMediaLibrary
 import com.example.lusonus.ui.utils.getFileName
 import com.example.lusonus.ui.utils.scanFolderRecursive
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-@RequiresApi(Build.VERSION_CODES.O)
-class FolderLibraryViewModel : ViewModel(), LifecycleEventObserver {
-
+class FolderLibraryViewModel :
+    ViewModel(),
+    LifecycleEventObserver {
     // Gets the singleton instance of the folder library.
     private val folderLibrary = SharedFolderLibrary
 
@@ -39,7 +39,10 @@ class FolderLibraryViewModel : ViewModel(), LifecycleEventObserver {
         ProcessLifecycleOwner.get().lifecycle.addObserver(this)
     }
 
-    override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
+    override fun onStateChanged(
+        source: LifecycleOwner,
+        event: Lifecycle.Event,
+    ) {
         if (event == Lifecycle.Event.ON_RESUME) {
             refreshAllFolders()
         }
@@ -62,12 +65,18 @@ class FolderLibraryViewModel : ViewModel(), LifecycleEventObserver {
     }
 
     // Adds a folder to the storage along with all the media involved with that folder.
-    fun addFolder(context: Context, folderUri: Uri, folderName: String, folderMediaUris: List<Uri>) {
-        val media = folderMediaUris.map { uri ->
-            val name = context.getFileName(uri)
-            mediaLibrary.modifyMedia(mapOf(name to uri))
-            mediaLibrary.getMedia(name)!!
-        }
+    fun addFolder(
+        context: Context,
+        folderUri: Uri,
+        folderName: String,
+        folderMediaUris: List<Uri>,
+    ) {
+        val media =
+            folderMediaUris.map { uri ->
+                val name = context.getFileName(uri)
+                mediaLibrary.modifyMedia(mapOf(name to uri))
+                mediaLibrary.getMedia(name)!!
+            }
 
         // Adds folder to the "storage"
         folderLibrary.addFolder(folderName, folderUri, media)
@@ -95,7 +104,10 @@ class FolderLibraryViewModel : ViewModel(), LifecycleEventObserver {
 
     // Refreshes the folder (what you call when you update the folder).
     // This is the "parent" function that starts up the coroutine.
-    fun refreshFolder(context: Context, folderUri: Uri) {
+    fun refreshFolder(
+        context: Context,
+        folderUri: Uri,
+    ) {
         // Does a coroutine!!!
         viewModelScope.launch {
             // Does the most important recursive function ever, read it in FileUtils.kt
@@ -108,16 +120,21 @@ class FolderLibraryViewModel : ViewModel(), LifecycleEventObserver {
 
     // Finalizes the updating of a folder.
 
-    private fun updateFolder(folderUri: Uri, newUris: List<Uri>, context: Context) {
+    private fun updateFolder(
+        folderUri: Uri,
+        newUris: List<Uri>,
+        context: Context,
+    ) {
         // Gets existing one or returns if it's invalid.
         val existing = folderLibrary.folders.value.find { it.uri == folderUri } ?: return
 
         // Makes new SnapshotStateList.
-        val newMedia = newUris.map { uri ->
-            val name = context.getFileName(uri)
-            mediaLibrary.modifyMedia(mapOf(name to uri))
-            mediaLibrary.getMedia(name)!!
-        }
+        val newMedia =
+            newUris.map { uri ->
+                val name = context.getFileName(uri)
+                mediaLibrary.modifyMedia(mapOf(name to uri))
+                mediaLibrary.getMedia(name)!!
+            }
 
         // Updates the list.
         folderLibrary.replaceFolder(existing.copy(media = newMedia as MutableList<Media>))

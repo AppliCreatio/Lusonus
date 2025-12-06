@@ -12,7 +12,7 @@ import kotlinx.coroutines.withContext
 // Context.functionName is apparently the nice Kotlin way to create utils functions.
 // It adds it to the Context class, which makes it more accessible.
 fun Context.getFileName(uri: Uri): String {
-    var name = "Unknown" //default for troubleshooting
+    var name = "Unknown" // default for troubleshooting
 
     // More research here :D
     // This is android studio's way to deal with Uri data.
@@ -21,7 +21,7 @@ fun Context.getFileName(uri: Uri): String {
     // Kind of like use StreamWriter from c#.
     contentResolver.query(uri, null, null, null, null)?.use {
         // The cursor is "like" a database table where each column has an index.
-            cursor ->
+        cursor ->
 
         // "OpenableColumns.DISPLAY_NAME" is how you get the filename of a file in android studio.
         // We use that with ".getColumnIndex" so we know what column to get the info from,
@@ -41,10 +41,7 @@ fun Context.getFileName(uri: Uri): String {
 }
 
 // Gets the name by its URI. (if is path add .substringAfterLast("/") to end of it)
-fun Context.getName(uri: Uri): String {
-    return uri.lastPathSegment?.substringAfterLast(":") ?: "Default"
-}
-
+fun Context.getName(uri: Uri): String = uri.lastPathSegment?.substringAfterLast(":") ?: "Default"
 
 // This is a function that deals with the coroutine responsible for the recursive calls.
 suspend fun Context.scanFolderRecursive(folderUri: Uri): List<Uri> =
@@ -101,10 +98,9 @@ private fun Context.scanFolder(folderUri: Uri): List<Uri> {
 // This is what you call voodoo magic,
 // apparently DocumentFile.type is super unreliable and there is a big chance things break.
 // Considering our entire thing relies on files, I found that this is needed.
-fun Context.getMimeType(uri: Uri): String {
-    return contentResolver.getType(uri) ?: run {
+fun Context.getMimeType(uri: Uri): String =
+    contentResolver.getType(uri) ?: run {
         val name = DocumentFile.fromSingleUri(this, uri)?.name ?: ""
         val extension = name.substringAfterLast('.', "")
         MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension) ?: "application/octet-stream"
     }
-}

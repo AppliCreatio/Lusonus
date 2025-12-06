@@ -8,7 +8,6 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -21,19 +20,23 @@ import com.example.lusonus.ui.composables.SettingsComposables.RadioButtonSingleS
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun SettingScreen(){
-    val viewModel: SettingsViewModel = viewModel(viewModelStoreOwner = LocalNavController.current.context as ComponentActivity, factory = SettingsViewModelFactory(LocalGlobals.current.settings)) // Gets an existing MediaViewModel if it exists/
+fun SettingScreen() {
+    val viewModel: SettingsViewModel =
+        viewModel(
+            viewModelStoreOwner = LocalNavController.current.context as ComponentActivity,
+            factory = SettingsViewModelFactory(LocalGlobals.current.settings),
+        ) // Gets an existing MediaViewModel if it exists/
     var profileToggleCheck by remember { mutableStateOf(viewModel.settings.profileToggle) }
 
     MainLayout({
-        Column (modifier = Modifier) {
+        Column(modifier = Modifier) {
             Text("Disable Profile")
             Switch(
                 checked = profileToggleCheck,
                 onCheckedChange = {
                     viewModel.toggleProfile()
                     profileToggleCheck = viewModel.settings.profileToggle
-                }
+                },
             )
 
             Text("Restrict File Type")

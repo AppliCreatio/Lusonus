@@ -21,61 +21,68 @@ import com.example.lusonus.ui.utils.getFileName
 @Composable
 fun FileRow(
     uri: Uri,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
 
-    val fullName = remember(uri) {
-        runCatching { context.getFileName(uri) }.getOrElse { "Unknown" }
-    }
+    val fullName =
+        remember(uri) {
+            runCatching { context.getFileName(uri) }.getOrElse { "Unknown" }
+        }
     val cleanName = remember(fullName) { fullName.substringBeforeLast(".") }
 
     // Load bitmap from embedded artwork using MediaMetadataRetriever
-    val bitmap = remember(uri) {
-        runCatching {
-            val mmr = MediaMetadataRetriever()
-            mmr.setDataSource(context, uri)
-            val art = mmr.embeddedPicture
-            mmr.release()
-            art?.let { BitmapFactory.decodeByteArray(it, 0, it.size) }
-        }.getOrNull()
-    }
+    val bitmap =
+        remember(uri) {
+            runCatching {
+                val mmr = MediaMetadataRetriever()
+                mmr.setDataSource(context, uri)
+                val art = mmr.embeddedPicture
+                mmr.release()
+                art?.let { BitmapFactory.decodeByteArray(it, 0, it.size) }
+            }.getOrNull()
+        }
 
     Row(
-        modifier = modifier
-            .fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically
+        modifier =
+            modifier
+                .fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         if (bitmap != null) {
             Image(
                 bitmap = bitmap.asImageBitmap(),
                 contentDescription = "File artwork",
-                modifier = Modifier
-                    .size(64.dp)
-                    .clip(RoundedCornerShape(8.dp)),
-                contentScale = ContentScale.Crop
+                modifier =
+                    Modifier
+                        .size(64.dp)
+                        .clip(RoundedCornerShape(8.dp)),
+                contentScale = ContentScale.Crop,
             )
         } else {
             Image(
-                painter = androidx.compose.ui.res.painterResource(id = R.drawable.resource_default),
+                painter =
+                    androidx.compose.ui.res
+                        .painterResource(id = R.drawable.lusonus_placeholder),
                 contentDescription = "File artwork",
-                modifier = Modifier
-                    .size(64.dp)
-                    .clip(RoundedCornerShape(8.dp)),
-                contentScale = ContentScale.Crop
+                modifier =
+                    Modifier
+                        .size(64.dp)
+                        .clip(RoundedCornerShape(8.dp)),
+                contentScale = ContentScale.Crop,
             )
         }
 
         Column(
             verticalArrangement = Arrangement.Center,
-            modifier = Modifier.fillMaxWidth().padding(start = 8.dp)
+            modifier = Modifier.fillMaxWidth().padding(start = 8.dp),
         ) {
             Text(
                 text = cleanName,
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurface,
                 maxLines = 1,
-                overflow = TextOverflow.Ellipsis
+                overflow = TextOverflow.Ellipsis,
             )
         }
     }

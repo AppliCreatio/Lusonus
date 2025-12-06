@@ -2,7 +2,6 @@ package com.example.lusonus.ui.screens.FolderScreen
 
 import FileRow
 import androidx.compose.foundation.combinedClickable
-import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -11,40 +10,40 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
-import com.example.lusonus.data.model.Media
+import com.example.lusonus.data.dataclasses.Media
 
 @Composable
 fun FolderContent(
     folderFiles: List<Media>,
-    onClickMedia: (String) -> Unit
+    onClickMedia: (String) -> Unit,
 ) {
     LazyColumn(modifier = Modifier.padding(8.dp)) {
         items(folderFiles) { media ->
             Card(
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.surfaceVariant
-                ),
+                colors =
+                    CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.surfaceVariant,
+                    ),
                 elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
                 shape = MaterialTheme.shapes.medium,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp)
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp),
             ) {
                 Box(
-                    modifier = Modifier
-                        .combinedClickable(
-                            onClick = { onClickMedia(media.name) },
-                        )
-                        .padding(12.dp)
+                    modifier =
+                        Modifier
+                            .combinedClickable(
+                                onClick = { onClickMedia(media.name) },
+                            ).padding(12.dp),
                 ) {
                     FileRow(
                         uri = media.uri,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),
                     )
                 }
             }

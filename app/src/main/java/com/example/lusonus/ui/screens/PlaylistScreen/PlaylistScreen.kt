@@ -28,8 +28,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.lusonus.data.model.MenuItem
-import com.example.lusonus.navigation.LocalGlobals
+import com.example.lusonus.data.dataclasses.MenuItem
 import com.example.lusonus.navigation.LocalNavController
 import com.example.lusonus.navigation.Routes
 import com.example.lusonus.ui.composables.Layout.MainLayout
@@ -41,20 +40,15 @@ import com.example.lusonus.ui.composables.PlaylistComposables.MediaPicker
 @OptIn(ExperimentalMaterial3Api::class)
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun PlaylistScreen(
-    playlistName: String
-) {
+fun PlaylistScreen(playlistName: String) {
     // Gets nav controller
     val navController = LocalNavController.current
 
     val context = LocalContext.current
 
-    val globals = LocalGlobals.current
-
     // Gets the playlist view model, calls the media factory so we can pass the playlist name to the
     // view model to be able to get the specific playlist.
-    val viewModel: PlaylistViewModel = viewModel(
-        factory = PlaylistViewModelFactory(playlistName, globals.settings))
+    val viewModel: PlaylistViewModel = viewModel(factory = PlaylistViewModelFactory(playlistName))
 
     val playlistFiles by viewModel.playlistFiles.collectAsState()
     val allMediaFiles by viewModel.allMediaFiles.collectAsState()
@@ -67,12 +61,13 @@ fun PlaylistScreen(
 
     // Refreshes when the screen appears and when the app returns to the foreground.
     DisposableEffect(lifecycleOwner) {
-        val observer = LifecycleEventObserver { _, event ->
-            if (event == Lifecycle.Event.ON_RESUME) {
-                // User returned to the app while screen is active.
-                viewModel.refreshMedia(context)
+        val observer =
+            LifecycleEventObserver { _, event ->
+                if (event == Lifecycle.Event.ON_RESUME) {
+                    // User returned to the app while screen is active.
+                    viewModel.refreshMedia(context)
+                }
             }
-        }
 
         lifecycleOwner.lifecycle.addObserver(observer)
 
@@ -83,59 +78,64 @@ fun PlaylistScreen(
 
     MainLayout(
         content = {
-            println("File Restriction: ${ globals.settings.fileTypeRestriction }")
-
             LaunchedEffect(Unit) {
                 viewModel.refreshMedia(context)
-                viewModel.filterByFileType(globals.settings.fileTypeRestriction)
             }
 
-            val sortOptions = listOf(
-                MenuItem("Alphabetical") { viewModel.sortMedia("alphabetically") },
-                MenuItem("Date Added") { viewModel.sortMedia("date added") },
-                MenuItem("Last Played") { viewModel.sortMedia("last played") }
-            )
+            val sortOptions =
+                listOf(
+                    MenuItem(
+                        title = "Alphabetical",
+                        action = { viewModel.sortMedia("alphabetically") },
+                    ),
+                    MenuItem(title = "Date Added", action = { viewModel.sortMedia("date added") }),
+                    MenuItem(title = "Last Played", action = { viewModel.sortMedia("last played") }),
+                )
 
             SearchAndSort(sortOptions, expanded, { expanded = !it }, searchInfo, {
                 searchInfo = it
-                viewModel.searchMedia( searchInfo.lowercase())
+                viewModel.searchMedia(searchInfo.lowercase())
             })
 
             Card(
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.secondaryContainer
-                ),
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 16.dp)
-                    .offset(y = 40.dp),
+                colors =
+                    CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                    ),
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = 16.dp)
+                        .offset(y = 40.dp),
                 shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
-                elevation = CardDefaults.cardElevation(
-                    defaultElevation = 4.dp
-                )
+                elevation =
+                    CardDefaults.cardElevation(
+                        defaultElevation = 4.dp,
+                    ),
             ) {
-            PlaylistContent(
-                playlistFiles = playlistFiles,
-                removeFromPlaylist = { media ->
-                    viewModel.removeFromPlaylist(media)
-                },
-                onClickMedia = { mediaName ->
-                    navController.navigate(Routes.MediaPlayer.go(mediaName))
-                }
-            )}
+                PlaylistContent(
+                    playlistFiles = playlistFiles,
+                    removeFromPlaylist = { media ->
+                        viewModel.removeFromPlaylist(media)
+                    },
+                    onClickMedia = { mediaName ->
+                        navController.navigate(Routes.MediaPlayer.go(mediaName))
+                    },
+                )
+            }
 
             // This is the picker to add a media to the playlist.
             if (showPicker) {
                 ModalBottomSheet(
-                    onDismissRequest = { showPicker = false })
-                {
+                    onDismissRequest = { showPicker = false },
+                ) {
                     MediaPicker(
                         allMediaFiles = allMediaFiles,
                         playlistFiles = playlistFiles,
                         onAddToPlaylist = { media ->
                             viewModel.addToPlaylist(media)
                             showPicker = false
-                        }
+                        },
                     )
                 }
             }
@@ -146,9 +146,9 @@ fun PlaylistScreen(
                 SharedTopBar(playlistName, {
                     TopBarAddButton(onClick = {
                         showPicker = true
-                    } )
+                    })
                 })
             }
-        }
+        },
     )
 }

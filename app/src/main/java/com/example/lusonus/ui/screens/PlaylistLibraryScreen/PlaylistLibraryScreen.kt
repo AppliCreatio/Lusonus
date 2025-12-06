@@ -20,7 +20,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.lusonus.data.model.MenuItem
+import com.example.lusonus.data.dataclasses.MenuItem
 import com.example.lusonus.navigation.LocalNavController
 import com.example.lusonus.navigation.Routes
 import com.example.lusonus.ui.composables.Layout.MainLayout
@@ -29,7 +29,6 @@ import com.example.lusonus.ui.composables.Layout.TopBar.SharedNavTopBar
 import com.example.lusonus.ui.composables.Layout.TopBar.SharedTopBar
 import com.example.lusonus.ui.composables.Layout.TopBar.TopBarAddButton
 import com.example.organisemedia.Helper.Playlist.NewPlaylistDialog
-import com.example.organisemedia.Layout.FloatingActionButton.SharedFloatingActionButton
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -38,7 +37,8 @@ fun PlaylistLibraryScreen() {
     val navController = LocalNavController.current
 
     // Gets the view model information
-    val viewModel: PlaylistLibraryViewModel = viewModel(viewModelStoreOwner = LocalNavController.current.context as ComponentActivity)
+    val viewModel: PlaylistLibraryViewModel =
+        viewModel(viewModelStoreOwner = LocalNavController.current.context as ComponentActivity)
 
     // Gets files from view model.
     val playlists by viewModel.playlists.collectAsState()
@@ -54,44 +54,50 @@ fun PlaylistLibraryScreen() {
         NewPlaylistDialog(
             // It would always be true in this scenario.
             showDialog = true,
-
             // What happens when dismissed.
             onDismiss = {
                 showDialog = false
             },
-
             // What happens on confirmation.
-            onConfirm = {
-                name ->
+            onConfirm = { name ->
                 viewModel.createPlaylist(name)
                 showDialog = false
-            }
+            },
         )
     }
 
     MainLayout(
         content = {
-
-            val sortOptions = listOf(
-                MenuItem("Alphabetical") { viewModel.sortPlaylist("alphabetically") },
-                MenuItem("Date Added") { viewModel.sortPlaylist("date added") },
-                MenuItem("Last Played") { viewModel.sortPlaylist("last played") }
-            )
+            val sortOptions =
+                listOf(
+                    MenuItem(
+                        title = "Alphabetical",
+                        action = { viewModel.sortPlaylist("alphabetically") },
+                    ),
+                    MenuItem(title = "Date Added", action = { viewModel.sortPlaylist("date added") }),
+                    MenuItem(title = "Last Played", action = { viewModel.sortPlaylist("last played") }),
+                )
 
             SearchAndSort(sortOptions, expanded, { expanded = !it }, searchInfo, {
                 searchInfo = it
-                viewModel.searchPlaylists( searchInfo.lowercase())
+                viewModel.searchPlaylists(searchInfo.lowercase())
             })
 
             Card(
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.secondaryContainer
-                ),
-                modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp).offset(y = 40.dp),
+                colors =
+                    CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                    ),
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = 16.dp)
+                        .offset(y = 40.dp),
                 shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
-                elevation = CardDefaults.cardElevation(
-                    defaultElevation = 4.dp
-                )
+                elevation =
+                    CardDefaults.cardElevation(
+                        defaultElevation = 4.dp,
+                    ),
             ) {
                 PlaylistLibraryContent(
                     playlists = playlists.map { it.name },
@@ -100,7 +106,7 @@ fun PlaylistLibraryScreen() {
                     },
                     onClickPlaylist = { playlistName ->
                         navController.navigate(Routes.Playlist.createRoute(playlistName))
-                    }
+                    },
                 )
             }
         },
@@ -110,10 +116,10 @@ fun PlaylistLibraryScreen() {
                 SharedTopBar("Lusonus", {
                     TopBarAddButton(onClick = {
                         showDialog = true
-                    } )
+                    })
                 })
                 SharedNavTopBar()
             }
-        }
+        },
     )
 }

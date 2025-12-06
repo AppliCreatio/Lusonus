@@ -10,8 +10,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.twotone.Info
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -36,60 +38,65 @@ fun BasicConfirmCancelDialog(
     Dialog(onDismissRequest = { onDismissRequest() }) {
         // Draw a rectangle shape with rounded corners inside the dialog
         Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(200.dp)
-                .padding(horizontal = 16.dp),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .height(200.dp)
+                    .padding(horizontal = 16.dp),
             shape = RoundedCornerShape(16.dp),
         ) {
             Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 20.dp),
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = 20.dp),
                 verticalArrangement = Arrangement.SpaceEvenly,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Row(
                         modifier = Modifier.padding(bottom = 10.dp),
-                        horizontalArrangement = Arrangement.spacedBy(5.dp)
+                        horizontalArrangement = Arrangement.spacedBy(5.dp),
                     ) {
                         Icon(
                             Icons.TwoTone.Info,
-                            "An information icon, notifying you of important information"
+                            "An information icon, notifying you of important information",
                         )
                         Text(title, fontWeight = FontWeight.Bold)
                     }
 
                     Text(
                         description,
-                        textAlign = TextAlign.Center
+                        textAlign = TextAlign.Center,
                     )
                 }
 
                 Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
+                    modifier =
+                        Modifier
+                            .fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center,
                 ) {
                     TextButton(
                         onClick = {
-                            onConfirmRequest()
-                        }
+                            onDismissRequest()
+                        },
                     ) {
-                        Text(confirmString)
+                        Text("Cancel")
                     }
 
                     TextButton(
                         onClick = {
-                            onDismissRequest()
-                        }
+                            onConfirmRequest()
+                        },
+                        colors =
+                            ButtonDefaults.textButtonColors(
+                                contentColor = MaterialTheme.colorScheme.error,
+                            ),
                     ) {
-                        Text("Cancel")
+                        Text(confirmString)
                     }
                 }
-
             }
         }
     }

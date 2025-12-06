@@ -6,11 +6,9 @@ import androidx.annotation.RequiresApi
 import androidx.documentfile.provider.DocumentFile
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.lusonus.data.model.Media
-import com.example.lusonus.data.model.Settings
-import com.example.lusonus.data.model.SharedMediaLibrary
-import com.example.lusonus.data.model.SharedPlaylistLibrary
-import com.example.lusonus.ui.utils.filter
+import com.example.lusonus.data.dataclasses.Media
+import com.example.lusonus.data.sharedinstances.SharedMediaLibrary
+import com.example.lusonus.data.sharedinstances.SharedPlaylistLibrary
 import com.example.lusonus.ui.utils.search
 import com.example.lusonus.ui.utils.sort
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,7 +18,9 @@ import kotlinx.coroutines.launch
 
 // Media view model to deal with
 @RequiresApi(Build.VERSION_CODES.O)
-class PlaylistViewModel(private val playlistName: String, val settings: Settings) : ViewModel() {
+class PlaylistViewModel(
+    private val playlistName: String,
+) : ViewModel() {
     // Gets shared singleton instance.
     private val playlistLibrary = SharedPlaylistLibrary
     private val mediaLibrary = SharedMediaLibrary
@@ -41,21 +41,19 @@ class PlaylistViewModel(private val playlistName: String, val settings: Settings
         }
     }
 
-
-
     val allMediaFiles: StateFlow<List<Media>> = mediaLibrary.media
 
     // Refreshes the media list (cleans up dead links).
     fun refreshMedia(context: Context) {
         val base = playlistLibrary.getPlaylist(playlistName)?.media ?: return
 
-        val refreshed = base.filter { media ->
-            DocumentFile.fromSingleUri(context, media.uri)?.exists() == true
-        }
+        val refreshed =
+            base.filter { media ->
+                DocumentFile.fromSingleUri(context, media.uri)?.exists() == true
+            }
 
         _playlistFiles.value = refreshed
     }
-
 
     // Adds selected media to this playlist
     fun addToPlaylist(mediaList: List<Media>) {
@@ -70,17 +68,15 @@ class PlaylistViewModel(private val playlistName: String, val settings: Settings
     fun searchMedia(query: String) {
         val base = playlistLibrary.getPlaylist(playlistName)?.media ?: return
         _playlistFiles.value =
-            if (query.isBlank()) base
-            else search(base, query)
+            if (query.isBlank()) {
+                base
+            } else {
+                search(base, query)
+            }
     }
 
     fun sortMedia(type: String) {
         val base = playlistLibrary.getPlaylist(playlistName)?.media ?: return
         _playlistFiles.value = sort(base, type)
-    }
-
-    fun filterByFileType(restrictionType: Int) {
-        val base = playlistLibrary.getPlaylist(playlistName)?.media ?: return
-        _playlistFiles.value = filter(base, restrictionType)
     }
 }

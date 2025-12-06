@@ -29,17 +29,28 @@ fun MainLayout(
     screenTitle: String,
     topbarAddButton: @Composable (() -> Unit)? = null,
     floatingActionButton: @Composable (() -> Unit)? = null, // this is optional
-    topBar: @Composable (() -> Unit)? = { SharedTopBar(screenTitle, topbarAddButton) },// If no specific parameter is passed, set to default top bar
-    bottomBar: @Composable (() -> Unit)? = { SharedBottomBar() } // this is optional){}
+    topBar: @Composable (() -> Unit)? = {
+        SharedTopBar(screenTitle, topbarAddButton)
+    }, // If no specific parameter is passed, set to default top bar
+    bottomBar: @Composable (() -> Unit)? = { SharedBottomBar() }, // this is optional
+    snackbarHost: @Composable () -> Unit = {}, // this is optional, mostly used for authentication
 ) {
-
-
     val navController = LocalNavController.current
     val globals = LocalGlobals.current
-    val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route ?: return
+    val currentRoute =
+        navController
+            .currentBackStackEntryAsState()
+            .value
+            ?.destination
+            ?.route ?: return
 
-    val screensWithPlayer = listOf(Routes.MediaLibrary.route, Routes.FolderLibrary.route, Routes.PlaylistLibrary.route,
-        Routes.Playlist.route)
+    val screensWithPlayer =
+        listOf(
+            Routes.MediaLibrary.route,
+            Routes.FolderLibrary.route,
+            Routes.PlaylistLibrary.route,
+            Routes.Playlist.route,
+        )
     val showPopUp = currentRoute in screensWithPlayer
     // This is the main scaffold for our app, we will pass Composables to this method which will
     // then modify the contents of the scaffold as needed.
@@ -48,28 +59,24 @@ fun MainLayout(
         topBar = {
             topBar?.invoke()
         },
-
         // Gets the bottom bar of the scaffold.
         bottomBar = {
             Column {
                 bottomBar?.invoke()
             }
         },
-
         // Gets the floating action bar if there is one.
         floatingActionButton = {
             floatingActionButton?.invoke()
         },
-
         floatingActionButtonPosition = FabPosition.End,
-
-        containerColor = MaterialTheme.colorScheme.background
-    ) {
-        paddingValues ->
+        snackbarHost = snackbarHost,
+        containerColor = MaterialTheme.colorScheme.background,
+    ) { paddingValues ->
         // This is where the passed Composable is called.
         Column(
-            modifier = Modifier.padding(paddingValues = paddingValues)
-        ){
+            modifier = Modifier.padding(paddingValues = paddingValues),
+        ) {
             content()
         }
     }

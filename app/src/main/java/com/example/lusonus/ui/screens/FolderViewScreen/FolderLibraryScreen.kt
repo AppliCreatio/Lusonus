@@ -30,7 +30,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.lusonus.data.model.MenuItem
+import com.example.lusonus.data.dataclasses.MenuItem
 import com.example.lusonus.navigation.LocalNavController
 import com.example.lusonus.navigation.Routes
 import com.example.lusonus.ui.composables.Layout.MainLayout
@@ -42,7 +42,6 @@ import com.example.lusonus.ui.screens.FolderViewScreen.FolderLibraryContent
 import com.example.lusonus.ui.screens.FolderViewScreen.FolderLibraryViewModel
 import com.example.lusonus.ui.utils.getName
 import com.example.lusonus.ui.utils.scanFolderRecursive
-import com.example.organisemedia.Layout.FloatingActionButton.SharedFloatingActionButton
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -57,10 +56,11 @@ fun FolderLibraryScreen() {
     val context = LocalContext.current
 
     // Gets the application (super important for updating media in folders)
-    val app = context.applicationContext as Application
+    context.applicationContext as Application
 
     // Gets the viewmodel for this view.
-    val viewModel: FolderLibraryViewModel = viewModel(viewModelStoreOwner = LocalNavController.current.context as ComponentActivity)
+    val viewModel: FolderLibraryViewModel =
+        viewModel(viewModelStoreOwner = LocalNavController.current.context as ComponentActivity)
 
     // DOES THE HOT FLOW!!!! YES!
     val folders by viewModel.folders.collectAsState()
@@ -70,25 +70,25 @@ fun FolderLibraryScreen() {
 
     // The picker where you select a folder.
     val pickFolderLauncher =
-        rememberLauncherForActivityResult(ActivityResultContracts.OpenDocumentTree())
-        {
-            uri: Uri? ->
+        rememberLauncherForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri: Uri? ->
             // Tried to just return but android studio forced this so...
             uri ?: return@rememberLauncherForActivityResult
 
             // Persist permission so we can read files long-term. (really important for updating)
             context.contentResolver.takePersistableUriPermission(
                 uri,
-                Intent.FLAG_GRANT_READ_URI_PERMISSION
+                Intent.FLAG_GRANT_READ_URI_PERMISSION or
+                        Intent.FLAG_GRANT_WRITE_URI_PERMISSION,
             )
 
             // Starts coroutine.
             coroutineScope.launch {
                 // Gets media from the folder tree, it's really interesting go read it in FileUtils.kt
                 // Uses a coroutine!!!
-                val mediaUris = withContext(Dispatchers.IO) {
-                    context.scanFolderRecursive(uri)
-                }
+                val mediaUris =
+                    withContext(Dispatchers.IO) {
+                        context.scanFolderRecursive(uri)
+                    }
 
                 // Folder name = last path segment or “Folder”, it's also in FileUtils.kt
                 val folderName = context.getName(uri).substringAfterLast("/")
@@ -98,10 +98,9 @@ fun FolderLibraryScreen() {
                     context = context,
                     folderUri = uri,
                     folderName = folderName,
-                    folderMediaUris = mediaUris
+                    folderMediaUris = mediaUris,
                 )
             }
-
         }
 
     // This is for search and sort.
@@ -114,15 +113,16 @@ fun FolderLibraryScreen() {
     // It refreshes when the screen appears and when the app returns to the foreground.
     DisposableEffect(lifecycleOwner) {
         // Observer to check for the comeback... haha
-        val observer = LifecycleEventObserver { _, event ->
-            if (event == Lifecycle.Event.ON_RESUME) {
-                // User returned to the app while screen is active.
-                folders.forEach { folder ->
-                    // Refreshes folders.
-                    viewModel.refreshFolder(context, folder.uri)
+        val observer =
+            LifecycleEventObserver { _, event ->
+                if (event == Lifecycle.Event.ON_RESUME) {
+                    // User returned to the app while screen is active.
+                    folders.forEach { folder ->
+                        // Refreshes folders.
+                        viewModel.refreshFolder(context, folder.uri)
+                    }
                 }
             }
-        }
 
         // Adds the observer.
         lifecycleOwner.lifecycle.addObserver(observer)
@@ -145,11 +145,15 @@ fun FolderLibraryScreen() {
             }
 
             // This is the sort options menu.
-            val sortOptions = listOf(
-                MenuItem("Alphabetical") { viewModel.sortFolders("alphabetically") },
-                MenuItem("Date Added") { viewModel.sortFolders("date added") },
-                MenuItem("Last Played") { viewModel.sortFolders("last played") }
-            )
+            val sortOptions =
+                listOf(
+                    MenuItem(
+                        title = "Alphabetical",
+                        action = { viewModel.sortFolders("alphabetically") },
+                    ),
+                    MenuItem(title = "Date Added", action = { viewModel.sortFolders("date added") }),
+                    MenuItem(title = "Last Played", action = { viewModel.sortFolders("last played") }),
+                )
 
             // Calls the search and sort.
             SearchAndSort(
@@ -160,18 +164,24 @@ fun FolderLibraryScreen() {
                 {
                     searchInfo = it
                     viewModel.searchFolders(it.lowercase())
-                }
+                },
             )
 
             Card(
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.secondaryContainer
-                ),
-                modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp).offset(y = 40.dp),
+                colors =
+                    CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                    ),
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = 16.dp)
+                        .offset(y = 40.dp),
                 shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
-                elevation = CardDefaults.cardElevation(
-                    defaultElevation = 4.dp
-                )
+                elevation =
+                    CardDefaults.cardElevation(
+                        defaultElevation = 4.dp,
+                    ),
             ) {
                 // Calls the displaying composables for the folders themselves.
                 FolderLibraryContent(
@@ -179,21 +189,20 @@ fun FolderLibraryScreen() {
                     onDeleteFolder = { folderName -> viewModel.deleteFolder(folderName) },
                     onClickFolder = { folderName ->
                         navController.navigate(Routes.Folder.createRoute(folderName))
-                    }
+                    },
                 )
             }
         },
         screenTitle = "Lusonus",
-
         topBar = {
             Column {
                 SharedTopBar("Lusonus", {
                     TopBarAddButton(onClick = {
                         pickFolderLauncher.launch(null)
-                    } )
+                    })
                 })
                 SharedNavTopBar()
             }
-        }
+        },
     )
 }

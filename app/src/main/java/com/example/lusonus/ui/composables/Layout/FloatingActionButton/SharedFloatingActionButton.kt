@@ -12,12 +12,12 @@ import androidx.compose.ui.graphics.vector.ImageVector
 fun SharedFloatingActionButton(
     onClick: () -> Unit,
     icon: ImageVector = Icons.Filled.Add,
-    contentDescription: String = "Add"
+    contentDescription: String = "Add",
 ) {
     FloatingActionButton(
         onClick = { onClick() },
         containerColor = MaterialTheme.colorScheme.primary,
-        contentColor = MaterialTheme.colorScheme.onPrimary
+        contentColor = MaterialTheme.colorScheme.onPrimary,
     ) {
         Icon(imageVector = icon, contentDescription = contentDescription)
     }
