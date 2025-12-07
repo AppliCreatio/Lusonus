@@ -23,8 +23,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.example.lusonus.data.dataclasses.Media
+import com.example.lusonus.navigation.LocalGlobals
+import com.example.lusonus.ui.utils.getMimeType
 
 @Composable
 fun PlaylistContent(
@@ -32,8 +35,22 @@ fun PlaylistContent(
     removeFromPlaylist: (Media) -> Unit,
     onClickMedia: (String) -> Unit,
 ) {
+    val context = LocalContext.current
+    val global = LocalGlobals.current
+
     LazyColumn(modifier = Modifier.padding(16.dp)) {
         items(items = playlistFiles) { media ->
+            val mimeType = context.getMimeType(media.uri)
+
+            val isAudio = mimeType.startsWith("audio")
+            val isVideo = mimeType.startsWith("video")
+
+            if (global.settings.fileTypeRestriction == 1 && isAudio)
+                return@items
+
+            if (global.settings.fileTypeRestriction == 2 && isVideo)
+                return@items
+
             var deleteMode by remember { mutableStateOf(false) }
 
             val containerColor =
