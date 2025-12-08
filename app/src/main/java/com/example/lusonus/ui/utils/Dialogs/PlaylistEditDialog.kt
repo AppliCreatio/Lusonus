@@ -1,5 +1,6 @@
 package com.example.lusonus.ui.utils.Dialogs
 
+import android.content.Intent
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
@@ -32,6 +33,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.example.lusonus.data.dataclasses.Profile
@@ -46,13 +48,24 @@ fun PlaylistEditDialog(
     name: String,
     image: Uri?
 ) {
+
+    val context = LocalContext.current
+
     var newName by rememberSaveable { mutableStateOf(name) }
     var newImage by rememberSaveable { mutableStateOf(image) }
 
     val singlePhotoPickerLauncher =
         rememberLauncherForActivityResult(
-            contract = ActivityResultContracts.PickVisualMedia(),
-            onResult = { uri -> newImage = uri },
+            contract = ActivityResultContracts.OpenDocument(),
+            onResult = { uri ->
+                if (uri != null) {
+                        context.contentResolver.takePersistableUriPermission(
+                            uri,
+                            Intent.FLAG_GRANT_READ_URI_PERMISSION
+                        )
+                        newImage = uri
+                }
+            }
         )
 
     Dialog(onDismissRequest = { onDismissRequest() }) {
@@ -91,9 +104,7 @@ fun PlaylistEditDialog(
 
                 TextButton(
                     onClick = {
-                        singlePhotoPickerLauncher.launch(
-                            PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly),
-                        )
+                        singlePhotoPickerLauncher.launch(arrayOf("image/*"))
                     },
                     modifier = Modifier.padding(8.dp),
                     colors =

@@ -69,6 +69,7 @@ open class PlaylistLibrary {
             .setName(name)
             .setDateAdded(dateAdded.format(formatter))
             .setLastPlayed(lastPlayed?.format(formatter) ?: "")
+            .setImage(image.toString())
             .addAllMediaItems(media.map { it.toProto() })
             .build()
 
@@ -84,7 +85,7 @@ open class PlaylistLibrary {
             name = name,
             dateAdded = parsedDateAdded,
             lastPlayed = parsedLastPlayed,
-            image = null,
+            image = image.toUri(),
             media = mutableStateListOf<Media>().apply {
                 addAll(mediaItemsList.map { it.toMedia() })
             }

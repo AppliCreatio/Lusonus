@@ -1,5 +1,6 @@
 package com.example.lusonus.ui.utils.Dialogs
 
+import android.content.Intent
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
@@ -30,6 +31,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.example.lusonus.data.dataclasses.Profile
@@ -46,11 +48,21 @@ fun DialogToEditProfile(
     setPicture: (Uri?) -> Unit,
 ) {
     var newName by rememberSaveable { mutableStateOf(name) }
+    val context = LocalContext.current
+    val contentResolver = context.contentResolver
 
     val singlePhotoPickerLauncher =
         rememberLauncherForActivityResult(
-            contract = ActivityResultContracts.PickVisualMedia(),
-            onResult = { uri -> setPicture(uri) },
+            contract = ActivityResultContracts.OpenDocument(),
+            onResult = { uri ->
+                if (uri != null)
+                    contentResolver.takePersistableUriPermission(
+                        uri,
+                        Intent.FLAG_GRANT_READ_URI_PERMISSION or
+                                Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                    )
+                setPicture(uri)
+            },
         )
 
     Dialog(onDismissRequest = { onDismissRequest() }) {
@@ -89,9 +101,7 @@ fun DialogToEditProfile(
 
                 TextButton(
                     onClick = {
-                        singlePhotoPickerLauncher.launch(
-                            PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly),
-                        )
+                        singlePhotoPickerLauncher.launch(arrayOf("image/*"))
                     },
                     modifier = Modifier.padding(8.dp),
                     colors =

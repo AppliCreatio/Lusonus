@@ -9,7 +9,8 @@ message PlaylistProto {
     string name = 1;
     string dateAdded = 2;
     string lastPlayed = 3;
-    repeated MediaProto mediaItems = 4;
+    string image = 4;
+    repeated MediaProto mediaItems = 5;
 }
 
 message PlaylistLibraryProto {

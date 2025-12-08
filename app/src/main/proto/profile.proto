@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+option java_package = "com.example.lusonus.data.dataclasses.proto";
+option java_multiple_files = true;
+
+message ProfileProto {
+  string name = 1;
+  string image = 2;
+}

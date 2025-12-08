@@ -30,7 +30,6 @@ import com.example.lusonus.ui.composables.Layout.TopBar.SharedTopBar
 import com.example.lusonus.ui.composables.Layout.TopBar.TopBarAddButton
 import com.example.organisemedia.Helper.Playlist.NewPlaylistDialog
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun PlaylistLibraryScreen() {
     // Gets nav controller
