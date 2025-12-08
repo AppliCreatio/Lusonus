@@ -149,6 +149,16 @@ fun PlaylistScreen(playlistName: String, playlistImage: Uri?) {
                         viewModel.removeFromPlaylist(media)
                     },
                     onClickMedia = { mediaName ->
+
+                        val queue = playlistFiles.dropWhile { it.name != mediaName }
+
+                        val intent = Intent(context, PlayerService::class.java).apply {
+                            action = ACTION_PLAY_URI
+                            putStringArrayListExtra(EXTRA_URI_LIST, viewModel.allPlaylistURIs(playlistFiles = queue))
+                        }
+
+                        context.startService(intent)
+
                         navController.navigate(Routes.MediaPlayer.go(mediaName))
                     },
                     onImageClick = { openEditDialog = true }

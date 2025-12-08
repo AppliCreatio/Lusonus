@@ -88,14 +88,12 @@ class PlaylistViewModel(
         _playlistFiles.value = sort(base, type)
     }
 
-    fun allPlaylistURIs(): ArrayList<String>{
-        return _playlistFiles.value.map { media -> media.uri.toString()  } as ArrayList<String>
+    fun allPlaylistURIs(playlistFiles: List<Media> = _playlistFiles.value): ArrayList<String>{
+        return playlistFiles.map { media -> media.uri.toString()  } as ArrayList<String>
     }
 
     fun editInfo(newName: String, newImage: Uri?){
         playlistLibrary.updatePlaylist(playlistName, newName, newImage)
-            // The StateFlow collection in init will automatically update _playlist
-
         _playlist.update { it.copy(name = newName, image = newImage) }
     }
 }
