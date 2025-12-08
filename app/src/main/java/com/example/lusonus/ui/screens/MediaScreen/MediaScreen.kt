@@ -18,6 +18,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.media3.exoplayer.ExoPlayer
 import com.example.lusonus.services.ACTION_NEXT
@@ -30,6 +31,7 @@ import com.example.lusonus.services.ACTION_SEEK_TO
 import com.example.lusonus.services.EXTRA_ARTWORK_BYTES
 import com.example.lusonus.services.EXTRA_DURATION
 import com.example.lusonus.services.EXTRA_IS_PLAYING
+import com.example.lusonus.services.EXTRA_MEDIA_NAME
 import com.example.lusonus.services.EXTRA_POSITION
 import com.example.lusonus.services.EXTRA_SEEK_POSITION
 import com.example.lusonus.services.EXTRA_URI
@@ -66,8 +68,12 @@ fun MediaScreen(mediaName: String) {
                     val position = intent.getLongExtra(EXTRA_POSITION, 0L)
                     val duration = intent.getLongExtra(EXTRA_DURATION, 0L)
                     val art = intent.getByteArrayExtra(EXTRA_ARTWORK_BYTES)
+                    val name = intent.getStringExtra(EXTRA_MEDIA_NAME)
 
                     viewModel.updatePlaybackState(isPlaying, position, duration, art)
+
+                    if(name != null)
+                        viewModel.updateCurrentMedia(name.toUri(), context!!)
                 }
             }
 

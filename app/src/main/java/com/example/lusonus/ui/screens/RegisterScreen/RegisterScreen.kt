@@ -151,8 +151,6 @@ fun RegisterScreen(viewModel: RegisterViewModel = viewModel(factory = AuthViewMo
                         .height(500.dp)
                         .padding(bottom = 16.dp)
                 ) {
-                    Text("Register", fontSize = 20.sp)
-
                     Column(
                         modifier = Modifier
                             .fillMaxSize()

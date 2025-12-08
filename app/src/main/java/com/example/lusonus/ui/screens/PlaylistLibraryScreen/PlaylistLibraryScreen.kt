@@ -30,7 +30,6 @@ import com.example.lusonus.ui.composables.Layout.TopBar.SharedTopBar
 import com.example.lusonus.ui.composables.Layout.TopBar.TopBarAddButton
 import com.example.organisemedia.Helper.Playlist.NewPlaylistDialog
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun PlaylistLibraryScreen() {
     // Gets nav controller
@@ -100,12 +99,12 @@ fun PlaylistLibraryScreen() {
                     ),
             ) {
                 PlaylistLibraryContent(
-                    playlists = playlists.map { it.name },
+                    playlists = playlists,
                     onDeletePlaylist = { playlistName ->
                         viewModel.deletePlaylist(playlistName)
                     },
-                    onClickPlaylist = { playlistName ->
-                        navController.navigate(Routes.Playlist.createRoute(playlistName))
+                    onClickPlaylist = { playlistName, playlistPicture ->
+                        navController.navigate(Routes.Playlist.createRoute(playlistName,playlistPicture))
                     },
                 )
             }

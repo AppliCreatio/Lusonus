@@ -5,6 +5,7 @@ import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,6 +16,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.twotone.AccountCircle
+import androidx.compose.material.icons.twotone.LibraryMusic
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -40,29 +42,30 @@ import com.example.lusonus.data.dataclasses.Profile
  * A composable dialog that is called when a user wants to edit their profile information or image.
  */
 @Composable
-fun DialogToEditProfile(
+fun PlaylistEditDialog(
     onDismissRequest: () -> Unit,
-    onConfirmation: () -> Unit,
+    onConfirmation: (String, Uri?) -> Unit,
     name: String,
-    setProfile: (Profile) -> Unit,
-    setPicture: (Uri?) -> Unit,
+    image: Uri?
 ) {
-    var newName by rememberSaveable { mutableStateOf(name) }
+
     val context = LocalContext.current
-    val contentResolver = context.contentResolver
+
+    var newName by rememberSaveable { mutableStateOf(name) }
+    var newImage by rememberSaveable { mutableStateOf(image) }
 
     val singlePhotoPickerLauncher =
         rememberLauncherForActivityResult(
             contract = ActivityResultContracts.OpenDocument(),
             onResult = { uri ->
-                if (uri != null)
-                    contentResolver.takePersistableUriPermission(
-                        uri,
-                        Intent.FLAG_GRANT_READ_URI_PERMISSION or
-                                Intent.FLAG_GRANT_WRITE_URI_PERMISSION
-                    )
-                setPicture(uri)
-            },
+                if (uri != null) {
+                        context.contentResolver.takePersistableUriPermission(
+                            uri,
+                            Intent.FLAG_GRANT_READ_URI_PERMISSION
+                        )
+                        newImage = uri
+                }
+            }
         )
 
     Dialog(onDismissRequest = { onDismissRequest() }) {
@@ -84,8 +87,8 @@ fun DialogToEditProfile(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Row(horizontalArrangement = Arrangement.spacedBy(5.dp)) {
-                    Icon(Icons.TwoTone.AccountCircle, "Edit Profile")
-                    Text("Edit Profile")
+                    Icon(Icons.TwoTone.LibraryMusic, "Edit Details")
+                    Text("Edit Details")
                 }
 
                 OutlinedTextField(
@@ -132,10 +135,9 @@ fun DialogToEditProfile(
                     Button(
                         onClick = {
                             if (newName.isNotBlank()) {
-                                setProfile(Profile(name = newName.trim()))
+                                onConfirmation(newName, newImage)
                             }
 
-                            onConfirmation()
                         },
                     ) {
                         Text("Confirm")

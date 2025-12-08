@@ -1,15 +1,20 @@
 package com.example.lusonus.ui.screens.MediaScreen
 
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.core.net.toUri
 import androidx.lifecycle.ViewModel
+import com.example.lusonus.data.dataclasses.Media
 import com.example.lusonus.data.sharedinstances.SharedMediaLibrary
+import android.content.Context
 import java.time.LocalDateTime
+import com.example.lusonus.ui.utils.getFileName
 
 // View model for MediaScreen.
 @RequiresApi(Build.VERSION_CODES.O)
@@ -83,6 +88,10 @@ class MediaViewModel(
                 e.printStackTrace()
             }
         }
+    }
+
+    fun updateCurrentMedia(uri: Uri, context: Context) {
+        mediaName = context.getFileName(uri)
     }
 
     // This is just a proper setter for the bitmap.

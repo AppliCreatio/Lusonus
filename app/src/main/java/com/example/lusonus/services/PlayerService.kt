@@ -38,6 +38,8 @@ const val ACTION_PLAYBACK_STATE = "com.example.lusonus.action.PLAYBACK_STATE"
 
 // Extra constants (more info than state).
 const val EXTRA_URI = "media_uri"
+const val EXTRA_URI_LIST = "media_uri_list"
+
 const val EXTRA_SEEK_POSITION = "com.example.lusonus.extra.SEEK_POSITION"
 const val EXTRA_IS_PLAYING = "com.example.lusonus.extra.IS_PLAYING"
 const val EXTRA_POSITION = "com.example.lusonus.extra.POSITION"
@@ -138,22 +140,35 @@ class PlayerService : MediaSessionService() {
             ACTION_PLAY_URI -> {
                 // Long story short there is information we aren't getting when we import the media
                 // so this gets all the stuff we are missing.
-                val uriString = intent.getStringExtra(EXTRA_URI) ?: return
+                val singleUri = intent.getStringExtra(EXTRA_URI)
+                val uriList = intent.getStringArrayListExtra(EXTRA_URI_LIST)
 
-                // If the currently playing media is the same as the one about to play just don't
-                // play it.
-                val current = player.currentMediaItem
-                if (current?.localConfiguration?.uri.toString() == uriString) {
-                    if (!player.isPlaying) player.play()
-                    return
+                // This processes the list of uris that has been sent to the player service
+                if (uriList != null && uriList.isNotEmpty()) {
+                    // A playlist was sent
+                    val items = uriList.map { MediaItem.fromUri(it) }
+
+                    // Similar to the single uri method below, we have to prepare the list of media
+                    // and give them to the player
+                    player.setMediaItems(items)
+                }
+                else if (singleUri != null) {
+                    // If the currently playing media is the same as the one about to play just don't
+                    // play it.
+                    val current = player.currentMediaItem
+                    if (current?.localConfiguration?.uri.toString() == singleUri) {
+                        if (!player.isPlaying) player.play()
+                        return
+                    }
+
+                    // From the string we get the MediaItem (not ours this is a Media3 thing).
+                    val item = MediaItem.fromUri(singleUri)
+
+                    // We also set the MediaItem to the player and then prepare the media before playing,
+                    // yes it's goofy I know.
+                    player.setMediaItem(item)
                 }
 
-                // From the string we get the MediaItem (not ours this is a Media3 thing).
-                val item = MediaItem.fromUri(uriString)
-
-                // We also set the MediaItem to the player and then prepare the media before playing,
-                // yes it's goofy I know.
-                player.setMediaItem(item)
                 player.prepare()
                 player.play()
 
