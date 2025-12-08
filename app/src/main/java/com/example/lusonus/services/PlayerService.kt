@@ -5,6 +5,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Intent
 import android.media.MediaMetadataRetriever
+import android.os.Binder
 import android.os.Build
 import android.os.IBinder
 import androidx.annotation.OptIn
@@ -398,8 +399,14 @@ class PlayerService : MediaSessionService() {
     }
 
     // Binds the intent... basically links intent with service.
-    override fun onBind(intent: Intent?): IBinder? {
+    override fun onBind(intent: Intent?): IBinder {
+        super.onBind(intent)
         // We need this so MediaSessionService uses the session for binding.
-        return super.onBind(intent)
+        return PlayerBinder()
+    }
+
+    // In PlayerService
+    inner class PlayerBinder : Binder() {
+        fun getPlayer(): ExoPlayer = player
     }
 }
