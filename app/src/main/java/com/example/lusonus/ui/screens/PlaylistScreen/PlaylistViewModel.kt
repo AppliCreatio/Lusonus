@@ -1,12 +1,14 @@
 package com.example.lusonus.ui.screens.PlaylistScreen
 
 import android.content.Context
+import android.net.Uri
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.documentfile.provider.DocumentFile
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.lusonus.data.dataclasses.Media
+import com.example.lusonus.data.dataclasses.Playlist
 import com.example.lusonus.data.sharedinstances.SharedMediaLibrary
 import com.example.lusonus.data.sharedinstances.SharedPlaylistLibrary
 import com.example.lusonus.ui.utils.search
@@ -14,8 +16,9 @@ import com.example.lusonus.ui.utils.sort
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.time.LocalDateTime
 
 // Media view model to deal with
 @RequiresApi(Build.VERSION_CODES.O)
@@ -29,8 +32,12 @@ class PlaylistViewModel(
     // Hot flow holding just this folder's files.
     private val _playlistFiles = MutableStateFlow<List<Media>>(emptyList())
 
+    private val _playlist = MutableStateFlow<Playlist>(playlistLibrary.getPlaylist(playlistName) ?: Playlist("test",
+        LocalDateTime.now(), LocalDateTime.now(), null))
+
     // READONLY version for UI.
     val playlistFiles: StateFlow<List<Media>> = _playlistFiles.asStateFlow()
+    val playlist: StateFlow<Playlist> = _playlist.asStateFlow()
 
     // This is called when view model is made, is helpful since we need to get the playlist safely.
     init {
@@ -83,5 +90,12 @@ class PlaylistViewModel(
 
     fun allPlaylistURIs(): ArrayList<String>{
         return _playlistFiles.value.map { media -> media.uri.toString()  } as ArrayList<String>
+    }
+
+    fun editInfo(newName: String, newImage: Uri?){
+        playlistLibrary.updatePlaylist(playlistName, newName, newImage)
+            // The StateFlow collection in init will automatically update _playlist
+
+        _playlist.update { it.copy(name = newName, image = newImage) }
     }
 }

@@ -1,9 +1,9 @@
 package com.example.lusonus.ui.screens.PlaylistScreen
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
@@ -45,12 +45,12 @@ import com.example.lusonus.ui.composables.Layout.SearchAndSort.SearchAndSort
 import com.example.lusonus.ui.composables.Layout.TopBar.SharedTopBar
 import com.example.lusonus.ui.composables.Layout.TopBar.TopBarAddButton
 import com.example.lusonus.ui.composables.PlaylistComposables.MediaPicker
-import com.example.lusonus.ui.utils.Dialogs.DialogToEditProfile
+import com.example.lusonus.ui.utils.Dialogs.PlaylistEditDialog
 
 @OptIn(ExperimentalMaterial3Api::class)
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun PlaylistScreen(playlistName: String) {
+fun PlaylistScreen(playlistName: String, playlistImage: Uri?) {
     // Gets nav controller
     val navController = LocalNavController.current
 
@@ -62,22 +62,27 @@ fun PlaylistScreen(playlistName: String) {
 
     val playlistFiles by viewModel.playlistFiles.collectAsState()
     val allMediaFiles by viewModel.allMediaFiles.collectAsState()
+    val playlist by viewModel.playlist.collectAsState()
 
     var showPicker by rememberSaveable { mutableStateOf(false) }
+    var openEditDialog by rememberSaveable { mutableStateOf(false) }
     var expanded by remember { mutableStateOf(false) }
     var searchInfo by rememberSaveable { mutableStateOf("") }
 
+
     val lifecycleOwner = LocalLifecycleOwner.current
 
-//    if (openEditDialog) {
-//        DialogToEditProfile(
-//            onDismissRequest = { openEditDialog = false },
-//            onConfirmation = { openEditDialog = false },
-//            name = "",
-//            setProfile = { viewModel.setProfileInfo(it) },
-//            setPicture = { viewModel.setPicture(it ?: profile.image) },
-//        )
-//    }
+    if (openEditDialog) {
+        PlaylistEditDialog(
+            onDismissRequest = { openEditDialog = false },
+            onConfirmation = { name, image ->
+                    viewModel.editInfo(newName = name, newImage = image)
+                    openEditDialog = false
+            },
+            name = playlist.name,
+            image = playlist.image
+        )
+    }
 
     // Refreshes when the screen appears and when the app returns to the foreground.
     DisposableEffect(lifecycleOwner) {
@@ -109,7 +114,9 @@ fun PlaylistScreen(playlistName: String) {
                         action = { viewModel.sortMedia("alphabetically") },
                     ),
                     MenuItem(title = "Date Added", action = { viewModel.sortMedia("date added") }),
-                    MenuItem(title = "Last Played", action = { viewModel.sortMedia("last played") }),
+                    MenuItem(
+                        title = "Last Played",
+                        action = { viewModel.sortMedia("last played") }),
                 )
 
             SearchAndSort(sortOptions, expanded, { expanded = !it }, searchInfo, {
@@ -134,10 +141,9 @@ fun PlaylistScreen(playlistName: String) {
                     ),
             ) {
 
-
-//                Image(painter = )
-
                 PlaylistContent(
+                    playlistName = playlist.name,
+                    playlistImage = playlist.image,
                     playlistFiles = playlistFiles,
                     removeFromPlaylist = { media ->
                         viewModel.removeFromPlaylist(media)
@@ -145,8 +151,10 @@ fun PlaylistScreen(playlistName: String) {
                     onClickMedia = { mediaName ->
                         navController.navigate(Routes.MediaPlayer.go(mediaName))
                     },
+                    onImageClick = { openEditDialog = true }
                 )
             }
+
 
             // This is the picker to add a media to the playlist.
             if (showPicker) {
@@ -167,7 +175,7 @@ fun PlaylistScreen(playlistName: String) {
         screenTitle = playlistName,
         topBar = {
             Column {
-                SharedTopBar(playlistName, {
+                SharedTopBar("Lusonus", {
                     TopBarAddButton(onClick = {
                         showPicker = true
                     })
@@ -175,7 +183,7 @@ fun PlaylistScreen(playlistName: String) {
             }
         },
         floatingActionButton = {
-            if(playlistFiles.isNotEmpty())
+            if (playlistFiles.isNotEmpty())
                 FloatingActionButton(onClick = {
                     val intent = Intent(context, PlayerService::class.java).apply {
                         action = ACTION_PLAY_URI
@@ -185,7 +193,12 @@ fun PlaylistScreen(playlistName: String) {
                     context.startService(intent)
 
                     navController.navigate(Routes.MediaPlayer.go(playlistFiles.first().name))
-                }) { Icon(imageVector = Icons.Sharp.PlayArrow, contentDescription = "The play button on the playlist") }
+                }) {
+                    Icon(
+                        imageVector = Icons.Sharp.PlayArrow,
+                        contentDescription = "The play button on the playlist"
+                    )
+                }
         }
     )
 }

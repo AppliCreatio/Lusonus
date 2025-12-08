@@ -100,12 +100,12 @@ fun PlaylistLibraryScreen() {
                     ),
             ) {
                 PlaylistLibraryContent(
-                    playlists = playlists.map { it.name },
+                    playlists = playlists,
                     onDeletePlaylist = { playlistName ->
                         viewModel.deletePlaylist(playlistName)
                     },
-                    onClickPlaylist = { playlistName ->
-                        navController.navigate(Routes.Playlist.createRoute(playlistName))
+                    onClickPlaylist = { playlistName, playlistPicture ->
+                        navController.navigate(Routes.Playlist.createRoute(playlistName,playlistPicture))
                     },
                 )
             }

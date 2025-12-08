@@ -84,6 +84,7 @@ open class PlaylistLibrary {
             name = name,
             dateAdded = parsedDateAdded,
             lastPlayed = parsedLastPlayed,
+            image = null,
             media = mutableStateListOf<Media>().apply {
                 addAll(mediaItemsList.map { it.toMedia() })
             }
@@ -127,7 +128,7 @@ open class PlaylistLibrary {
     fun createPlaylist(name: String) {
         if (_allPlaylists.value.none { it.name == name }) {
             val newPlaylist =
-                Playlist(name = name, dateAdded = LocalDateTime.now(), lastPlayed = null)
+                Playlist(name = name, dateAdded = LocalDateTime.now(), image = null, lastPlayed = null)
             _allPlaylists.value += newPlaylist
             _playlists.value += newPlaylist
             persist()
@@ -208,5 +209,18 @@ open class PlaylistLibrary {
             } else {
                 search(_allPlaylists.value, query)
             }
+    }
+
+    fun updatePlaylist(oldName: String, newName: String, newImage: Uri?) {
+        _allPlaylists.value = _allPlaylists.value.map { playlist ->
+            if (playlist.name == oldName) {
+                playlist.copy(name = newName, image = newImage)
+            } else {
+                playlist
+            }
+        }
+
+        _playlists.value = _allPlaylists.value
+        persist()
     }
 }

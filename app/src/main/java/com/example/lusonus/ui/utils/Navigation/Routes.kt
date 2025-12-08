@@ -14,8 +14,8 @@ sealed class Routes(
 
     object PlaylistLibrary : Routes(route = "PlaylistLibraryScreenRoute")
 
-    object Playlist : Routes(route = "PlaylistScreenRoute/{playlistName}") {
-        fun createRoute(playlistName: String) = "PlaylistScreenRoute/$playlistName"
+    object Playlist : Routes(route = "PlaylistScreenRoute/{playlistName}/{playlistImage}") {
+        fun createRoute(playlistName: String, playlistImage: Uri?) = "PlaylistScreenRoute/$playlistName/${if(playlistImage != null) Uri.encode(playlistImage.toString()) else "" }"
     }
 
     object Profile : Routes("ProfileScreenRoute") {

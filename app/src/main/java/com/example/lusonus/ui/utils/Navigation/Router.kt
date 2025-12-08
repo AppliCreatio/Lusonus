@@ -1,12 +1,14 @@
 package com.example.lusonus.navigation
 
 import FolderLibraryScreen
+import android.net.Uri
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.Modifier
+import androidx.core.net.toUri
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -23,6 +25,7 @@ import com.example.lusonus.ui.screens.PlaylistLibraryScreen.PlaylistLibraryScree
 import com.example.lusonus.ui.screens.PlaylistScreen.PlaylistScreen
 import com.example.lusonus.ui.screens.RegisterScreen.RegisterScreen
 import com.example.lusonus.ui.screens.SettingsScreen.SettingScreen
+import java.lang.Exception
 
 // Allows the passing down of data. (Provider pattern)
 val LocalNavController = compositionLocalOf<NavHostController> { error("No NavController found!") }
@@ -70,29 +73,39 @@ fun Router(
         // Playlist screen route.
         composable(
             route = Routes.Playlist.route,
-            arguments = listOf(navArgument(name = "playlistName") { type = NavType.StringType }),
+            arguments = listOf(
+                navArgument(name = "playlistName") { type = NavType.StringType },
+                navArgument(name = "playlistImage") { type = NavType.StringType },
+            ),
         ) { backStackEntry ->
 
             // Gets parameter from the URL.
             val playlistName = backStackEntry.arguments?.getString("playlistName") ?: ""
+            val playlistImage = backStackEntry.arguments?.getString("playlistImage")?.let {
+                try {
+                    Uri.decode(it).toUri()
+                } catch(e: Exception) {
+                    null
+                }}
 
             PlaylistScreen(
                 playlistName = playlistName,
+                playlistImage = playlistImage
             )
         }
 
         // Profile screen route.
-        // TODO: Make view model for profile.
         composable(Routes.Profile.route) {
             ProfileScreen()
         }
 
         // Register screen route.
-        // TODO: Make view model for register.
         composable(Routes.Register.route) { RegisterScreen() }
 
+        // Settings screen route
         composable(Routes.Settings.route) { SettingScreen() }
 
+        // Folders screen route
         composable(Routes.FolderLibrary.route) { FolderLibraryScreen() }
         composable(
             route = Routes.Folder.route,
@@ -105,6 +118,8 @@ fun Router(
                 folderName = folderName,
             )
         }
+
+        // FAQ screen route
         composable(Routes.FAQ.route) { FAQScreen() }
     }
 }
