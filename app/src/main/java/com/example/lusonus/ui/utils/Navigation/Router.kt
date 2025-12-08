@@ -23,6 +23,7 @@ import com.example.lusonus.ui.screens.PlaylistLibraryScreen.PlaylistLibraryScree
 import com.example.lusonus.ui.screens.PlaylistScreen.PlaylistScreen
 import com.example.lusonus.ui.screens.RegisterScreen.RegisterScreen
 import com.example.lusonus.ui.screens.SettingsScreen.SettingScreen
+import com.example.lusonus.ui.screens.SettingsScreen.SettingsViewModel
 
 // Allows the passing down of data. (Provider pattern)
 val LocalNavController = compositionLocalOf<NavHostController> { error("No NavController found!") }
@@ -32,8 +33,9 @@ val LocalStorageList =
 val LocalGlobals =
     compositionLocalOf<Global> { error("No media list found!") }
 
+val LocalSettingsViewModel = compositionLocalOf<SettingsViewModel> { error("bad!") }
+
 // Router deals with managing our different pages and which route calls which composable.
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun Router(
     navController: NavHostController,

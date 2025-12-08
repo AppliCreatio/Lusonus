@@ -1,5 +1,6 @@
 package com.example.lusonus.ui.composables.SettingsComposables
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
@@ -8,6 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
+import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
@@ -23,42 +25,40 @@ import com.example.lusonus.ui.screens.SettingsScreen.SettingsViewModel
 // Creating using template from https://developer.android.com/develop/ui/compose/components/radio-button
 @Composable
 fun RadioButtonSingleSelection(
-    modifier: Modifier = Modifier,
     viewModel: SettingsViewModel,
 ) {
     val radioOptions = listOf("None", "MP3", "MP4")
-    val selectedOption = remember { mutableIntStateOf(viewModel.settings.fileTypeRestriction) }
-    // Note that Modifier.selectableGroup() is essential to ensure correct accessibility behavior
-    Text(radioOptions[selectedOption.intValue])
+    val selectedIndex = viewModel.settings.fileTypeRestriction
 
-    Column(modifier.selectableGroup()) {
-        radioOptions.forEach { text ->
+    Card() { }
+    Column(Modifier.selectableGroup(), horizontalAlignment = Alignment.CenterHorizontally) {
+        radioOptions.forEachIndexed { index, text ->
             Row(
                 Modifier
                     .fillMaxWidth()
                     .height(56.dp)
                     .selectable(
-                        selected = (text == radioOptions[selectedOption.intValue]),
-                        onClick = {
-                            onOptionSelected(radioOptions.indexOf(text), viewModel)
-                            selectedOption.intValue = radioOptions.indexOf(text)
-                        },
-                        role = Role.RadioButton,
-                    ).padding(horizontal = 16.dp),
+                        selected = (index == selectedIndex),
+                        onClick = { viewModel.changeFileTypeRestriction(index) },
+                        role = Role.RadioButton
+                    )
+                    .padding(horizontal = 16.dp),
                 verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
             ) {
                 RadioButton(
-                    selected = (text == radioOptions[selectedOption.intValue]),
-                    onClick = null, // null recommended for accessibility with screen readers
+                    selected = (index == selectedIndex),
+                    onClick = null
                 )
                 Text(
                     text = text,
                     style = MaterialTheme.typography.bodyLarge,
-                    modifier = Modifier.padding(start = 16.dp),
+                    modifier = Modifier.padding(start = 16.dp)
                 )
             }
         }
     }
+
 }
 
 private fun ColumnScope.onOptionSelected(
