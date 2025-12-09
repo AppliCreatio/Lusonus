@@ -5,6 +5,10 @@ import com.example.lusonus.data.dataclasses.proto.PlaylistLibraryProto
 import java.io.InputStream
 import java.io.OutputStream
 
+/*
+*   Brandon made this entire file
+*  */
+
 object PlaylistLibrarySerializer : Serializer<PlaylistLibraryProto> {
     override val defaultValue: PlaylistLibraryProto = PlaylistLibraryProto.getDefaultInstance()
 

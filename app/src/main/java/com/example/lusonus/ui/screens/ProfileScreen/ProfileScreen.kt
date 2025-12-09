@@ -1,7 +1,5 @@
 package com.example.ass3_appdev.screens.main
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
@@ -30,7 +28,10 @@ import com.example.lusonus.ui.screens.ProfileScreen.ProfileViewModelFactory
 import com.example.lusonus.ui.utils.Dialogs.BasicConfirmCancelDialog
 import com.example.lusonus.ui.utils.Dialogs.DialogToEditProfile
 
-@RequiresApi(Build.VERSION_CODES.O)
+/*
+*   Alex made this file
+*  */
+
 @Composable
 fun ProfileScreen(viewModel: ProfileScreenViewModel = viewModel(factory = ProfileViewModelFactory())) {
     val navController = LocalNavController.current
@@ -90,16 +91,6 @@ fun ProfileScreen(viewModel: ProfileScreenViewModel = viewModel(factory = Profil
             )
         }
 
-        // General Container for other information from the profile screen
-        val containerDisplay: Modifier =
-            Modifier
-                .padding(horizontal = 10.dp)
-                .fillMaxWidth()
-                .background(
-                    MaterialTheme.colorScheme.secondaryContainer,
-                    shape = RoundedCornerShape(10.dp),
-                )
-
         MainLayout(
             {
                 LazyColumn(
@@ -129,12 +120,7 @@ fun ProfileScreen(viewModel: ProfileScreenViewModel = viewModel(factory = Profil
                         )
                     }
                     item {
-                        ConnectedStorage(
-                            modifier =
-                                containerDisplay
-                                    .height(120.dp)
-                                    .padding(bottom = 10.dp),
-                        )
+                        ConnectedStorage()
                     }
                 }
             },

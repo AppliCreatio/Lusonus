@@ -13,6 +13,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+/*
+*   Alex made this entire file
+*  */
+
 @Composable
 fun RegisterBanner() {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {

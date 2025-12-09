@@ -7,6 +7,10 @@ import com.example.lusonus.data.dataclasses.proto.ProfileProto
 import java.io.InputStream
 import java.io.OutputStream
 
+/*
+*   Alex made this entire file
+*  */
+
 object ProfileSerializer : Serializer<ProfileProto> {
 
     override val defaultValue: ProfileProto =

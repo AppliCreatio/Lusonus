@@ -2,8 +2,6 @@ package com.example.lusonus.ui.screens.PlaylistScreen
 
 import android.content.Context
 import android.net.Uri
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.documentfile.provider.DocumentFile
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -20,8 +18,11 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 
+/*
+*   Brandon made this file with changes by Alex
+*  */
+
 // Media view model to deal with
-@RequiresApi(Build.VERSION_CODES.O)
 class PlaylistViewModel(
     private val playlistName: String,
 ) : ViewModel() {
@@ -32,8 +33,12 @@ class PlaylistViewModel(
     // Hot flow holding just this folder's files.
     private val _playlistFiles = MutableStateFlow<List<Media>>(emptyList())
 
-    private val _playlist = MutableStateFlow<Playlist>(playlistLibrary.getPlaylist(playlistName) ?: Playlist("test",
-        LocalDateTime.now(), LocalDateTime.now(), null))
+    private val _playlist = MutableStateFlow<Playlist>(
+        playlistLibrary.getPlaylist(playlistName) ?: Playlist(
+            "test",
+            LocalDateTime.now(), LocalDateTime.now(), null
+        )
+    )
 
     // READONLY version for UI.
     val playlistFiles: StateFlow<List<Media>> = _playlistFiles.asStateFlow()
@@ -88,11 +93,11 @@ class PlaylistViewModel(
         _playlistFiles.value = sort(base, type)
     }
 
-    fun allPlaylistURIs(playlistFiles: List<Media> = _playlistFiles.value): ArrayList<String>{
-        return playlistFiles.map { media -> media.uri.toString()  } as ArrayList<String>
+    fun allPlaylistURIs(playlistFiles: List<Media> = _playlistFiles.value): ArrayList<String> {
+        return playlistFiles.map { media -> media.uri.toString() } as ArrayList<String>
     }
 
-    fun editInfo(newName: String, newImage: Uri?){
+    fun editInfo(newName: String, newImage: Uri?) {
         playlistLibrary.updatePlaylist(playlistName, newName, newImage)
         _playlist.update { it.copy(name = newName, image = newImage) }
     }

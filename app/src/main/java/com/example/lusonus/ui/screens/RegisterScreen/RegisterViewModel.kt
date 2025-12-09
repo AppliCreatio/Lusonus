@@ -4,17 +4,19 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.lusonus.data.auth.AuthRepository
 import com.example.lusonus.data.auth.ResultAuth
-import com.example.lusonus.data.dataclasses.User
 import com.google.firebase.auth.FirebaseAuthException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
+/*
+*   Alex made this file
+*  */
+
 class RegisterViewModel(
     private val authRepository: AuthRepository,
 ) : ViewModel() {
-    fun currentUser(): StateFlow<User?> = authRepository.currentUser()
 
     private val _signInResult = MutableStateFlow<ResultAuth<Boolean>?>(ResultAuth.Inactive)
     private val _signUpResult = MutableStateFlow<ResultAuth<Boolean>?>(ResultAuth.Inactive)
@@ -33,7 +35,10 @@ class RegisterViewModel(
         _signUpResult.value = ResultAuth.InProgress
         viewModelScope.launch(Dispatchers.IO) {
             try {
+                // Gets error string if any
                 errorMessage = authRepository.signUp(email, password)
+
+                // Sets the success value depending if the errorMessage is null or not
                 _signUpResult.value = ResultAuth.Success(errorMessage == null)
             } catch (e: FirebaseAuthException) {
                 _signUpResult.value = ResultAuth.Failure(e)
@@ -52,7 +57,11 @@ class RegisterViewModel(
     ) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
+
+                // Gets error string if any
                 errorMessage = authRepository.signIn(email, password)
+
+                // Sets the success value depending if the errorMessage is null or not
                 _signInResult.value = ResultAuth.Success(errorMessage == null)
             } catch (e: FirebaseAuthException) {
                 _signInResult.value = ResultAuth.Failure(e)

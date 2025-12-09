@@ -5,6 +5,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.example.lusonus.data.dataclasses.Settings
 
+/*
+*   Alex, Brandon and Aris worked on this file
+*  */
+
 object Global {
     var mediaPopUpName by mutableStateOf("")
         private set

@@ -4,10 +4,10 @@ option java_package = "com.example.lusonus.data.dataclasses.proto";
 option java_multiple_files = true;
 
 message MediaProto {
-    string uri = 1;
-    string name = 2;
-    string dateAdded = 3;
-    string lastPlayed = 4;
+  string uri = 1;
+  string name = 2;
+  string dateAdded = 3;
+  string lastPlayed = 4;
 }
 
 message MediaLibraryProto {

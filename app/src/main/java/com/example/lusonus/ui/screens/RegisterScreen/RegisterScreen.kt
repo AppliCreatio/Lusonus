@@ -1,35 +1,20 @@
 package com.example.lusonus.ui.screens.RegisterScreen
 
-import android.os.Build
-import androidx.annotation.RequiresApi
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.sharp.AccountCircle
 import androidx.compose.material.icons.sharp.AlternateEmail
 import androidx.compose.material.icons.sharp.Key
-import androidx.compose.material.icons.twotone.AccountBox
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -40,11 +25,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.lusonus.data.auth.ResultAuth
 import com.example.lusonus.navigation.LocalNavController
@@ -54,11 +35,12 @@ import com.example.lusonus.ui.composables.RegisterScreenComposables.RegisterBann
 import com.example.lusonus.ui.composables.RegisterScreenComposables.RegisterButtons
 import com.example.lusonus.ui.composables.RegisterScreenComposables.RegisterInputField
 import com.example.lusonus.ui.composables.RegisterScreenComposables.RegisterSnackbar
-import com.example.lusonus.ui.screens.RegisterScreen.AuthViewModelFactory
 import com.example.lusonus.ui.utils.Dialogs.BadRegisterDialog
-import com.example.lusonus.ui.utils.verifyCredentials
 
-@RequiresApi(Build.VERSION_CODES.O)
+/*
+*   Alex made this file
+*  */
+
 @Composable
 fun RegisterScreen(viewModel: RegisterViewModel = viewModel(factory = AuthViewModelFactory())) {
     // This is used for the form
@@ -163,13 +145,33 @@ fun RegisterScreen(viewModel: RegisterViewModel = viewModel(factory = AuthViewMo
 
                         // All of the input fields for account handling
                         Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                            RegisterInputField(value = newName, changeValue = { newName = it}, label = "Username", icon = Icons.Sharp.AccountCircle)
-                            RegisterInputField(value = newEmail, changeValue = { newEmail = it}, label = "Email", icon = Icons.Sharp.AlternateEmail)
-                            RegisterInputField(value = newPassword, changeValue = { newPassword = it}, label = "Password", icon = Icons.Sharp.Key)
+                            RegisterInputField(
+                                value = newName,
+                                changeValue = { newName = it },
+                                label = "Username",
+                                icon = Icons.Sharp.AccountCircle
+                            )
+                            RegisterInputField(
+                                value = newEmail,
+                                changeValue = { newEmail = it },
+                                label = "Email",
+                                icon = Icons.Sharp.AlternateEmail
+                            )
+                            RegisterInputField(
+                                value = newPassword,
+                                changeValue = { newPassword = it },
+                                label = "Password",
+                                icon = Icons.Sharp.Key
+                            )
                         }
 
                         // The buttons for sign up and sign in
-                        RegisterButtons(newEmail, newPassword, {errorMessage = it}, viewModel, {badRegisterDialog = true})
+                        RegisterButtons(
+                            newEmail,
+                            newPassword,
+                            { errorMessage = it },
+                            viewModel,
+                            { badRegisterDialog = true })
 
                         if (badRegisterDialog)
                             BadRegisterDialog(

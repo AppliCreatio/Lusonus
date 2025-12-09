@@ -5,6 +5,10 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
+/*
+*   Alex made this entire file
+*  */
+
 @Composable
 fun SearchBar(
     searchInfo: String,

@@ -7,6 +7,10 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 
+/*
+*   Coded by Brandon
+*  */
+
 // The best way I found to getting a fade going was to make a custom util function.
 // Go read the docs if you are confused on the Modifier junk.
 fun Modifier.fadeOuterEdge(

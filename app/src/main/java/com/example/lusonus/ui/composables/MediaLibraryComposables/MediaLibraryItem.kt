@@ -19,6 +19,10 @@ import androidx.compose.ui.unit.dp
 import com.example.lusonus.data.dataclasses.Media
 import com.example.lusonus.ui.composables.DeleteRow
 
+/*
+*   Brandon made this entire file
+*  */
+
 @Composable
 fun MediaLibraryItem(
     media: Media,
@@ -59,7 +63,8 @@ fun MediaLibraryItem(
                             }
                         },
                         onLongClick = { deleteMode = !deleteMode },
-                    ).padding(8.dp),
+                    )
+                    .padding(8.dp),
         ) {
             if (deleteMode) {
                 DeleteRow()

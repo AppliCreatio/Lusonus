@@ -31,6 +31,10 @@ import com.example.lusonus.R
 import com.example.lusonus.ui.composables.DeleteRow
 import java.io.InputStream
 
+/*
+*   Alex made this entire file
+*  */
+
 /**
  * The Profile Banner appears at the top of the application
  * to display the name and the description of the user. It is a stateful composable,

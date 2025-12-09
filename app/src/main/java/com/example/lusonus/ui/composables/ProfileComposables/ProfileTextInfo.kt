@@ -6,6 +6,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.sp
 
+/*
+*   Alex made this entire file
+*  */
+
 /**
  * A stateless composable that holds all of the text information of the profile and displays it
  */

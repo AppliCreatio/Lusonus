@@ -1,8 +1,6 @@
 package com.example.lusonus.ui.screens.PlaylistLibraryScreen
 
-import android.os.Build
 import androidx.activity.ComponentActivity
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
@@ -29,6 +27,10 @@ import com.example.lusonus.ui.composables.Layout.TopBar.SharedNavTopBar
 import com.example.lusonus.ui.composables.Layout.TopBar.SharedTopBar
 import com.example.lusonus.ui.composables.Layout.TopBar.TopBarAddButton
 import com.example.organisemedia.Helper.Playlist.NewPlaylistDialog
+
+/*
+*   Brandon made this file with changes by Alex
+*  */
 
 @Composable
 fun PlaylistLibraryScreen() {
@@ -73,8 +75,12 @@ fun PlaylistLibraryScreen() {
                         title = "Alphabetical",
                         action = { viewModel.sortPlaylist("alphabetically") },
                     ),
-                    MenuItem(title = "Date Added", action = { viewModel.sortPlaylist("date added") }),
-                    MenuItem(title = "Last Played", action = { viewModel.sortPlaylist("last played") }),
+                    MenuItem(
+                        title = "Date Added",
+                        action = { viewModel.sortPlaylist("date added") }),
+                    MenuItem(
+                        title = "Last Played",
+                        action = { viewModel.sortPlaylist("last played") }),
                 )
 
             SearchAndSort(sortOptions, expanded, { expanded = !it }, searchInfo, {
@@ -104,7 +110,12 @@ fun PlaylistLibraryScreen() {
                         viewModel.deletePlaylist(playlistName)
                     },
                     onClickPlaylist = { playlistName, playlistPicture ->
-                        navController.navigate(Routes.Playlist.createRoute(playlistName,playlistPicture))
+                        navController.navigate(
+                            Routes.Playlist.createRoute(
+                                playlistName,
+                                playlistPicture
+                            )
+                        )
                     },
                 )
             }

@@ -8,6 +8,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.tasks.await
 
+/*
+*   Alex made this entire file
+*  */
 class AuthRepositoryFirebase(
     private val auth: FirebaseAuth,
 ) : AuthRepository {

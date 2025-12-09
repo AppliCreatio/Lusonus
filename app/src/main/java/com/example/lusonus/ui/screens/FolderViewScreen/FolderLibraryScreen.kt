@@ -1,11 +1,9 @@
 import android.app.Application
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
@@ -46,7 +44,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-@RequiresApi(Build.VERSION_CODES.O)
+/*
+*   Brandon made this entire file
+*  */
+
 @Composable
 fun FolderLibraryScreen() {
     // Gets the nav controller of the app.
@@ -151,8 +152,12 @@ fun FolderLibraryScreen() {
                         title = "Alphabetical",
                         action = { viewModel.sortFolders("alphabetically") },
                     ),
-                    MenuItem(title = "Date Added", action = { viewModel.sortFolders("date added") }),
-                    MenuItem(title = "Last Played", action = { viewModel.sortFolders("last played") }),
+                    MenuItem(
+                        title = "Date Added",
+                        action = { viewModel.sortFolders("date added") }),
+                    MenuItem(
+                        title = "Last Played",
+                        action = { viewModel.sortFolders("last played") }),
                 )
 
             // Calls the search and sort.

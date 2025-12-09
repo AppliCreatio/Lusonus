@@ -15,14 +15,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 
+/*
+*   Alex made this entire file
+*  */
+
 @Composable
-fun RegisterSnackbar(data: SnackbarData){
+fun RegisterSnackbar(data: SnackbarData) {
     Snackbar(
         containerColor = MaterialTheme.colorScheme.error,
         contentColor = MaterialTheme.colorScheme.onError,
         shape = RoundedCornerShape(12.dp),
         modifier = Modifier.padding(16.dp)
-    ){
+    ) {
         val parts = data.visuals.message.split(":", limit = 2)
         val method = parts.getOrNull(0) ?: ""
         val message = parts.getOrNull(1) ?: data.visuals.message
@@ -40,7 +44,7 @@ fun RegisterSnackbar(data: SnackbarData){
             }
             Text(
                 text = message.trim(),
-                fontWeight = if(parts.size == 1) FontWeight.Bold else FontWeight.Normal,
+                fontWeight = if (parts.size == 1) FontWeight.Bold else FontWeight.Normal,
                 textAlign = TextAlign.Center
             )
         }

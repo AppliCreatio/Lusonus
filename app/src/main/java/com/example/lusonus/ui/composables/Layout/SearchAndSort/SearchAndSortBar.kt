@@ -17,6 +17,10 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import com.example.lusonus.data.dataclasses.MenuItem
 
+/*
+*   Alex made this entire file
+*  */
+
 @Composable
 fun SearchAndSort(
     sortOptions: List<MenuItem>,
@@ -28,8 +32,7 @@ fun SearchAndSort(
     val configuration = LocalConfiguration.current
     val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
 
-    if (!isLandscape)
-    {
+    if (!isLandscape) {
         Row(
             modifier =
                 Modifier

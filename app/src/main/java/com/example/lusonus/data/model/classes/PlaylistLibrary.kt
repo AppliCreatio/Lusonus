@@ -2,10 +2,7 @@ package com.example.lusonus.data.model.classes
 
 import android.content.Context
 import android.net.Uri
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.runtime.toMutableStateList
 import androidx.core.net.toUri
 import com.example.lusonus.appContext
@@ -13,7 +10,6 @@ import com.example.lusonus.data.dataclasses.Media
 import com.example.lusonus.data.dataclasses.Playlist
 import com.example.lusonus.data.dataclasses.proto.MediaProto
 import com.example.lusonus.data.dataclasses.proto.PlaylistProto
-import com.example.lusonus.data.dataclasses.protodatastore.mediaLibraryDataStore
 import com.example.lusonus.data.dataclasses.protodatastore.playlistLibraryDataStore
 import com.example.lusonus.ui.utils.search
 import com.example.lusonus.ui.utils.sort
@@ -25,6 +21,10 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+
+/*
+*   Brandon made this entire file
+*  */
 
 open class PlaylistLibrary {
     // Application context.
@@ -103,7 +103,12 @@ open class PlaylistLibrary {
     private fun MediaProto.toMedia(): Media =
         Media(
             name = name,
-            dateAdded = runCatching { LocalDateTime.parse(dateAdded, formatter) }.getOrElse { LocalDateTime.now() },
+            dateAdded = runCatching {
+                LocalDateTime.parse(
+                    dateAdded,
+                    formatter
+                )
+            }.getOrElse { LocalDateTime.now() },
             lastPlayed = runCatching {
                 if (lastPlayed.isBlank()) null else LocalDateTime.parse(lastPlayed, formatter)
             }.getOrNull(),
@@ -129,7 +134,12 @@ open class PlaylistLibrary {
     fun createPlaylist(name: String) {
         if (_allPlaylists.value.none { it.name == name }) {
             val newPlaylist =
-                Playlist(name = name, dateAdded = LocalDateTime.now(), image = null, lastPlayed = null)
+                Playlist(
+                    name = name,
+                    dateAdded = LocalDateTime.now(),
+                    image = null,
+                    lastPlayed = null
+                )
             _allPlaylists.value += newPlaylist
             _playlists.value += newPlaylist
             persist()

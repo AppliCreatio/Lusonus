@@ -2,8 +2,6 @@ package com.example.lusonus.navigation
 
 import FolderLibraryScreen
 import android.net.Uri
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.compositionLocalOf
@@ -25,8 +23,11 @@ import com.example.lusonus.ui.screens.PlaylistLibraryScreen.PlaylistLibraryScree
 import com.example.lusonus.ui.screens.PlaylistScreen.PlaylistScreen
 import com.example.lusonus.ui.screens.RegisterScreen.RegisterScreen
 import com.example.lusonus.ui.screens.SettingsScreen.SettingScreen
-import java.lang.Exception
 import com.example.lusonus.ui.screens.SettingsScreen.SettingsViewModel
+
+/*
+*   Coded by Alex and Brandon
+*  */
 
 // Allows the passing down of data. (Provider pattern)
 val LocalNavController = compositionLocalOf<NavHostController> { error("No NavController found!") }
@@ -39,7 +40,6 @@ val LocalGlobals =
 val LocalSettingsViewModel = compositionLocalOf<SettingsViewModel> { error("bad!") }
 
 // Router deals with managing our different pages and which route calls which composable.
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun Router(
     navController: NavHostController,
@@ -87,9 +87,10 @@ fun Router(
             val playlistImage = backStackEntry.arguments?.getString("playlistImage")?.let {
                 try {
                     Uri.decode(it).toUri()
-                } catch(e: Exception) {
+                } catch (e: Exception) {
                     null
-                }}
+                }
+            }
 
             PlaylistScreen(
                 playlistName = playlistName,

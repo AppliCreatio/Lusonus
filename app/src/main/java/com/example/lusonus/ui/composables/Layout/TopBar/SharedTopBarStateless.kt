@@ -23,6 +23,10 @@ import androidx.compose.ui.unit.dp
 import com.example.lusonus.ui.composables.Layout.Buttons.MenuDropDown.MenuDropDown
 import com.example.lusonus.ui.utils.fadeBottomEdge
 
+/*
+*   Brandon made this entire file
+*  */
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SharedTopBarStateless(
@@ -37,10 +41,12 @@ fun SharedTopBarStateless(
     // The top bar of the scaffold.
     CenterAlignedTopAppBar(
         modifier =
-            Modifier.height(96.dp).fadeBottomEdge(
-                fadeHeight = 12.dp,
-                color = MaterialTheme.colorScheme.background,
-            ),
+            Modifier
+                .height(96.dp)
+                .fadeBottomEdge(
+                    fadeHeight = 12.dp,
+                    color = MaterialTheme.colorScheme.background,
+                ),
         colors =
             topAppBarColors(
                 containerColor = MaterialTheme.colorScheme.primaryContainer,

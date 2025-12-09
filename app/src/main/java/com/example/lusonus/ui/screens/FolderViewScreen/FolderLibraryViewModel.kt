@@ -2,8 +2,6 @@ package com.example.lusonus.ui.screens.FolderViewScreen
 
 import android.content.Context
 import android.net.Uri
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
@@ -19,6 +17,10 @@ import com.example.lusonus.ui.utils.getFileName
 import com.example.lusonus.ui.utils.scanFolderRecursive
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+
+/*
+*   Brandon made this entire file
+*  */
 
 class FolderLibraryViewModel :
     ViewModel(),

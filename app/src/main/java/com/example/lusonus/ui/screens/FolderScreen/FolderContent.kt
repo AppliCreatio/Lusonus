@@ -18,6 +18,10 @@ import com.example.lusonus.data.dataclasses.Media
 import com.example.lusonus.navigation.LocalGlobals
 import com.example.lusonus.ui.utils.getMimeType
 
+/*
+*   Brandon made this entire file
+*  */
+
 @Composable
 fun FolderContent(
     folderFiles: List<Media>,
@@ -55,7 +59,8 @@ fun FolderContent(
                         Modifier
                             .combinedClickable(
                                 onClick = { onClickMedia(media.name) },
-                            ).padding(12.dp),
+                            )
+                            .padding(12.dp),
                 ) {
                     FileRow(
                         uri = media.uri,

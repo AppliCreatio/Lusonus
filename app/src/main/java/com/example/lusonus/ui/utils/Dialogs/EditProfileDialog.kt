@@ -3,7 +3,6 @@ package com.example.lusonus.ui.utils.Dialogs
 import android.content.Intent
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -38,6 +37,8 @@ import com.example.lusonus.data.dataclasses.Profile
 
 /**
  * A composable dialog that is called when a user wants to edit their profile information or image.
+ *
+ * Coded by Alex
  */
 @Composable
 fun DialogToEditProfile(

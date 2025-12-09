@@ -2,8 +2,6 @@ package com.example.lusonus.ui.screens.PlaylistScreen
 
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
@@ -47,8 +45,11 @@ import com.example.lusonus.ui.composables.Layout.TopBar.TopBarAddButton
 import com.example.lusonus.ui.composables.PlaylistComposables.MediaPicker
 import com.example.lusonus.ui.utils.Dialogs.PlaylistEditDialog
 
+/*
+*   Brandon mostly made this file with changes made by Alex
+*  */
+
 @OptIn(ExperimentalMaterial3Api::class)
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun PlaylistScreen(playlistName: String, playlistImage: Uri?) {
     // Gets nav controller
@@ -76,8 +77,8 @@ fun PlaylistScreen(playlistName: String, playlistImage: Uri?) {
         PlaylistEditDialog(
             onDismissRequest = { openEditDialog = false },
             onConfirmation = { name, image ->
-                    viewModel.editInfo(newName = name, newImage = image)
-                    openEditDialog = false
+                viewModel.editInfo(newName = name, newImage = image)
+                openEditDialog = false
             },
             name = playlist.name,
             image = playlist.image
@@ -154,7 +155,10 @@ fun PlaylistScreen(playlistName: String, playlistImage: Uri?) {
 
                         val intent = Intent(context, PlayerService::class.java).apply {
                             action = ACTION_PLAY_URI
-                            putStringArrayListExtra(EXTRA_URI_LIST, viewModel.allPlaylistURIs(playlistFiles = queue))
+                            putStringArrayListExtra(
+                                EXTRA_URI_LIST,
+                                viewModel.allPlaylistURIs(playlistFiles = queue)
+                            )
                         }
 
                         context.startService(intent)

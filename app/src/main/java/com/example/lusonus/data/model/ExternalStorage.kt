@@ -6,6 +6,10 @@ import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.snapshots.SnapshotStateList
 
+/*
+*   Alex made this entire file
+*  */
+
 data class ExternalStorage(
     val name: String,
     var isConnected: Boolean,

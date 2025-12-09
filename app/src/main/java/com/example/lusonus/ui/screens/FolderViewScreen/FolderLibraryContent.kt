@@ -13,6 +13,10 @@ import com.example.lusonus.data.dataclasses.Folder
 import com.example.lusonus.ui.composables.FolderLibraryComposables.FolderItem
 import com.example.lusonus.ui.utils.getName
 
+/*
+*   Brandon made this entire file
+*  */
+
 @Composable
 fun FolderLibraryContent(
     folders: List<Folder>,

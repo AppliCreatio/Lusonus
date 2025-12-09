@@ -10,12 +10,21 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.example.lusonus.ui.screens.ProfileScreen.ProfileScreenViewModel
 import com.example.lusonus.ui.screens.RegisterScreen.RegisterViewModel
 import com.example.lusonus.ui.utils.verifyCredentials
 
+/*
+*   Alex made this entire file
+*  */
+
 @Composable
-fun RegisterButtons(email: String, password: String, createErrorMessage: (String) -> Unit, viewModel: RegisterViewModel, badInput: () -> Unit){
+fun RegisterButtons(
+    email: String,
+    password: String,
+    createErrorMessage: (String) -> Unit,
+    viewModel: RegisterViewModel,
+    badInput: () -> Unit
+) {
     Row(
         modifier = Modifier.fillMaxWidth(0.7f),
         horizontalArrangement = Arrangement.SpaceEvenly,
@@ -27,10 +36,10 @@ fun RegisterButtons(email: String, password: String, createErrorMessage: (String
                     email = email,
                     password = password,
                     modErrorMessage = { errorMessage += it })
-            ){
+            ) {
 
-                viewModel.signIn(email, password)}
-            else{
+                viewModel.signIn(email, password)
+            } else {
                 createErrorMessage(errorMessage)
                 badInput()
             }
@@ -45,10 +54,9 @@ fun RegisterButtons(email: String, password: String, createErrorMessage: (String
                     email = email,
                     password = password,
                     modErrorMessage = { errorMessage += it })
-            ){
+            ) {
                 viewModel.signUp(email, password)
-                }
-            else{
+            } else {
                 createErrorMessage(errorMessage)
                 badInput()
 

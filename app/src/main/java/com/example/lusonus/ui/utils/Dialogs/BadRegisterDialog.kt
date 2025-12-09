@@ -24,6 +24,8 @@ import androidx.compose.ui.window.Dialog
 
 /**
  * A composable dialog that is called whenever there is a bad input within the application.
+ *
+ * made by Alex
  */
 @Composable
 fun BadRegisterDialog(

@@ -23,6 +23,10 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 
+/*
+*   Brandon made 99% of this file
+*  */
+
 // LAND OF CONSTANTS
 // EVERYTHING WE NEED TO TRACK
 
@@ -151,8 +155,7 @@ class PlayerService : MediaSessionService() {
                     // Similar to the single uri method below, we have to prepare the list of media
                     // and give them to the player
                     player.setMediaItems(items)
-                }
-                else if (singleUri != null) {
+                } else if (singleUri != null) {
                     // If the currently playing media is the same as the one about to play just don't
                     // play it.
                     val current = player.currentMediaItem

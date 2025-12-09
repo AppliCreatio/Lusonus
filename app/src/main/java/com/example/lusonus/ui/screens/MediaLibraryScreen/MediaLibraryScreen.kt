@@ -2,11 +2,9 @@ package com.example.lusonus.ui.screens.MediaLibraryScreen
 
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
@@ -40,7 +38,10 @@ import com.example.lusonus.ui.composables.Layout.TopBar.SharedNavTopBar
 import com.example.lusonus.ui.composables.Layout.TopBar.SharedTopBar
 import com.example.lusonus.ui.composables.Layout.TopBar.TopBarAddButton
 
-@RequiresApi(Build.VERSION_CODES.O)
+/*
+*   Brandon made this entire file
+*  */
+
 @Composable
 fun MediaLibraryScreen() {
     // Gets nav controller
@@ -116,7 +117,9 @@ fun MediaLibraryScreen() {
                         action = { viewModel.sortMedia("alphabetically") },
                     ),
                     MenuItem(title = "Date Added", action = { viewModel.sortMedia("date added") }),
-                    MenuItem(title = "Last Played", action = { viewModel.sortMedia("last played") }),
+                    MenuItem(
+                        title = "Last Played",
+                        action = { viewModel.sortMedia("last played") }),
                 )
 
             SearchAndSort(sortOptions, expanded, { expanded = !it }, searchInfo, {

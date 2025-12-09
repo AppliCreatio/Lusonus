@@ -6,6 +6,10 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.dataStore
 import com.example.lusonus.data.dataclasses.proto.Settings
 
+/*
+*   Brandon made this entire file
+*  */
+
 val Context.settingsDataStore: DataStore<Settings> by dataStore(
     fileName = "settings.pb",
     serializer = SettingsSerializer

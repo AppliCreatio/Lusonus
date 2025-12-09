@@ -2,8 +2,6 @@ package com.example.lusonus.ui.composables.RegisterScreenComposables
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.sharp.AccountCircle
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -17,8 +15,17 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 
+/*
+*   Alex made this entire file
+*  */
+
 @Composable
-fun RegisterInputField(value: String, changeValue: (String)-> Unit, label: String, icon: ImageVector){
+fun RegisterInputField(
+    value: String,
+    changeValue: (String) -> Unit,
+    label: String,
+    icon: ImageVector
+) {
     Row(
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -28,10 +35,10 @@ fun RegisterInputField(value: String, changeValue: (String)-> Unit, label: Strin
             tint = MaterialTheme.colorScheme.primary
         )
         OutlinedTextField(
-            modifier = Modifier.padding(start = 10.dp,end = 34.dp),
+            modifier = Modifier.padding(start = 10.dp, end = 34.dp),
             value = value,
             onValueChange = { changeValue(it) },
-            visualTransformation = if(label == "Password") PasswordVisualTransformation() else VisualTransformation.None,
+            visualTransformation = if (label == "Password") PasswordVisualTransformation() else VisualTransformation.None,
             label = { Text(text = label) },
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = MaterialTheme.colorScheme.secondary,

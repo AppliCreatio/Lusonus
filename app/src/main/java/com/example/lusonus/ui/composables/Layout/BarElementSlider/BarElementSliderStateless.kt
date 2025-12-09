@@ -20,6 +20,10 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 
+/*
+*   Brandon made this entire file
+*  */
+
 @SuppressLint("ConfigurationScreenWidthHeight")
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

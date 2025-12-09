@@ -3,6 +3,10 @@ package com.example.lusonus.data.auth
 import com.example.lusonus.data.dataclasses.User
 import kotlinx.coroutines.flow.StateFlow
 
+/*
+*   Alex made this entire file
+*  */
+
 interface AuthRepository {
     // Return a StateFlow so that the composable can always update when
     //   the current authorized user status changes for any reason

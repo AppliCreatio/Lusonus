@@ -15,6 +15,10 @@ import com.example.lusonus.navigation.LocalGlobals
 import com.example.lusonus.ui.composables.MediaLibraryComposables.MediaLibraryItem
 import com.example.lusonus.ui.utils.getMimeType
 
+/*
+*   Brandon made this entire file
+*  */
+
 @Composable
 fun MediaLibraryContent(
     files: List<Media>,

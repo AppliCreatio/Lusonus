@@ -6,6 +6,10 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import com.example.lusonus.data.interfaces.Entries
 import java.time.LocalDateTime
 
+/*
+*   Brandon and Alex made this entire file
+*  */
+
 data class Playlist(
     override val name: String,
     override val dateAdded: LocalDateTime,

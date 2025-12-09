@@ -21,6 +21,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.lusonus.ui.theme.AppTheme
 
+/*
+*   Coded by Aris
+*  */
+
 @Composable
 fun <T : Any> rememberMutableStateListOf(vararg elements: T): SnapshotStateList<T> =
     rememberSaveable(
