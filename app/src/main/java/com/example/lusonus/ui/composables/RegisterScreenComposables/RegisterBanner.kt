@@ -25,6 +25,6 @@ fun RegisterBanner() {
             imageVector = Icons.TwoTone.AccountBox,
             contentDescription = "Register Icon"
         )
-        Text(text = "Lusonus awaits", fontSize = 24.sp, fontWeight = FontWeight.SemiBold)
+        Text(text = "Lusonus Awaits", fontSize = 24.sp, fontWeight = FontWeight.SemiBold)
     }
 }

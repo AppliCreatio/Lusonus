@@ -121,9 +121,8 @@ fun PlaylistItem(
                             painter = painter,
                             contentDescription = "The image of the playlist $playlistName",
                             modifier = Modifier
-                                .background(MaterialTheme.colorScheme.onSurface)
-                                .size(64.dp)
-                                .clip(RoundedCornerShape(8.dp)),
+                                .size(56.dp)
+                                .clip(RoundedCornerShape(8.dp)).background(MaterialTheme.colorScheme.onSurface),
                             contentScale = ContentScale.Crop,
                         )
 
