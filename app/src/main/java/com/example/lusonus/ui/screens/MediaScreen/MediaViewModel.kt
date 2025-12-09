@@ -1,23 +1,22 @@
 package com.example.lusonus.ui.screens.MediaScreen
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.core.net.toUri
 import androidx.lifecycle.ViewModel
-import com.example.lusonus.data.dataclasses.Media
 import com.example.lusonus.data.sharedinstances.SharedMediaLibrary
-import android.content.Context
-import java.time.LocalDateTime
 import com.example.lusonus.ui.utils.getFileName
+import java.time.LocalDateTime
+
+/*
+*   Brandon made this file using Aris original template
+*  */
 
 // View model for MediaScreen.
-@RequiresApi(Build.VERSION_CODES.O)
 class MediaViewModel(
     private var mediaName: String,
 ) : ViewModel() {

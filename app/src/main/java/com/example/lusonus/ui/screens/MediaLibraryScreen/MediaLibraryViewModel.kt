@@ -2,13 +2,15 @@ package com.example.lusonus.ui.screens.MediaLibraryScreen
 
 import android.content.Context
 import android.net.Uri
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import com.example.lusonus.data.dataclasses.Media
 import com.example.lusonus.data.sharedinstances.SharedMediaLibrary
 import com.example.lusonus.ui.utils.getFileName
 import kotlinx.coroutines.flow.StateFlow
+
+/*
+*   Brandon made this entire file
+*  */
 
 // Media view model to deal with
 class MediaLibraryViewModel : ViewModel() {

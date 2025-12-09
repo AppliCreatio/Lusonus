@@ -4,6 +4,10 @@ import com.example.lusonus.data.dataclasses.proto.Settings
 import java.io.InputStream
 import java.io.OutputStream
 
+/*
+*   Brandon made this entire file
+*  */
+
 object SettingsSerializer : Serializer<Settings> {
 
     override val defaultValue: Settings =

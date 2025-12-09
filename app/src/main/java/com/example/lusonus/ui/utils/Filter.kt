@@ -3,6 +3,10 @@ package com.example.lusonus.ui.utils
 // import com.example.lusonus.data.model.Entries
 // import com.example.lusonus.data.model.Media
 
+/*
+*   Coded by Aris
+*  */
+
 // @RequiresApi(Build.VERSION_CODES.O)
 // fun filter(mediaList: List<Media>, restrictionType: Int): List<Media> {
 //    return when(restrictionType){

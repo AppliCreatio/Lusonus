@@ -1,8 +1,6 @@
 package com.example.lusonus.ui.composables.MediaLibraryComposables
 
 import android.net.Uri
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.listSaver
@@ -10,7 +8,10 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import com.example.lusonus.data.dataclasses.Media
 import java.time.LocalDateTime
 
-@RequiresApi(Build.VERSION_CODES.O)
+/*
+*   Brandon made this entire file
+*  */
+
 val MediaListSaver: Saver<SnapshotStateList<Media>, Any> =
     listSaver(
         save = { list: SnapshotStateList<Media> -> list.map { it.uri.toString() } },
@@ -19,7 +20,14 @@ val MediaListSaver: Saver<SnapshotStateList<Media>, Any> =
             savedList.forEach { uriStr ->
                 val uri = Uri.parse(uriStr)
                 val name = uri.lastPathSegment ?: "Unknown"
-                list.add(Media(name = name, dateAdded = LocalDateTime.now(), lastPlayed = null, uri))
+                list.add(
+                    Media(
+                        name = name,
+                        dateAdded = LocalDateTime.now(),
+                        lastPlayed = null,
+                        uri
+                    )
+                )
             }
             list
         },

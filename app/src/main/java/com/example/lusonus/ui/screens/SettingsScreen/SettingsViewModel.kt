@@ -6,11 +6,15 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.lusonus.appContext
+import com.example.lusonus.data.dataclasses.proto.Settings
 import com.example.lusonus.data.dataclasses.protodatastore.settingsDataStore
 import com.example.lusonus.data.sharedinstances.Global
-import com.example.lusonus.data.dataclasses.proto.Settings
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+
+/*
+*   Aris made this file with changes by Brandon
+*  */
 
 class SettingsViewModel : ViewModel() {
 

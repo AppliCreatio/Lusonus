@@ -1,11 +1,14 @@
 package com.example.ass3_appdev.screens.main
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.twotone.List
 import androidx.compose.material.icons.rounded.CheckCircle
@@ -29,6 +32,10 @@ import com.example.lusonus.navigation.LocalStorageList
 import com.example.lusonus.ui.utils.Dialogs.ConnectedStorageDialog
 
 /*
+*   Alex made this entire file with some help from Brandon
+*  */
+
+/*
  This saver variation of ExternalStorage is meant as a conversion tool to be able to store the ExternalStorage data class
  as a state that can be remembered through recomposition. When something is saved, it creates a new object that mimics the data class
  and when we want to use it, it creates a new instance of said data class
@@ -45,7 +52,7 @@ val ConnectedStorageSaver =
  * It is stateful due to the dialog boolean and the connected storage
  */
 @Composable
-fun ConnectedStorage(modifier: Modifier) {
+fun ConnectedStorage() {
     // used online recourses as well as AI to understand how to save a data class as a state
     // mostly gonna be used within the future when I add the option to change storages
     var connectedStorage by rememberSaveable(stateSaver = ConnectedStorageSaver) {
@@ -58,7 +65,15 @@ fun ConnectedStorage(modifier: Modifier) {
     var chooseStorageDialog by rememberSaveable { mutableStateOf(false) }
 
     Column(
-        modifier = modifier.padding(horizontal = 10.dp),
+        modifier = Modifier
+            .padding(horizontal = 10.dp)
+            .fillMaxWidth()
+            .background(
+                MaterialTheme.colorScheme.secondaryContainer,
+                shape = RoundedCornerShape(10.dp),
+            )
+            .padding(start = 10.dp, end = 10.dp, bottom = 10.dp)
+            .height(120.dp),
         verticalArrangement = Arrangement.SpaceAround,
     ) {
         Text(
@@ -77,7 +92,8 @@ fun ConnectedStorage(modifier: Modifier) {
                             Offset(size.width, y),
                             strokeWidth,
                         )
-                    }.fillMaxWidth()
+                    }
+                    .fillMaxWidth()
                     .padding(3.dp),
         )
         Row(

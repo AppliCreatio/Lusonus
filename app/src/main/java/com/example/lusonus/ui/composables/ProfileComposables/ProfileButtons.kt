@@ -8,6 +8,10 @@ import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 
+/*
+*   Alex made this entire file
+*  */
+
 @Composable
 fun ProfileButtons(signOut: () -> Unit) {
     IconButton(

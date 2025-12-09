@@ -12,6 +12,10 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.lusonus.data.dataclasses.MenuItem
 
+/*
+*   Alex made this entire file
+*  */
+
 @Composable
 fun MinimalDropdownMenu(
     menuItems: List<MenuItem>,

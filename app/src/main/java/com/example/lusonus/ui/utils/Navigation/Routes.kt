@@ -2,6 +2,10 @@ package com.example.lusonus.navigation
 
 import android.net.Uri
 
+/*
+*   Coded by Alex and Brandon
+*  */
+
 // Sealed class that holds different routes.
 sealed class Routes(
     val route: String,
@@ -15,7 +19,8 @@ sealed class Routes(
     object PlaylistLibrary : Routes(route = "PlaylistLibraryScreenRoute")
 
     object Playlist : Routes(route = "PlaylistScreenRoute/{playlistName}/{playlistImage}") {
-        fun createRoute(playlistName: String, playlistImage: Uri?) = "PlaylistScreenRoute/$playlistName/${if(playlistImage != null) Uri.encode(playlistImage.toString()) else "" }"
+        fun createRoute(playlistName: String, playlistImage: Uri?) =
+            "PlaylistScreenRoute/$playlistName/${if (playlistImage != null) Uri.encode(playlistImage.toString()) else ""}"
     }
 
     object Profile : Routes("ProfileScreenRoute") {

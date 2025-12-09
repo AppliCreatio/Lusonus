@@ -3,9 +3,7 @@ package com.example.lusonus.ui.utils.Dialogs
 import android.content.Intent
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,7 +13,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.twotone.AccountCircle
 import androidx.compose.material.icons.twotone.LibraryMusic
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -36,10 +33,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.example.lusonus.data.dataclasses.Profile
 
 /**
  * A composable dialog that is called when a user wants to edit their profile information or image.
+ *
+ * Coded by Alex
  */
 @Composable
 fun PlaylistEditDialog(
@@ -59,11 +57,11 @@ fun PlaylistEditDialog(
             contract = ActivityResultContracts.OpenDocument(),
             onResult = { uri ->
                 if (uri != null) {
-                        context.contentResolver.takePersistableUriPermission(
-                            uri,
-                            Intent.FLAG_GRANT_READ_URI_PERMISSION
-                        )
-                        newImage = uri
+                    context.contentResolver.takePersistableUriPermission(
+                        uri,
+                        Intent.FLAG_GRANT_READ_URI_PERMISSION
+                    )
+                    newImage = uri
                 }
             }
         )

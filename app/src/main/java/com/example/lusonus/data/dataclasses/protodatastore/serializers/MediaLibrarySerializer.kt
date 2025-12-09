@@ -5,6 +5,10 @@ import com.example.lusonus.data.dataclasses.proto.MediaLibraryProto
 import java.io.InputStream
 import java.io.OutputStream
 
+/*
+*   Brandon made this entire file
+*  */
+
 object MediaLibrarySerializer : Serializer<MediaLibraryProto> {
     override val defaultValue: MediaLibraryProto = MediaLibraryProto.getDefaultInstance()
 

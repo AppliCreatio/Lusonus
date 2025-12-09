@@ -4,6 +4,10 @@ import android.net.Uri
 import com.example.lusonus.data.interfaces.Entries
 import java.time.LocalDateTime
 
+/*
+*   Brandon made this entire file
+*  */
+
 data class Folder(
     override val name: String,
     override val dateAdded: LocalDateTime,

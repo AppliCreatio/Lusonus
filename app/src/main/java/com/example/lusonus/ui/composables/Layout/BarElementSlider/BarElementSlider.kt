@@ -13,6 +13,10 @@ import androidx.compose.runtime.snapshotFlow
 // I highly recommend you look at Android Studio "how to do animations in compose" or how layouts
 // work if you are confused. All this I learned from their developers cite.
 
+/*
+*   Brandon made this entire file
+*  */
+
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun BarElementSlider(

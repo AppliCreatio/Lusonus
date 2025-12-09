@@ -2,6 +2,10 @@ package com.example.lusonus.ui.utils
 
 import android.annotation.SuppressLint
 
+/*
+*   Coded by Brandon
+*  */
+
 // Calculates the timestamp based on the provided milliseconds.
 @SuppressLint("DefaultLocale")
 public fun formatTimeFromMilliseconds(milliseconds: Long): String {

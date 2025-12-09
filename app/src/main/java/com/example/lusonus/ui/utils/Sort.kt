@@ -1,18 +1,14 @@
 package com.example.lusonus.ui.utils
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import com.example.lusonus.data.interfaces.Entries
 import java.time.format.DateTimeFormatter
 
-// fun <T : Entries> sortPlaylists(list: SnapshotStateMap<String, SnapshotStateList<String>>, sortType: String): Map<String, SnapshotStateList<String>>{
-//    return when(sortType) {
-//            "alphabetically" -> list.toSortedMap()
-//            else -> list
-//    }
-// }
+/*
+*   Coded by Alex
+*  */
 
-@RequiresApi(Build.VERSION_CODES.O)
+// Generic method that sorts the media entries according to the string passed into
+// Kotlin is kind and has built in sorting methods based on dataclass property
 fun <T : Entries> sort(
     mediaList: List<T>,
     sortType: String,

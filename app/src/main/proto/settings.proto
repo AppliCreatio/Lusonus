@@ -4,6 +4,6 @@ option java_package = "com.example.lusonus.data.dataclasses.proto";
 option java_multiple_files = true;
 
 message Settings {
-    bool profileToggle = 1;
-    int32 fileTypeRestriction = 2;
+  bool profileToggle = 1;
+  int32 fileTypeRestriction = 2;
 }

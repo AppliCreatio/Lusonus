@@ -12,11 +12,8 @@ import com.example.lusonus.data.auth.AuthRepository
 import com.example.lusonus.data.dataclasses.Profile
 import com.example.lusonus.data.dataclasses.User
 import com.example.lusonus.data.dataclasses.proto.ProfileProto
-import com.example.lusonus.data.dataclasses.proto.Settings
 import com.example.lusonus.data.dataclasses.protodatastore.profileDataStore
-import com.example.lusonus.data.dataclasses.protodatastore.settingsDataStore
 import com.example.lusonus.data.interfaces.ProfileRepositoryInterface
-import com.example.lusonus.data.sharedinstances.Global
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -25,6 +22,12 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+/*
+*   Alex made this file
+*  */
+
+// For the profiles I need for the authentication repository and the profile repository since I am
+// doing checks for if we are logged in when entering the profile screen
 class ProfileScreenViewModel(
     private val authRepository: AuthRepository,
     private val profileRepository: ProfileRepositoryInterface,
@@ -44,12 +47,12 @@ class ProfileScreenViewModel(
             profile = proto
 
             // Load profile when ViewModel is created
-            loadProfile(profile)
+            loadProfile()
         }
     }
 
     // Loads the user information
-    private fun loadProfile(proto: ProfileProto) {
+    private fun loadProfile() {
         viewModelScope.launch {
             appContext.profileDataStore.data.collect { proto ->
                 _currentProfile.value = Profile(
@@ -60,6 +63,7 @@ class ProfileScreenViewModel(
         }
     }
 
+    // Sets the information of the profile
     fun setProfileInfo(newProfile: Profile) =
         viewModelScope.launch {
             val updated = profile.toBuilder()

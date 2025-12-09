@@ -23,6 +23,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
+/*
+*   Brandon made this entire file
+*  */
+
 @Composable
 fun FolderItem(
     folderName: String,
@@ -64,7 +68,8 @@ fun FolderItem(
                             }
                         },
                         onLongClick = { deleteMode = !deleteMode },
-                    ).padding(12.dp)
+                    )
+                    .padding(12.dp)
                     .fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {

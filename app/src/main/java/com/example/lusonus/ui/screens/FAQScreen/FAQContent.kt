@@ -9,6 +9,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+/*
+*   Alex made this entire file with changes made by Aris
+*  */
+
 /**
  * A FAQ container that displays info about a FAQ.
  */

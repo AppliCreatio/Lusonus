@@ -3,27 +3,21 @@ package com.example.lusonus.ui.screens.PlaylistScreen
 import FileRow
 import android.graphics.BitmapFactory
 import android.net.Uri
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -31,20 +25,21 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.lusonus.R
 import com.example.lusonus.data.dataclasses.Media
-import java.io.InputStream
 import com.example.lusonus.navigation.LocalGlobals
+import com.example.lusonus.ui.composables.PlaylistComposables.PlaylistBanner
 import com.example.lusonus.ui.utils.getMimeType
+import java.io.InputStream
+
+/*
+*   Brandon made this file with changes by Alex
+*  */
 
 @Composable
 fun PlaylistContent(
@@ -58,6 +53,9 @@ fun PlaylistContent(
 
     val context = LocalContext.current
     val global = LocalGlobals.current
+
+    // We need this since we use a resource as well as uris for images so we need to do checks
+    // as to see if we need to open a stream or just use the resource id
 
     val bitmap =
         try {
@@ -74,28 +72,18 @@ fun PlaylistContent(
             painterResource(id = R.drawable.lusonus_placeholder)
         }
 
-    LazyColumn(modifier = Modifier.padding(16.dp).fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+    LazyColumn(
+        modifier = Modifier
+            .padding(16.dp)
+            .fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
 
         item {
-            Column(
-                modifier = Modifier.padding(bottom = 20.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                Image(
-                    painter = painter,
-                    contentDescription = "File artwork",
-                    modifier =
-                        Modifier
-                            .size(128.dp)
-                            .clip(RoundedCornerShape(4.dp))
-                            .clickable(onClick = onImageClick).background(MaterialTheme.colorScheme.onSurface),
-                    contentScale = ContentScale.Crop,
-                )
-
-                Text(text = playlistName, fontWeight = FontWeight.Bold)
-            }
+            PlaylistBanner(painter, playlistName, onImageClick)
         }
 
+        // These are all of the medias inside of the playlist
         items(items = playlistFiles) { media ->
             val mimeType = context.getMimeType(media.uri)
 
@@ -143,7 +131,8 @@ fun PlaylistContent(
                                     }
                                 },
                                 onLongClick = { deleteMode = !deleteMode },
-                            ).padding(8.dp),
+                            )
+                            .padding(8.dp),
                 ) {
                     if (deleteMode) {
                         Box(
@@ -161,6 +150,7 @@ fun PlaylistContent(
                             )
                         }
                     } else {
+                        // Stateless component for playlist item
                         FileRow(uri = media.uri)
                     }
                 }

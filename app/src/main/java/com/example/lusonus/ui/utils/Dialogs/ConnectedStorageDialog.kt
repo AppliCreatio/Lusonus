@@ -27,6 +27,10 @@ import androidx.compose.ui.window.Dialog
 import com.example.lusonus.data.model.ExternalStorage
 import com.example.lusonus.navigation.LocalStorageList
 
+/*
+*   Coded by Alex
+*  */
+
 @Composable
 fun ConnectedStorageDialog(
     onRequest: () -> Unit,

@@ -2,11 +2,11 @@ package com.example.lusonus.data.model.classes
 
 import android.content.Context
 import android.net.Uri
+import androidx.compose.runtime.mutableStateListOf
 import com.example.lusonus.appContext
 import com.example.lusonus.data.dataclasses.Folder
 import com.example.lusonus.data.dataclasses.Media
 import com.example.lusonus.data.dataclasses.proto.FolderProto
-import com.example.lusonus.data.dataclasses.proto.FolderLibraryProto
 import com.example.lusonus.data.dataclasses.protodatastore.folderLibraryDataStore
 import com.example.lusonus.data.sharedinstances.SharedMediaLibrary
 import com.example.lusonus.ui.utils.search
@@ -15,12 +15,15 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import androidx.compose.runtime.mutableStateListOf
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+
+/*
+*   Brandon made this entire file
+*  */
 
 open class FolderLibrary {
     // Application context.
@@ -74,8 +77,18 @@ open class FolderLibrary {
         Folder(
             name = name,
             uri = Uri.parse(uri),
-            dateAdded = runCatching { LocalDateTime.parse(dateAdded, formatter) }.getOrElse { LocalDateTime.now() },
-            lastPlayed = runCatching { if (lastPlayed.isBlank()) null else LocalDateTime.parse(lastPlayed, formatter) }.getOrNull(),
+            dateAdded = runCatching {
+                LocalDateTime.parse(
+                    dateAdded,
+                    formatter
+                )
+            }.getOrElse { LocalDateTime.now() },
+            lastPlayed = runCatching {
+                if (lastPlayed.isBlank()) null else LocalDateTime.parse(
+                    lastPlayed,
+                    formatter
+                )
+            }.getOrNull(),
             media = mutableStateListOf<Media>().apply { addAll(mediaItemsList.map { it.toMedia() }) }
         )
 
@@ -91,8 +104,18 @@ open class FolderLibrary {
     private fun com.example.lusonus.data.dataclasses.proto.MediaProto.toMedia() =
         Media(
             name = name,
-            dateAdded = runCatching { LocalDateTime.parse(dateAdded, formatter) }.getOrElse { LocalDateTime.now() },
-            lastPlayed = runCatching { if (lastPlayed.isBlank()) null else LocalDateTime.parse(lastPlayed, formatter) }.getOrNull(),
+            dateAdded = runCatching {
+                LocalDateTime.parse(
+                    dateAdded,
+                    formatter
+                )
+            }.getOrElse { LocalDateTime.now() },
+            lastPlayed = runCatching {
+                if (lastPlayed.isBlank()) null else LocalDateTime.parse(
+                    lastPlayed,
+                    formatter
+                )
+            }.getOrNull(),
             uri = Uri.parse(uri)
         )
 
@@ -157,6 +180,7 @@ open class FolderLibrary {
 
     // Searches for folders based on a query.
     fun searchFolders(query: String) {
-        _folders.value = if (query.isBlank()) _allFolders.value else search(_allFolders.value, query)
+        _folders.value =
+            if (query.isBlank()) _allFolders.value else search(_allFolders.value, query)
     }
 }

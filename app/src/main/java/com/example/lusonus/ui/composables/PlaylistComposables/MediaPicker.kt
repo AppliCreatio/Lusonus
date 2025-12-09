@@ -33,6 +33,10 @@ import com.example.lusonus.data.dataclasses.Media
 import com.example.lusonus.navigation.LocalGlobals
 import com.example.lusonus.ui.utils.getMimeType
 
+/*
+*   Brandon made this entire file
+*  */
+
 @Composable
 fun MediaPicker(
     allMediaFiles: List<Media>,

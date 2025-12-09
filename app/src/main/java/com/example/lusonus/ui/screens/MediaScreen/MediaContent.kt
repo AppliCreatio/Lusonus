@@ -2,14 +2,10 @@ package com.example.lusonus.ui.screens.MediaScreen
 
 import android.content.res.Configuration
 import android.graphics.Bitmap
-import android.os.Build
-import androidx.annotation.OptIn
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -42,17 +38,16 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.viewinterop.AndroidView
-import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
-import androidx.media3.ui.AspectRatioFrameLayout
-import androidx.media3.ui.PlayerView
 import com.example.lusonus.R
 import com.example.lusonus.data.dataclasses.Media
 import com.example.lusonus.ui.composables.MediaComposables.VideoPlayer
 import com.example.lusonus.ui.utils.formatTimeFromMilliseconds
-import com.example.lusonus.ui.utils.getFileName
 import com.example.lusonus.ui.utils.isVideo
+
+/*
+*   Brandon made this file using Aris original template
+*  */
 
 @Composable
 fun MediaContent(
@@ -168,7 +163,10 @@ fun MediaContent(
                     ) {
                         IconButton(onClick = onPrevious) { Icon(Icons.Default.FastRewind, null) }
                         IconButton(onClick = if (isPlaying) onPause else onResume) {
-                            Icon(if (isPlaying) Icons.Default.Pause else Icons.Default.PlayArrow, null)
+                            Icon(
+                                if (isPlaying) Icons.Default.Pause else Icons.Default.PlayArrow,
+                                null
+                            )
                         }
                         IconButton(onClick = onNext) { Icon(Icons.Default.FastForward, null) }
                     }

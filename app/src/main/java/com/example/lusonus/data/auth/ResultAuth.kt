@@ -1,5 +1,9 @@
 package com.example.lusonus.data.auth
 
+/*
+*   Alex made this entire file
+*  */
+
 sealed class ResultAuth<out T> {
     data class Success<out T>(
         val data: T,

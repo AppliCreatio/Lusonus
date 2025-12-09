@@ -8,6 +8,10 @@ import androidx.documentfile.provider.DocumentFile
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
+/*
+*   Coded by Brandon
+*  */
+
 // Some research here...
 // Context.functionName is apparently the nice Kotlin way to create utils functions.
 // It adds it to the Context class, which makes it more accessible.
@@ -21,7 +25,7 @@ fun Context.getFileName(uri: Uri): String {
     // Kind of like use StreamWriter from c#.
     contentResolver.query(uri, null, null, null, null)?.use {
         // The cursor is "like" a database table where each column has an index.
-        cursor ->
+            cursor ->
 
         // "OpenableColumns.DISPLAY_NAME" is how you get the filename of a file in android studio.
         // We use that with ".getColumnIndex" so we know what column to get the info from,

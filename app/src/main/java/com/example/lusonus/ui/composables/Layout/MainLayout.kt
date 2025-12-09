@@ -1,7 +1,5 @@
 package com.example.lusonus.ui.composables.Layout
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -17,11 +15,14 @@ import com.example.lusonus.navigation.Routes
 import com.example.lusonus.ui.composables.Layout.BottomBar.SharedBottomBar
 import com.example.lusonus.ui.composables.Layout.TopBar.SharedTopBar
 
+/*
+*   Brandon and Alex made this entire file
+*  */
+
 /**
  * This main layout wraps other composables in a consistent layout. It has the ability to be modular by changing or removing the
  * top bar, bottom bar or floating action button. If nothing is specified, it will default to the default layout
  */
-@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainLayout(

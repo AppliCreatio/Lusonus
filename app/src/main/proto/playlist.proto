@@ -6,13 +6,13 @@ option java_multiple_files = true;
 import "media.proto";
 
 message PlaylistProto {
-    string name = 1;
-    string dateAdded = 2;
-    string lastPlayed = 3;
-    string image = 4;
-    repeated MediaProto mediaItems = 5;
+  string name = 1;
+  string dateAdded = 2;
+  string lastPlayed = 3;
+  string image = 4;
+  repeated MediaProto mediaItems = 5;
 }
 
 message PlaylistLibraryProto {
-    repeated PlaylistProto playlists = 1;
+  repeated PlaylistProto playlists = 1;
 }

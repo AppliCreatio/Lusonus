@@ -6,6 +6,10 @@ import androidx.datastore.dataStore
 import com.example.lusonus.data.dataclasses.proto.FolderLibraryProto
 import com.example.lusonus.data.dataclasses.protodatastore.serializers.FolderLibrarySerializer
 
+/*
+*   Brandon made this entire file
+*  */
+
 val Context.folderLibraryDataStore: DataStore<FolderLibraryProto> by dataStore(
     fileName = "folder_library.pb",
     serializer = FolderLibrarySerializer,

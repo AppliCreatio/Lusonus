@@ -16,6 +16,10 @@ import com.example.lusonus.navigation.Routes
 import com.example.lusonus.ui.composables.Layout.BarElementSlider.BarElementSlider
 import com.example.lusonus.ui.utils.fadeOuterEdge
 
+/*
+*   Brandon made this entire file
+*  */
+
 @Composable
 fun SharedNavTopBar(navController: NavHostController = LocalNavController.current) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()

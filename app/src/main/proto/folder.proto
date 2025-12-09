@@ -6,13 +6,13 @@ option java_multiple_files = true;
 import "media.proto";
 
 message FolderProto {
-    string name = 1;
-    string uri = 2;
-    string dateAdded = 3;
-    string lastPlayed = 4;
-    repeated MediaProto mediaItems = 5;
+  string name = 1;
+  string uri = 2;
+  string dateAdded = 3;
+  string lastPlayed = 4;
+  repeated MediaProto mediaItems = 5;
 }
 
 message FolderLibraryProto {
-    repeated FolderProto folders = 1;
+  repeated FolderProto folders = 1;
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="Theme.EmptyActivity" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:windowSplashScreenBackground">@color/splash_light</item>
         <item name="android:windowSplashScreenAnimatedIcon">@mipmap/lusonus_icon</item>

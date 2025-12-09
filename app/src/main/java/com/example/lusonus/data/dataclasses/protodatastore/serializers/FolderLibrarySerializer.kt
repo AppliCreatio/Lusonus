@@ -5,6 +5,10 @@ import com.example.lusonus.data.dataclasses.proto.FolderLibraryProto
 import java.io.InputStream
 import java.io.OutputStream
 
+/*
+*   Brandon made this entire file
+*  */
+
 object FolderLibrarySerializer : Serializer<FolderLibraryProto> {
     override val defaultValue: FolderLibraryProto = FolderLibraryProto.getDefaultInstance()
 

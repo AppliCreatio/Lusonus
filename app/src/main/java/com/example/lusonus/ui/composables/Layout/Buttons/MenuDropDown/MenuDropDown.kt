@@ -9,10 +9,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.example.lusonus.data.dataclasses.MenuItem
-import com.example.lusonus.data.sharedinstances.Global
 import com.example.lusonus.navigation.LocalGlobals
 import com.example.lusonus.navigation.LocalNavController
 import com.example.lusonus.navigation.Routes
+
+/*
+*   Alex made this entire file
+*  */
 
 @Composable
 fun MenuDropDown() {
@@ -22,24 +25,21 @@ fun MenuDropDown() {
     val global = LocalGlobals.current
     var menuList: List<MenuItem>
 
-    if (global.settings.profileToggle)
-    {
+    if (global.settings.profileToggle) {
         menuList =
-        listOf(
-            MenuItem(
-                "Settings",
-                route = Routes.Settings.route,
-                action = { navController.navigate(Routes.Settings.route) },
-            ),
-            MenuItem(
-                "About Us",
-                route = Routes.FAQ.route,
-                action = { navController.navigate(Routes.FAQ.route) },
-            ),
-        )
-    }
-    else
-    {
+            listOf(
+                MenuItem(
+                    "Settings",
+                    route = Routes.Settings.route,
+                    action = { navController.navigate(Routes.Settings.route) },
+                ),
+                MenuItem(
+                    "About Us",
+                    route = Routes.FAQ.route,
+                    action = { navController.navigate(Routes.FAQ.route) },
+                ),
+            )
+    } else {
         menuList =
             listOf(
                 MenuItem(

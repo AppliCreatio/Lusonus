@@ -1,7 +1,5 @@
 package com.example.lusonus.ui.screens.FolderScreen
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
@@ -31,7 +29,10 @@ import com.example.lusonus.navigation.Routes
 import com.example.lusonus.ui.composables.Layout.MainLayout
 import com.example.lusonus.ui.composables.Layout.SearchAndSort.SearchAndSort
 
-@RequiresApi(Build.VERSION_CODES.O)
+/*
+*   Brandon made this entire file
+*  */
+
 @Composable
 fun FolderScreen(folderName: String) {
     val navController = LocalNavController.current
@@ -76,7 +77,9 @@ fun FolderScreen(folderName: String) {
                         action = { viewModel.sortMedia("alphabetically") },
                     ),
                     MenuItem(title = "Date Added", action = { viewModel.sortMedia("date added") }),
-                    MenuItem(title = "Last Played", action = { viewModel.sortMedia("last played") }),
+                    MenuItem(
+                        title = "Last Played",
+                        action = { viewModel.sortMedia("last played") }),
                 )
 
             SearchAndSort(

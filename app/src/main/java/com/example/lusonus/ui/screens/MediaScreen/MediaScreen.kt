@@ -6,17 +6,13 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.ServiceConnection
-import android.os.Build
 import android.os.IBinder
-import androidx.annotation.RequiresApi
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -38,7 +34,10 @@ import com.example.lusonus.services.EXTRA_URI
 import com.example.lusonus.services.PlayerService
 import com.example.lusonus.ui.composables.Layout.MainLayout
 
-@RequiresApi(Build.VERSION_CODES.O)
+/*
+*   Brandon made this file using Aris original template
+*  */
+
 @Composable
 fun MediaScreen(mediaName: String) {
     // Gets the media view model, calls the media factory so we can pass the media name to the
@@ -72,7 +71,7 @@ fun MediaScreen(mediaName: String) {
 
                     viewModel.updatePlaybackState(isPlaying, position, duration, art)
 
-                    if(name != null)
+                    if (name != null)
                         viewModel.updateCurrentMedia(name.toUri(), context!!)
                 }
             }
@@ -99,7 +98,10 @@ fun MediaScreen(mediaName: String) {
                 val binder = binder as PlayerService.PlayerBinder
                 player.value = binder.getPlayer()
             }
-            override fun onServiceDisconnected(name: ComponentName?) { player.value = null }
+
+            override fun onServiceDisconnected(name: ComponentName?) {
+                player.value = null
+            }
         }
     }
 
@@ -115,7 +117,8 @@ fun MediaScreen(mediaName: String) {
         // Sets up the proper intent.
         val intent =
             Intent(context, PlayerService::class.java).apply {
-                action = if (viewModel.isPlaying || !viewModel.hasStarted) ACTION_PLAY_URI else ACTION_PAUSE
+                action =
+                    if (viewModel.isPlaying || !viewModel.hasStarted) ACTION_PLAY_URI else ACTION_PAUSE
                 putExtra(EXTRA_URI, viewModel.media?.uri.toString())
             }
 

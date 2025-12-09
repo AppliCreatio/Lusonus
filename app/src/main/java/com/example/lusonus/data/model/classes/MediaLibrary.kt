@@ -2,27 +2,28 @@ package com.example.lusonus.data.model.classes
 
 import android.content.Context
 import android.net.Uri
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.core.net.toUri
 import androidx.documentfile.provider.DocumentFile
 import com.example.lusonus.appContext
 import com.example.lusonus.data.dataclasses.Media
 import com.example.lusonus.data.dataclasses.proto.MediaProto
-import com.example.lusonus.data.dataclasses.proto.MediaLibraryProto
 import com.example.lusonus.data.dataclasses.protodatastore.mediaLibraryDataStore
 import com.example.lusonus.data.sharedinstances.SharedPlaylistLibrary
 import com.example.lusonus.ui.utils.search
 import com.example.lusonus.ui.utils.sort
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+
+/*
+*   Brandon made this entire file
+*  */
 
 open class MediaLibrary {
     // Application context.
@@ -80,7 +81,12 @@ open class MediaLibrary {
 
     // Convert proto to Media dataclass.
     private fun MediaProto.toMedia(): Media {
-        val parsedDateAdded = runCatching { LocalDateTime.parse(dateAdded, formatter) }.getOrElse { LocalDateTime.now() }
+        val parsedDateAdded = runCatching {
+            LocalDateTime.parse(
+                dateAdded,
+                formatter
+            )
+        }.getOrElse { LocalDateTime.now() }
         val parsedLastPlayed = runCatching {
             if (lastPlayed.isBlank()) null else LocalDateTime.parse(lastPlayed, formatter)
         }.getOrNull()

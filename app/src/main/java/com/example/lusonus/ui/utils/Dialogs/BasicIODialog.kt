@@ -26,6 +26,8 @@ import androidx.compose.ui.window.Dialog
 
 /**
  * A basic confirmation and cancel dialog that I can use depending on the context.
+ *
+ * made by alex
  */
 @Composable
 fun BasicConfirmCancelDialog(
